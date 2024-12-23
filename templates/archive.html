@@ -1,0 +1,17 @@
+{% extends "page.html" %}
+
+{% block page_content %}
+    <h1 class="page-title">{{ page.title }}</h1>
+
+    {% set section = get_section(path="post/_index.md") %}
+    {% for year, posts in section.pages | group_by(attribute="year") %}
+        <h2>{{ year }}</h2>
+
+        <ul>
+        {% for post in posts %}
+            <li><a href="{{ post.permalink }}">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+
+{% endblock content %}
