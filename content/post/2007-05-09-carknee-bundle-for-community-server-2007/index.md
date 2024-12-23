@@ -5,6 +5,8 @@ slug = "carknee-bundle-for-community-server-2007"
 title = "CarKnee Bundle for Community Server 2007"
 description = ""
 
+aliases = ["/archive/2007/05/09/carknee-bundle-for-community-server-2007.aspx"]
+
 [taxonomies]
 tags = ["Community Server", "CarKnee Bundle"]
 +++
