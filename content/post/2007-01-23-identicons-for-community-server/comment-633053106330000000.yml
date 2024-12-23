@@ -1,0 +1,5 @@
+id: 633053106330000000
+date: 2007-01-25T08:30:33.0000000Z
+name: Thomas Freudenberg
+avatar: https://robohash.org/053119a6d229961a734a3714a57a8519.jpg
+message: Sean, nice work. However, I tried to add it to my site, but couldn't get it working. The value of the img's src is always "/". Inspecting your assembly with Reflector, I noticed that the result of String.Format is never used.

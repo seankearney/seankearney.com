@@ -1,0 +1,18 @@
+id: 633656593900000000
+date: 2008-12-23T20:03:10.0000000Z
+name: Alexey Rusakov
+avatar: https://robohash.org/03760a1149209431aeb2e0dc59152d5a.jpg
+message: >-
+  Sean,
+
+
+  The method is designed to substitute the actual plain field value with a runtime value, that might not yet be saved to a Sitecore item.
+
+
+  So using the OverrideFieldValue would make FieldRenderer function _as if_ Sitecore field contained that value. But it doesn't mean that it will be exactly what is displayed by the control.
+
+
+  Good catch on the bug. To fix it I would (and I will) modify the GetFieldValue processor so that it is aware of overriden value, instead of adding a new one later on.
+
+
+  Thanks for the report.

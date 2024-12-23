@@ -1,0 +1,30 @@
+id: 633118406980000000
+date: 2007-04-10T22:24:58.0000000Z
+name: Jay
+avatar: https://robohash.org/4d0fef3280b8c1356077de7363a8b893.jpg
+message: >2+
+   i use CS 2.1 (sp2 i think) to get this done.
+
+  i know this post is a little old but what i have done to play multiple mp3's in a row was 
+
+
+  1. upload all my mp3s to a folder on my server
+
+
+  2 open windows media play 
+
+
+  3 created a playlist (.wpl)
+
+
+  4 upload playlist to the same folder as mp3s on my server
+
+
+  5 under the video option i added (example http://yourhost.com/playlist1.wpl)
+
+
+  to my suprise it worked like a charm. the only bad thing is no one nows whats in the list but me or the person creating the blog. but if you wanted you could make multiple playlist and then list what song is in the playlist on each blog.
+
+
+  hope this helps aleast on person out there  o this also works if you create a playlist for videos as well 
+

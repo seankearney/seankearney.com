@@ -1,0 +1,5 @@
+id: 634173472210000000
+date: 2010-08-14T01:47:01.0000000Z
+name: Sean Kearney
+avatar: https://robohash.org/cd7897511d257d1932178812f5aca46a.jpg
+message: Possibly consider using this compression method for development where the ability to use Luke outweighs performance. Then in production, use the standard Sitecore compression for performance reasons.
