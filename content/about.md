@@ -1,8 +1,7 @@
 +++
 template = "page.html"
 date = 2010-08-26
-slug = "about"
-title = "About Me"
+title = "About Sean Kearney"
 description = ""
 
 aliases = ["/page/About", "/page/About.aspx"]
