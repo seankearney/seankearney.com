@@ -5,6 +5,8 @@ slug = "my-life-may-be-forever-different"
 title = "My life may be forever different..."
 description = ""
 
+aliases = ["/post/My-life-may-be-forever-different.aspx"]
+
 [taxonomies]
 tags = ["Personal"]
 +++

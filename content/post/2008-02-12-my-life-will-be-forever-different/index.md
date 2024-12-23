@@ -1,9 +1,11 @@
 +++
 template = "post.html"
 date = 2008-02-12
-slug = "my-life-will-be-forever-different!!!"
+slug = "my-life-will-be-forever-different"
 title = "My life will be forever different!!!"
 description = ""
+
+aliases = ["/post/My-life-will-be-forever-different!!!.aspx"]
 
 [taxonomies]
 tags = ["Personal"]
