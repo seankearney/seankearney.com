@@ -1,0 +1,379 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    Flash File (.swf) Loader Control &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">Flash File (.swf) Loader Control</h1>
+          <span class="post-date">2007-01-02</span>
+           |
+            
+            <a href="https://seankearney.com/tags/asp-net/" class="post-tag">ASP.NET</a>
+            
+            <a href="https://seankearney.com/tags/front-end/" class="post-tag">Front End</a>
+            
+          
+          <article>
+            <p>All web developers and designers should know by now that you should not use the traditional <code>&lt;object&gt;&lt;embed&gt;</code>... method for placing Flash content on your site. <a href="http://www.adobe.com/devnet/activecontent/">Macromedia (Adobe) recommends</a> using javascript to load the Flash content and it works just fine. However, if you are a .NET programmer and have a lot of flash content it is fairly easy to create a Control that handles the repetitive tasks.</p>
+<span id="continue-reading"></span>
+<p>First we need to create a little javascript file. I place my javascript in a /Utility/ directory (a la <a href="http://communityserver.org">CommunityServer</a>) and here it is:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span>/</span><span style="color:#bf616a;">Utility</span><span>/</span><span style="color:#bf616a;">LoadFlash</span><span>.</span><span style="color:#bf616a;">js  
+</span><span>
+</span><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">loadFlashDoc</span><span>(</span><span style="color:#bf616a;">fPath</span><span>, </span><span style="color:#bf616a;">fWidth</span><span>, </span><span style="color:#bf616a;">fHeight</span><span>){  
+</span><span>  document.</span><span style="color:#96b5b4;">write</span><span>(&#39;</span><span style="color:#a3be8c;">&lt;object classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; codebase=&quot;[http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0&quot;](http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,29,0&quot;) </span><span>&#39;);  
+</span><span>  document.</span><span style="color:#96b5b4;">write</span><span>(&#39;</span><span style="color:#a3be8c;"> width=&quot;</span><span>&#39; + </span><span style="color:#bf616a;">fWidth </span><span>+ &#39;</span><span style="color:#a3be8c;">&quot; height=&quot;</span><span>&#39; + </span><span style="color:#bf616a;">fHeight </span><span>+ &#39;</span><span style="color:#a3be8c;">&quot;&gt; </span><span>&#39;);  
+</span><span>  document.</span><span style="color:#96b5b4;">write</span><span>(&#39;</span><span style="color:#a3be8c;"> &lt;param name=&quot;movie&quot; value=&quot;</span><span>&#39; + </span><span style="color:#bf616a;">fPath </span><span>+ &#39;</span><span style="color:#a3be8c;">&quot;&gt; </span><span>&#39;);  
+</span><span>  document.</span><span style="color:#96b5b4;">write</span><span>(&#39;</span><span style="color:#a3be8c;"> &lt;param name=&quot;quality&quot; value=&quot;high&quot;&gt; </span><span>&#39;);  
+</span><span>  document.</span><span style="color:#96b5b4;">write</span><span>(&#39;</span><span style="color:#a3be8c;"> &lt;param name=&quot;wmode&quot; value=&quot;transparent&quot; /&gt; </span><span>&#39;);  
+</span><span>  document.</span><span style="color:#96b5b4;">write</span><span>(&#39;</span><span style="color:#a3be8c;"> &lt;embed wmode=&quot;transparent&quot; quality=&quot;high&quot; pluginspage=&quot;[http://www.macromedia.com/go/getflashplayer&quot;](http://www.macromedia.com/go/getflashplayer&quot;) type=&quot;application/x-shockwave-flash&quot; </span><span>&#39;);  
+</span><span>  document.</span><span style="color:#96b5b4;">write</span><span>(&#39;</span><span style="color:#a3be8c;"> src=&quot;</span><span>&#39; + </span><span style="color:#bf616a;">fPath </span><span>+ &#39;</span><span style="color:#a3be8c;">&quot; </span><span>&#39;);  
+</span><span>  document.</span><span style="color:#96b5b4;">write</span><span>(&#39;</span><span style="color:#a3be8c;"> width=&quot;</span><span>&#39; + </span><span style="color:#bf616a;">fWidth </span><span>+ &#39;</span><span style="color:#a3be8c;">&quot; </span><span>&#39;);  
+</span><span>  document.</span><span style="color:#96b5b4;">write</span><span>(&#39;</span><span style="color:#a3be8c;"> height=&quot;</span><span>&#39; + </span><span style="color:#bf616a;">fHeight </span><span>+ &#39;</span><span style="color:#a3be8c;">&quot;&gt;&lt;/embed&gt; </span><span>&#39;);  
+</span><span>  document.</span><span style="color:#96b5b4;">write</span><span>(&#39;</span><span style="color:#a3be8c;">&lt;/object&gt;</span><span>&#39;);  
+</span><span>}
+</span></code></pre>
+<p>Nothing to complex here. Just write out the object &amp; embed lines used to show the flash file specified as fPath with the fWidth and fHeight.</p>
+<p>Now for the ASP.NET Control.</p>
+<pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">public class </span><span style="color:#ebcb8b;">FlashLoader </span><span style="color:#eff1f5;">: System.Web.UI.</span><span style="color:#a3be8c;">Control  
+</span><span style="color:#eff1f5;">{  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">FlashFile property  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private </span><span style="color:#eff1f5;">String </span><span style="color:#bf616a;">_FlashFile</span><span style="color:#eff1f5;">;  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">public </span><span style="color:#eff1f5;">String </span><span style="color:#bf616a;">FlashFile  
+</span><span style="color:#eff1f5;">        {  
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">_FlashFile</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// get  
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">set </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_FlashFile </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// set  
+</span><span style="color:#eff1f5;">        }</span><span style="color:#65737e;">// property  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">#endregion  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">Width property  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private int </span><span style="color:#bf616a;">_Width</span><span style="color:#eff1f5;">;  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">public int </span><span style="color:#bf616a;">Width  
+</span><span style="color:#eff1f5;">        {  
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">_Width</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// get  
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">set </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_Width </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// set  
+</span><span style="color:#eff1f5;">        }</span><span style="color:#65737e;">// property  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">#endregion  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">Height property  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private int </span><span style="color:#bf616a;">_Height</span><span style="color:#eff1f5;">;  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">public int </span><span style="color:#bf616a;">Height  
+</span><span style="color:#eff1f5;">        {  
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">_Height</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// get  
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">set </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_Height </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// set  
+</span><span style="color:#eff1f5;">        }</span><span style="color:#65737e;">// property  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">#endregion  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">Title property  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private </span><span style="color:#eff1f5;">String </span><span style="color:#bf616a;">_Title </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Empty</span><span style="color:#eff1f5;">;  
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">/// &lt;</span><span style="color:#bf616a;">summary</span><span style="color:#65737e;">&gt;  
+</span><span style="color:#65737e;">        /// A Title for the Flash File  
+</span><span style="color:#65737e;">        /// &lt;/</span><span style="color:#bf616a;">summary</span><span style="color:#65737e;">&gt;  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">public </span><span style="color:#eff1f5;">String </span><span style="color:#bf616a;">Title  
+</span><span style="color:#eff1f5;">        {  
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">_Title</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// get  
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">set </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_Title </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// set  
+</span><span style="color:#eff1f5;">        }</span><span style="color:#65737e;">// property  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">#endregion  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">protected override void </span><span style="color:#8fa1b3;">OnLoad</span><span style="color:#eff1f5;">(EventArgs </span><span style="color:#bf616a;">e</span><span style="color:#eff1f5;">)  
+</span><span style="color:#eff1f5;">        {  
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">FlashFile</span><span style="color:#eff1f5;">))  
+</span><span style="color:#eff1f5;">                        </span><span style="color:#b48ead;">return</span><span style="color:#eff1f5;">;  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">Page</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ClientScript</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsClientScriptIncludeRegistered</span><span style="color:#eff1f5;">(</span><span>typeof</span><span style="color:#eff1f5;">(FlashLoader), </span><span>&quot;</span><span style="color:#a3be8c;">flashLoader</span><span>&quot;</span><span style="color:#eff1f5;">))  
+</span><span style="color:#eff1f5;">                        </span><span style="color:#bf616a;">Page</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ClientScript</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">RegisterClientScriptInclude</span><span style="color:#eff1f5;">(</span><span>typeof</span><span style="color:#eff1f5;">(FlashLoader), </span><span>&quot;</span><span style="color:#a3be8c;">flashLoader</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span>&quot;</span><span style="color:#a3be8c;">/Utility/loadFlash.js</span><span>&quot;</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">        }  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">protected override void </span><span style="color:#8fa1b3;">Render</span><span style="color:#eff1f5;">(HtmlTextWriter </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">)  
+</span><span style="color:#eff1f5;">        {  
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">FlashFile</span><span style="color:#eff1f5;">))  
+</span><span style="color:#eff1f5;">                        </span><span style="color:#b48ead;">return</span><span style="color:#eff1f5;">;  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">WriteLine</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">&lt;script type=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">text/javascript</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">&gt;loadFlashDoc(&#39;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;">&#39;, &#39;</span><span style="color:#d08770;">{1}</span><span style="color:#a3be8c;">&#39;, &#39;</span><span style="color:#d08770;">{2}</span><span style="color:#a3be8c;">&#39;);&lt;/script&gt;</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">FlashFile</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">Width</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">Height</span><span style="color:#eff1f5;">));  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">WriteLine</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">&lt;noscript&gt;</span><span>&quot;</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Write</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#96b5b4;">\t</span><span style="color:#a3be8c;">&lt;object classid=</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">clsid:d27cdb6e-ae6d-11cf-96b8-444553540000</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;"> codebase=</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0</span><span style="color:#96b5b4;">\&quot;</span><span>&quot;</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">WriteLine</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">width=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#d08770;">{0}</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> height=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#d08770;">{1}</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> id=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">zoom_map</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> align=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">top</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">&gt;</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">Width</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">Height</span><span style="color:#eff1f5;">));  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Write</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#96b5b4;">\t\t</span><span>&quot;</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">WriteLine</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">&lt;param name=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">movie</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> value=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#d08770;">{0}</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> /&gt;</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">FlashFile</span><span style="color:#eff1f5;">));  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">WriteLine</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#96b5b4;">\t\t</span><span style="color:#a3be8c;">&lt;param name=</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">wmode</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;"> value=</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">transparent</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;"> /&gt;</span><span>&quot;</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">WriteLine</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#96b5b4;">\t\t</span><span style="color:#a3be8c;">&lt;param name=</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">quality</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;"> value=</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">high</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;"> /&gt;</span><span>&quot;</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">WriteLine</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#96b5b4;">\t\t</span><span style="color:#a3be8c;">&lt;param name=</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">bgcolor</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;"> value=</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;">#FFFFFF</span><span style="color:#96b5b4;">\&quot;</span><span style="color:#a3be8c;"> /&gt;</span><span>&quot;</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Write</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#96b5b4;">\t\t</span><span>&quot;</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">WriteLine</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">&lt;embed src=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#d08770;">{0}</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> quality=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">high</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> bgcolor=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">#FFFFFF</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> width=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#d08770;">{1}</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> height=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#d08770;">{2}</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> name=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#d08770;">{3}</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> align=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">top</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> wmode=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">transparent</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> type=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">application/x-shockwave-flash</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;"> pluginspage=</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">http://www.macromedia.com/go/getflashplayer</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">&gt;&lt;/embed&gt;</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">FlashFile</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">Width</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">Height</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">Title</span><span style="color:#eff1f5;">));  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">WriteLine</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#96b5b4;">\t</span><span style="color:#a3be8c;">&lt;/object&gt;</span><span>&quot;</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">WriteLine</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">&lt;/noscript&gt;</span><span>&quot;</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">        }  
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>To use this control you would just register your control and add the tag as such:</p>
+<pre data-lang="html" style="background-color:#2b303b;color:#c0c5ce;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;</span><span style="color:#bf616a;">FLASH:FlashLoader </span><span style="color:#8fa1b3;">id</span><span>=&quot;</span><span style="color:#a3be8c;">Flash</span><span>&quot; </span><span style="color:#d08770;">runat</span><span>=&quot;</span><span style="color:#a3be8c;">server</span><span>&quot; </span><span style="color:#d08770;">FlashFile</span><span>=&quot;</span><span style="color:#a3be8c;">/path/to/file.swf</span><span>&quot; </span><span style="color:#d08770;">Width</span><span>=&quot;</span><span style="color:#a3be8c;">475</span><span>&quot; </span><span style="color:#d08770;">Height</span><span>=&quot;</span><span style="color:#a3be8c;">275</span><span>&quot; </span><span style="color:#d08770;">Title</span><span>=&quot;</span><span style="color:#a3be8c;">Flash File</span><span>&quot; /&gt;  
+</span></code></pre>
+<p>And you will get output as follows:</p>
+<pre data-lang="html" style="background-color:#2b303b;color:#c0c5ce;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">start-tag</span><span>&quot;&gt;script&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">attribute-name</span><span>&quot;&gt; src&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;=&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">attribute-value</span><span>&quot;&gt;&quot;/Utility/loadFlash.js&quot; &lt;/</span><span style="color:#bf616a;">span</span><span>&gt;&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">attribute-name</span><span>&quot;&gt;type&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;=&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">attribute-value</span><span>&quot;&gt;&quot;text/javascript&quot;&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;&gt;&lt;/&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">end-tag</span><span>&quot;&gt;script&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;&gt;  
+</span><span>...  
+</span><span>&lt;&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">start-tag</span><span>&quot;&gt;script&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">attribute-name</span><span>&quot;&gt; type&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;=&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">attribute-value</span><span>&quot;&gt;&quot;text/javascript&quot;&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;&gt;loadFlashDoc(&#39;/path/to/file.swf&#39;, &#39;475&#39;, &#39;275&#39;);&lt;/&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">end-tag</span><span>&quot;&gt;script&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;&gt;  
+</span><span>&lt;&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">start-tag</span><span>&quot;&gt;noscript&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;&gt;  
+</span><span>    &lt;</span><span style="color:#bf616a;">object </span><span style="color:#d08770;">classid</span><span>=&quot;</span><span style="color:#a3be8c;">clsid:d27cdb6e-ae6d-11cf-96b8-444553540000</span><span>&quot; </span><span style="color:#d08770;">codebase</span><span>=&quot;</span><span style="color:#a3be8c;">http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0</span><span>&quot;</span><span style="color:#d08770;">width</span><span>=&quot;</span><span style="color:#a3be8c;">475</span><span>&quot; </span><span style="color:#d08770;">height</span><span>=&quot;</span><span style="color:#a3be8c;">275</span><span>&quot; </span><span style="color:#8fa1b3;">id</span><span>=&quot;</span><span style="color:#a3be8c;">zoom_map</span><span>&quot; </span><span style="color:#d08770;">align</span><span>=&quot;</span><span style="color:#a3be8c;">top</span><span>&quot;&gt;  
+</span><span>        &lt;</span><span style="color:#bf616a;">param </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">movie</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">/path/to/file.swf</span><span>&quot; /&gt;  
+</span><span>        &lt;</span><span style="color:#bf616a;">param </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">wmode</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">transparent</span><span>&quot; /&gt;  
+</span><span>        &lt;</span><span style="color:#bf616a;">param </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">quality</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">high</span><span>&quot; /&gt;  
+</span><span>        &lt;</span><span style="color:#bf616a;">param </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">bgcolor</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">#FFFFFF</span><span>&quot; /&gt;  
+</span><span>        &lt;</span><span style="color:#bf616a;">embed </span><span style="color:#d08770;">src</span><span>=&quot;</span><span style="color:#a3be8c;">/path/to/file.swf</span><span>&quot; </span><span style="color:#d08770;">quality</span><span>=&quot;</span><span style="color:#a3be8c;">high</span><span>&quot; </span><span style="color:#d08770;">bgcolor</span><span>=&quot;</span><span style="color:#a3be8c;">#FFFFFF</span><span>&quot; </span><span style="color:#d08770;">width</span><span>=&quot;</span><span style="color:#a3be8c;">475</span><span>&quot; </span><span style="color:#d08770;">height</span><span>=&quot;</span><span style="color:#a3be8c;">275</span><span>&quot; </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">Flash File</span><span>&quot; </span><span style="color:#d08770;">align</span><span>=&quot;</span><span style="color:#a3be8c;">top</span><span>&quot; </span><span style="color:#d08770;">wmode</span><span>=&quot;</span><span style="color:#a3be8c;">transparent</span><span>&quot; </span><span style="color:#d08770;">type</span><span>=&quot;</span><span style="color:#a3be8c;">application/x-shockwave-flash</span><span>&quot; </span><span style="color:#d08770;">pluginspage</span><span>=&quot;</span><span style="color:#a3be8c;">http://www.macromedia.com/go/getflashplayer</span><span>&quot;&gt;&lt;/</span><span style="color:#bf616a;">embed</span><span>&gt;  
+</span><span>    &lt;/</span><span style="color:#bf616a;">object</span><span>&gt;  
+</span><span>&lt;/&lt;</span><span style="color:#bf616a;">span </span><span style="color:#d08770;">class</span><span>=&quot;</span><span style="color:#a3be8c;">end-tag</span><span>&quot;&gt;noscript&lt;/</span><span style="color:#bf616a;">span</span><span>&gt;&gt;
+</span></code></pre>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;how-to-handle-multiple-domain-names-for-your-site&#x2F;">How to handle multiple domain names for your site.</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;filezilla-ftp-server-step-1-create-object-from-xml&#x2F;">FileZilla FTP Server Step 1: Create Object From XML</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,425 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    Getting a Sitecore field value &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">Getting a Sitecore field value</h1>
+          <span class="post-date">2012-07-15</span>
+           |
+            
+            <a href="https://seankearney.com/tags/sitecore/" class="post-tag">Sitecore</a>
+            
+            <a href="https://seankearney.com/tags/tips/" class="post-tag">Tips</a>
+            
+          
+          <article>
+            <p>There are many ways to get the value of a Sitecore field and each is slightly different.</p>
+<span id="continue-reading"></span><pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">string </span><span style="color:#bf616a;">fieldName </span><span>= &quot;</span><span style="color:#a3be8c;">__Icon</span><span>&quot;;
+</span><span>Sitecore.Data.Items.Item </span><span style="color:#bf616a;">someItem </span><span>= </span><span style="color:#bf616a;">Sitecore</span><span>.</span><span style="color:#bf616a;">Context</span><span>.</span><span style="color:#bf616a;">Database</span><span>.</span><span style="color:#bf616a;">GetItem</span><span>(&quot;</span><span style="color:#a3be8c;">/sitecore/content</span><span>&quot;);
+</span><span>Sitecore.Data.Fields.Field </span><span style="color:#bf616a;">someField </span><span>= </span><span style="color:#bf616a;">someItem</span><span>.</span><span style="color:#bf616a;">Fields</span><span>[</span><span style="color:#bf616a;">fieldName</span><span>]; </span><span style="color:#65737e;">// you could use field name, ID or index here
+</span><span>
+</span><span style="color:#65737e;">// assumptions:
+</span><span style="color:#65737e;">// 1. The Item exists
+</span><span style="color:#65737e;">// 2. The field exists and has a value on the item
+</span><span style="color:#65737e;">// 3. This was written against Sitecore 6.4.1.101221
+</span><span>                
+</span><span style="color:#65737e;">// Method 1: Indexer on Item supports using a field&#39;s name, index, or ID
+</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">value1 </span><span>= </span><span style="color:#bf616a;">someItem</span><span>[</span><span style="color:#bf616a;">fieldName</span><span>];
+</span><span>
+</span><span style="color:#65737e;">// Method 2: Get the value from the field
+</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">value2 </span><span>= </span><span style="color:#bf616a;">someField</span><span>.</span><span style="color:#bf616a;">Value</span><span>; </span><span style="color:#65737e;">// This is commonly seen as someItem.Fields[fieldName].Value
+</span><span>
+</span><span style="color:#65737e;">// Method 3: 
+</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">value3 </span><span>= </span><span style="color:#bf616a;">someField</span><span>.</span><span style="color:#bf616a;">GetValue</span><span>(</span><span style="color:#d08770;">true</span><span>);
+</span><span>
+</span><span style="color:#65737e;">// Method 4: 
+</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">value4 </span><span>= </span><span style="color:#bf616a;">someField</span><span>.</span><span style="color:#bf616a;">GetValue</span><span>(</span><span style="color:#d08770;">false</span><span>);
+</span><span>
+</span><span style="color:#65737e;">// Method 5: 
+</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">value5 </span><span>= </span><span style="color:#bf616a;">someField</span><span>.</span><span style="color:#bf616a;">GetValue</span><span>(</span><span style="color:#d08770;">true</span><span>, </span><span style="color:#d08770;">true</span><span>);
+</span><span>
+</span><span style="color:#65737e;">// Method 6: 
+</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">value6 </span><span>= </span><span style="color:#bf616a;">someField</span><span>.</span><span style="color:#bf616a;">GetValue</span><span>(</span><span style="color:#d08770;">false</span><span>, </span><span style="color:#d08770;">true</span><span>);
+</span><span>
+</span><span style="color:#65737e;">// Method 7: 
+</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">value7 </span><span>= </span><span style="color:#bf616a;">someField</span><span>.</span><span style="color:#bf616a;">GetValue</span><span>(</span><span style="color:#d08770;">false</span><span>, </span><span style="color:#d08770;">false</span><span>);
+</span><span>
+</span><span style="color:#65737e;">// Method 8: 
+</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">value8 </span><span>= </span><span style="color:#bf616a;">someField</span><span>.</span><span style="color:#bf616a;">GetValue</span><span>(</span><span style="color:#d08770;">true</span><span>, </span><span style="color:#d08770;">false</span><span>);
+</span><span>
+</span><span style="color:#65737e;">// Method 9: 
+</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">value9 </span><span>= </span><span style="color:#bf616a;">someItem</span><span>.</span><span style="color:#bf616a;">InnerData</span><span>.</span><span style="color:#bf616a;">Fields</span><span>[</span><span style="color:#bf616a;">theField</span><span>.</span><span style="color:#bf616a;">ID</span><span>]; 
+</span></code></pre>
+<p><strong>Method 1</strong></p>
+<p>This method uses an indexer on the item. If the field doesn't exist on the item you will get an empty string. If the field does exist you will get the same result as method 2.</p>
+<p><strong>Method 2</strong></p>
+<p>You need to have a field to use this method! If you called method 2 by the more commonly used notation of someItem.Fields[fieldName].Value you can get a null reference exception when trying to access the Value. The first  value to be found will be returned.</p>
+<ol>
+<li>The Value</li>
+<li>If the item is a clone, the clone source's value</li>
+<li>Standard Value</li>
+<li>The field's default value</li>
+<li>Empty String</li>
+</ol>
+<p><strong>Method 3 &amp; Method 5</strong></p>
+<p>These two are functionally equivalent. This method gets the value of the field similar to method 2.</p>
+<p><strong>Methods 4 &amp; Method 6</strong></p>
+<p>These two are functionally equivalent. This method gets the value of the field without checking a clone's source or the standard values. The first value to be found will be returned.</p>
+<ol>
+<li>The Value</li>
+<li>The field's default value</li>
+<li>Empty String</li>
+</ol>
+<p><strong>Method 7</strong></p>
+<p>This method gets the value of the field without checking a clone's source, standard values or default value! The first value to be found will be returned.</p>
+<ol>
+<li>The Value</li>
+<li>Null</li>
+</ol>
+<p><strong>Method 8</strong></p>
+<p>This method gets the value of the field without checking the default value! The first value to be found will be returned.</p>
+<ol>
+<li>The Value</li>
+<li>If the item is a clone, the clone source's value</li>
+<li>Standard Value</li>
+<li>Null</li>
+</ol>
+<p><strong>Method 9</strong></p>
+<p>The FieldList object at ItemData.Fields on an item is the real container of field information for that item. The FieldCollection on Item.Fields is really a way into the FieldList on the ItemData. ItemData is also a much more raw form. Internally the FieldList is a HashList&lt;ID, string&gt; where the key is the field id and the value is the raw value of the field. Cloned Values, Standard Values and Default Values do not exist in the FieldList and using this method would return null where the field has no value.</p>
+<p><strong>Sitecore Bug</strong></p>
+<p>By calling <code>Field.GetValue(false)</code>, <code>Field.GetValue(false, true)</code>, or <code>Field.GetValue(false, false)</code> you can cause the <code>Field.ContainsStandardValues</code> property to have an invalid value! This has been logged as bug #368493 with Sitecore.</p>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;field-containsstandardvalue-in-sitecore-is-buggy&#x2F;">Field.ContainsStandardValue in Sitecore is Buggy</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;checking-if-a-sitecore-field-has-a-value&#x2F;">Checking if a Sitecore field has a value</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+          
+
+          <div id="634781669640000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;aaa73f5f0902061a7be6642aabfbd2a3.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">John West</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634781669640000000">
+                    2012-07-18T00:09:24.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                This (excellent) post makes me realize that none of these invoke the renderField pipeline. It seems like the `Sitecore.Data.Fields.Field` class should have a Render() method that does this. Here&#39;s one attempt:
+
+namespace Sitecore.Sharedsource.Data.Fields
+{
+  public static class Field
+  {
+    public static string Render(
+      this Sitecore.Data.Fields.Field field)
+    {
+      return Sitecore.Web.UI.WebControls.FieldRenderer.Render(
+        field.Item,
+        field.ID.ToString());
+    }
+  }
+}
+
+You have to include this line in any .cs file that uses this extension:
+
+using Sitecore.Sharedsource.Data.Fields;
+
+Then you can use it like this:
+
+// throws ex if field does not exist
+someItem.Fields[&quot;fieldName&quot;].Render() 
+
+or:
+
+someField.Render()
+
+It could be smarter, such as only calling the pipeline for field types that actually need it. 
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634798443520000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;afa73a7adb8fd718f57ea4180c93be54.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Varun Shringarpure</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634798443520000000">
+                    2012-08-06T10:05:52.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Nice Article.. 
+            </p>
+        </div>
+          
+          
+             
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

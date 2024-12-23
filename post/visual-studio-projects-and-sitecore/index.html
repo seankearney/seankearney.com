@@ -1,0 +1,603 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    Visual Studio Projects and Sitecore &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">Visual Studio Projects and Sitecore</h1>
+          <span class="post-date">2010-10-01</span>
+           |
+            
+            <a href="https://seankearney.com/tags/sitecore/" class="post-tag">Sitecore</a>
+            
+            <a href="https://seankearney.com/tags/basics/" class="post-tag">Basics</a>
+            
+          
+          <article>
+            <p>This is a topic that I've been meaning to cover for some time now, but it is <a href="http://www.sitecore.net/en/Community/Technical-Blogs/John-West-Sitecore-Blog/Posts/2010/09/Create-a-Visual-Studio-2010-Project-for-a-Sitecore-Solution.aspx">this post</a> by <a href="http://twitter.com/sitecorejohn">John West</a> that pushed me to do it sooner rather than later.</p>
+<span id="continue-reading"></span>
+<p>There are basically two ways of working with Sitecore.</p>
+<ol>
+<li>Your solution, and code, is fully immersed in the Sitecore web site.</li>
+<li>Your solution, and code, is outside of Sitecore's web site and you use some post build process to deploy.</li>
+</ol>
+<p>John's post, and Sitecore documents, suggests that you go with option 1. I, however, do not agree that this is the right way to go. I feel that my code should not be mixed in with over 6,000 of Sitecore's files. Here are some reasons:</p>
+<ol>
+<li>The most important advantage is a clear understanding of the ownership of files in the solution. Everything checked into source control is explicitly owned by the solution being developed. All other files are owned by Sitecore or a third party package installed in Sitecore.</li>
+<li>I want to be able to distinguish my files from Sitecore's just by looking on the file system.</li>
+<li>If I need to ship the code to my client I simply want to zip up my 'workspace' and not have to wade through out-of-the box Sitecore files.</li>
+<li>I want my development environment to be as close as possible to a production environment. This means no .cs files in my web root</li>
+</ol>
+<p>I've been working outside of the web root for three years now and wouldn't consider it being any other way. In fact, I am always wondering why you would want to work out of the web root as Sitecore suggests. I spoke to a client recently, while proving support for <a href="http://TeamDevelopmentForSitecore">Team Development for Sitecore</a>, and their answer was simply, "we didn't know better." That isn't acceptable.</p>
+<p>Here is the way I work and highly suggest you work as well.</p>
+<ol>
+<li>Use IIS and configure Sitecore somewhere other than C:[Workspace][Client]\trunk. For example, C:\Sitecore[Client]\Website</li>
+<li>Create your Visual Studio solution (and projects) outside of the web root. i.e. C:[Workspace][Client]\trunk\ClientWebsite.sln</li>
+<li>Add references to any Sitecore assemblies as needed. Make sure to set "Copy Local" to false as John West suggests.</li>
+<li>Use a post build step to copy the output of your compiled Web Application project to the location specified in step 1. Or, better yet, use Team Development for Sitecore to handle the deployment for you.</li>
+<li>To debug, you will need to make a change to the Web Application project. On the 'Web' tab of the properties for your Web Application project you should choose the "Use Custom Web Server" option and enter in your development Sitecore URL. Once this setting has been specified you can now press F5 to build your project and debug normally. This may require some IIS components to be enabled, depending on your system. This will also work for IIS running on a remote machine (and virtual machines) as long as remote debugging components are installed on the remote machine.</li>
+</ol>
+<p>Taking this one step further, you NEED to be using source control and automated builds in your development. <a href="http://martinfowler.com/articles/continuousIntegration.html">Continuous Integration</a> is also a good practice and possible using Team Development for Sitecore! Cost shouldn't be an excuse either as there are <a href="http://subversion.apache.org/">free</a> <a href="http://www.jetbrains.com/teamcity/">tools</a> out there to help you with this!<br />
+We, at <a href="http://www.hhogdev.com">Hedgehog Development</a>, have done a good number of Sitecore <a href="http://www.sitecore.net/en/News/Press-releases/2009/Site-of-the-Year-NA-2009.aspx">site</a>s this way and we do consider this a best practice. We are able to bring new developers onto a project in minutes and can roll out builds effortlessly.</p>
+<p>I would love to get some feedback on this. Please let me know if you love working out of the web root as Sitecore suggests.</p>
+<p><strong>Update 2/2013:</strong> John West has seen the light and now agrees that this approach is sound. <a href="http://www.sitecore.net/en/Community/Technical-Blogs/John-West-Sitecore-Blog/Posts/2010/09/Create-a-Visual-Studio-2010-Project-for-a-Sitecore-Solution.aspx#communitycontent_2_CommentsList_CommentItem_14">http://www.sitecore.net/en/Community/Technical-Blogs/John-West-Sitecore-Blog/Posts/2010/09/Create-a-Visual-Studio-2010-Project-for-a-Sitecore-Solution.aspx#communitycontent_2_CommentsList_CommentItem_14</a></p>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;learnsitecore-podcast-2-team-development-for-sitecore&#x2F;">LearnSitecore Podcast 2 - Team Development for Sitecore</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-item-and-version-design-flaw&#x2F;">Sitecore item and version design flaw</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+          
+
+          <div id="634215549390000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;dd4acb3e41148b9e6b9aa14b0780e06e.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Adam Weber</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634215549390000000">
+                    2010-10-01T18:35:39.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Sean,
+
+I couldn't agree with you more. I've been a long-time fan of working outside of the web root as well and using post-build scripts (MSBuild is crazy extensible) to copy files from the solution to the web root. 
+
+This approach [i]always[/i] results in cleaner solutions, easier code management, more efficient deployments and also smoother upgrades. 
+
+--adam
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634215608950000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;aaa73f5f0902061a7be6642aabfbd2a3.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">John West</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634215608950000000">
+                    2010-10-01T20:14:55.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                This approach definitely has advantages. I think it is more work for someone like me who has to create lots of Visual Studio projects for Sitecore solutions frequently and quickly, and then not integrate with source code management or maintain those solutions for any length of time. 
+
+I think I've heard of another approach that uses dynamic compilation to reduce the frequency of ASP.NET restarts. I think that would require code within the document root. If such a model exists, I expect it would compile the code into an assembly for deployment (not require deployment of source code).
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634215714330000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;e9ac5d1ba61b7b128136ec1c2db82f2c.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Admin</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634215714330000000">
+                    2010-10-01T23:10:33.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                @John,
+I would say that if I did what you did then I would probably do something like you have outlined; essentially a way to test out various things quickly.
+
+However, my issue is that the majority of people reading your blog aren't doing what you do. I would think the majority are working on their own &quot;in-house&quot; site, or, as in my case, many sites for many clients. Therefore, being that the majority probably aren't doing what you do, then they probably shouldn't work the way you do either.
+
+As for the dynamic compilation... it sounds like using the 'web site model' with Sitecore. Then maybe using web deploy projects you can compile that for production release. Interesting idea.
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634215719510000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;aaa73f5f0902061a7be6642aabfbd2a3.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">John West</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634215719510000000">
+                    2010-10-01T23:19:11.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Just noting that I read somewhere that Windows Azure requires the Web Application Project, though there are probably ways around that. I thought it was funny because Microsoft had removed that project model in the first release of Visual Studio 2005, but had to add it back with a service pack, included it in 2008, and appeared to make it mandatory for Azure in 2010.
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634217796250000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;23463b99b62a72f26ed677cc556c44e8.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Alex</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634217796250000000">
+                    2010-10-04T09:00:25.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Post-build steps are not as good, you have to recompile the project to update the actual files. 
+I'd suggest to create all custom files(and projects) within folder under /Website instead. 
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634218344050000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;ef25aabf9027c35b2e4b73cdb27c9b61.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Ivan</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634218344050000000">
+                    2010-10-05T00:13:25.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                I think Alex is right. 
+I am also sure it would be much easier and understandable to make some step for deploying/build script. That step can remove all the *.cs files from under webroot of preparing build.
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634218378540000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;e9ac5d1ba61b7b128136ec1c2db82f2c.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Admin</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634218378540000000">
+                    2010-10-05T01:10:54.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Alex/Ivan,
+I can see some benefit to the approach you want to take, but I must ask if you work on a single site for your company or many sites for different clients, (or something else)? 
+
+In my experience I have many projects (clients) that have various components to their site. For instance, I have two projects that both rely on Coveo for search. I do not want to have Coveo running on my machine so I create a virtual machine that runs Sitecore and Coveo. When I build my project, from my workstation, the compiled code gets pushed to my VM and I debug. To make it more confusing, the Coveo version are different, therefore I have each client in their own virtual machine. If I took your approach I would need to have Visual Studio running in a VM and I would need to work in that VM via remote desktop.
+
+Ultimately it comes down to preference. Using virtual machines and Team Development for Sitecore I am able to code outside of the web root, leverage source control, have a development environment closely mirror my production environment, and do continuous integration. To me, that is the best way to work.
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634230196180000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;4a4bfe1e6a03050c2884c9fc7fd6e747.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Rasmus</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634230196180000000">
+                    2010-10-18T17:26:58.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                I like the idea of working outside the webroot and we're doing this for umbraco projects aswell. But how do you handle changes done in Sitecore. Typically our developers would add new sublayouts through sitecore, to ensure database changes are done correctly. How do you handle that in a &quot;out of webroot&quot; project?
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634232244310000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;93308b41863a5f67a5d6e5c62a98314c.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Nick Wesselman</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634232244310000000">
+                    2010-10-21T02:20:31.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Sean,
+
+How do you handle Sitecore module installs? It seems like after installing, you'd need them added to the base Sitecore &quot;image&quot; that all developers use, and that is used for deploying new environments. But then how do you isolate the &quot;image&quot; from the code deployed on top of it?
+
+Thanks,
+Nick
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634240500540000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;b4591048ba49c1111162c1db646f4147.jpg?d=robohash" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Alistair Deneys</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634240500540000000">
+                    2010-10-30T15:40:54.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Vote 1 for outside webroot.
+
+I also find myself creating lots of small projects to try out ideas like John does (for my blog), and I find it much easier to have separate projects outside my webroot and use MSBuild to copy the files over to a Sitecore instance on my local machine I share between all these small projects. Spinning up a whole new instance of Sitecore, complete with it's own set of DBs just to try out a little idea feels much too heavy.
+
+I understand people's frustrations of having their website restart each time you update, even for something like a CSS file (cause that should be stored in your project too; separation of ownership). I guess I've just learnt to live with it and value to separation over the convenience.
+
+Just to cover off Rasmus' and Nick's questions (for how I do it anyway), presentation components still need to be created in Sitecore, then XSLTs copied to the project and ASCX / ASPX created manually (for proper code behind) in the solution. Just make sure the path of the ASCX / ASPX is the same as the component you created. You might also want to have a look into the VS2010 plugin Sitecore Rocks! which let's you create these components inside VS. As for the modules, I install those then move the package files off to a separate folder and use MSBuild to copy those files across as a post-build step.
+            </p>
+        </div>
+          
+          
+             
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

@@ -1,0 +1,448 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    Using Luke to view Lucene indexes in Sitecore 6 &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">Using Luke to view Lucene indexes in Sitecore 6</h1>
+          <span class="post-date">2010-08-13</span>
+           |
+            
+            <a href="https://seankearney.com/tags/sitecore/" class="post-tag">Sitecore</a>
+            
+            <a href="https://seankearney.com/tags/lucene/" class="post-tag">Lucene</a>
+            
+          
+          <article>
+            <p>As a Sitecore developer who is a fan of leveraging Lucene in my projects I've always been aggravated that, starting with Sitecore 6, I couldn't use Luke to view my indexes. As <a href="http://mcore.wordpress.com/2008/11/05/sitecores-lucene-integration/">Jens Mikkelsen</a> points out  this was due to custom compression that Sitecore uses for the Lucene index.</p>
+<span id="continue-reading"></span>
+<p>To get around these compression issues Jens, and others, have come up with the Index Viewer shared source module and this tool was the only way to help with Sitecore-Lucene indexes. Until now. I've figured out to get around the custom compression and allow Luke to view our indexes!</p>
+<p>The breakthrough was based on a <a href="http://mcore.wordpress.com/2008/11/05/sitecores-lucene-integration/#comment-133">comment</a> by Alexy on where we could look into defining our own compression implementation. I started digging through the Lucene code and the answer was right there for us!<br />
+Here's the solution.</p>
+<ol>
+<li>Go get a copy of <a href="http://www.icsharpcode.net/OpenSource/SharpZipLib/">SharpZipLib</a></li>
+<li>Grab a copy of Lucene.Net.dll from your Sitecore 6 web root</li>
+<li>Grab the code below and add it to your project along with references to the above two dll's</li>
+<li>Compile the project and move the resulting DLL and ICSharpCode.SharpZipLib.dll to your Sitecore /bin directory</li>
+<li>Update the Web.Config appSetting "Lucene.Net.CompressionLib.class" with your new info</li>
+<li>Rebuild your search indexes</li>
+<li>Grab the latest <a href="http://code.google.com/p/luke/downloads/list">Luke</a> and point it at your index</li>
+</ol>
+<p>Custom Compression Code (based on <a href="https://svn.apache.org/repos/asf/lucene/lucene.net/tags/Lucene.Net_2_4_0/src/Lucene.Net/SharpZipLibAdapter.cs">this class</a>):</p>
+<pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">public class </span><span style="color:#ebcb8b;">SharpZipLibAdapter </span><span style="color:#eff1f5;">: SupportClass.CompressionSupport.</span><span style="color:#a3be8c;">ICompressionAdapter  
+</span><span style="color:#eff1f5;">{  
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public byte</span><span style="color:#eff1f5;">[] </span><span style="color:#8fa1b3;">Compress</span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[] </span><span style="color:#bf616a;">input</span><span style="color:#eff1f5;">, </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">offset</span><span style="color:#eff1f5;">, </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">length</span><span style="color:#eff1f5;">)  
+</span><span style="color:#eff1f5;">    {  
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Create the compressor with highest level of compression  
+</span><span style="color:#eff1f5;">        Deflater </span><span style="color:#bf616a;">compressor </span><span>= new </span><span style="color:#eff1f5;">Deflater();  
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">compressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">SetLevel</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">Deflater</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">BEST_COMPRESSION</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Give the compressor the data to compress  
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">compressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">SetInput</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">input</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">offset</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">length</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">compressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Finish</span><span style="color:#eff1f5;">();  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">/*  
+</span><span style="color:#65737e;">            * Create an expandable byte array to hold the compressed data.  
+</span><span style="color:#65737e;">            * You cannot use an array that&#39;s the same size as the orginal because  
+</span><span style="color:#65737e;">            * there is no guarantee that the compressed data will be smaller than  
+</span><span style="color:#65737e;">            * the uncompressed data.  
+</span><span style="color:#65737e;">            */  
+</span><span style="color:#eff1f5;">        MemoryStream </span><span style="color:#bf616a;">bos </span><span>= new </span><span style="color:#eff1f5;">MemoryStream(</span><span style="color:#bf616a;">input</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Length</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Compress the data  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[] </span><span style="color:#bf616a;">buf </span><span>= new </span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[</span><span style="color:#d08770;">1024</span><span style="color:#eff1f5;">];  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">while </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">compressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsFinished</span><span style="color:#eff1f5;">)  
+</span><span style="color:#eff1f5;">        {  
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">count </span><span>= </span><span style="color:#bf616a;">compressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Deflate</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">buf</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">bos</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Write</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">buf</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">count</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">        }  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Get the compressed data  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">bos</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToArray</span><span style="color:#eff1f5;">();  
+</span><span style="color:#eff1f5;">    }  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public byte</span><span style="color:#eff1f5;">[] </span><span style="color:#8fa1b3;">Uncompress</span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[] </span><span style="color:#bf616a;">input</span><span style="color:#eff1f5;">)  
+</span><span style="color:#eff1f5;">    {  
+</span><span style="color:#eff1f5;">        Inflater </span><span style="color:#bf616a;">decompressor </span><span>= new </span><span style="color:#eff1f5;">Inflater();  
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">decompressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">SetInput</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">input</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Create an expandable byte array to hold the decompressed data  
+</span><span style="color:#eff1f5;">        MemoryStream </span><span style="color:#bf616a;">bos </span><span>= new </span><span style="color:#eff1f5;">MemoryStream(</span><span style="color:#bf616a;">input</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Length</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Decompress the data  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[] </span><span style="color:#bf616a;">buf </span><span>= new </span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[</span><span style="color:#d08770;">1024</span><span style="color:#eff1f5;">];  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">while </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">decompressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsFinished</span><span style="color:#eff1f5;">)  
+</span><span style="color:#eff1f5;">        {  
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">count </span><span>= </span><span style="color:#bf616a;">decompressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Inflate</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">buf</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">bos</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Write</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">buf</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">count</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">        }  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Get the decompressed data  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">bos</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToArray</span><span style="color:#eff1f5;">();  
+</span><span style="color:#eff1f5;">    }  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public byte</span><span style="color:#eff1f5;">[] </span><span style="color:#8fa1b3;">Compress</span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[] </span><span style="color:#bf616a;">input</span><span style="color:#eff1f5;">)  
+</span><span style="color:#eff1f5;">    {  
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Create the compressor with highest level of compression  
+</span><span style="color:#eff1f5;">        Deflater </span><span style="color:#bf616a;">compressor </span><span>= new </span><span style="color:#eff1f5;">Deflater();  
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">compressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">SetLevel</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">Deflater</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">BEST_COMPRESSION</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Give the compressor the data to compress  
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">compressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">SetInput</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">input</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">compressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Finish</span><span style="color:#eff1f5;">();  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">/*  
+</span><span style="color:#65737e;">            * Create an expandable byte array to hold the compressed data.  
+</span><span style="color:#65737e;">            * You cannot use an array that&#39;s the same size as the orginal because  
+</span><span style="color:#65737e;">            * there is no guarantee that the compressed data will be smaller than  
+</span><span style="color:#65737e;">            * the uncompressed data.  
+</span><span style="color:#65737e;">            */  
+</span><span style="color:#eff1f5;">        MemoryStream </span><span style="color:#bf616a;">bos </span><span>= new </span><span style="color:#eff1f5;">MemoryStream(</span><span style="color:#bf616a;">input</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Length</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Compress the data  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[] </span><span style="color:#bf616a;">buf </span><span>= new </span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[</span><span style="color:#d08770;">1024</span><span style="color:#eff1f5;">];  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">while </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">compressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsFinished</span><span style="color:#eff1f5;">)  
+</span><span style="color:#eff1f5;">        {  
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">count </span><span>= </span><span style="color:#bf616a;">compressor</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Deflate</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">buf</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">bos</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Write</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">buf</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">count</span><span style="color:#eff1f5;">);  
+</span><span style="color:#eff1f5;">        }  
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Get the compressed data  
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">bos</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToArray</span><span style="color:#eff1f5;">();  
+</span><span style="color:#eff1f5;">    }  
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>Disclaimer: This was tested with Sitecore 6.2.0.100104</p>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-media-url&#x2F;">Sitecore Media URL</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">About Sean Kearney</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+          
+
+          <div id="634173401150000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="https:&#x2F;&#x2F;robohash.org&#x2F;90b6b26d46550f533e2049774be8644f.jpg" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Kyle Heon</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634173401150000000">
+                    2010-08-13T23:48:35.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Thanks for throwing this together Sean.
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634173443090000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="https:&#x2F;&#x2F;robohash.org&#x2F;90b6b26d46550f533e2049774be8644f.jpg" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Kyle Heon</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634173443090000000">
+                    2010-08-14T00:58:29.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Index rebuilds are significantly slower to build but I'm seeing 50%+ decrease in size on disk for my indexes. Not a big deal for my relatively tiny indexes but for large ones I can see this being really beneficial. Thanks again.
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="634173472210000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="https:&#x2F;&#x2F;robohash.org&#x2F;cd7897511d257d1932178812f5aca46a.jpg" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Sean Kearney</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#634173472210000000">
+                    2010-08-14T01:47:01.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Possibly consider using this compression method for development where the ability to use Luke outweighs performance. Then in production, use the standard Sitecore compression for performance reasons.
+            </p>
+        </div>
+          
+          
+             
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

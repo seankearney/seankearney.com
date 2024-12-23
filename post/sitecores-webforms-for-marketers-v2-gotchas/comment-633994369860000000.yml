@@ -1,0 +1,15 @@
+id: 633994369860000000
+date: 2010-01-18T18:43:06.0000000Z
+name: Igor
+avatar: https://robohash.org/cb06df458e9a72476d2e0b2998647f91.jpg
+message: >
+  I must disagree with your "gotchas". 
+
+
+  First of all the module is oriented to users who are not developers.  It can explain their designer tool and markup structure. I believe the most of customizations can be reached using CSS. I have done it several times and seen a lot of such examples in live sites. 
+
+
+  2 and 3 are rather good solutions for the master - slave environment. As far as I know those "gotchas" are premeditated steps to make “web forms” support the “Sitecore staging” module.
+
+
+  I would not advise using versioning for list controls at all. I entirely approve of their acquiring items as Sitecore item names. Such a way assures that values in list items are immutable. I guess the feature that you really need is multilanguage. It would be great if list items could be localized. I believe Sitecore is either thinking or even implementing it now. 

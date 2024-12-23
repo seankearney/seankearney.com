@@ -1,0 +1,358 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    Sitecore Security Report and Reset &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">Sitecore Security Report and Reset</h1>
+          <span class="post-date">2011-07-07</span>
+           |
+            
+            <a href="https://seankearney.com/tags/sitecore/" class="post-tag">Sitecore</a>
+            
+            <a href="https://seankearney.com/tags/security/" class="post-tag">Security</a>
+            
+          
+          <article>
+            <p>I have a nice assortment of little scripts that I've written over the years to perform various tasks within Sitecore. Based on <a href="http://stackoverflow.com/questions/6614776/viewing-and-clearing-all-user-specific-permissions-in-sitecore">this Stack Overflow question</a> I figured I would release one.</p>
+<span id="continue-reading"></span>
+<p>This script will show, and allow you to reset, the <code>__security</code> field on all items in a subtree. The code wasn't written to be pretty; it was written quickly to perform a very specific task.</p>
+<p>To use this, simply drop this aspx file into your webroot and browse to it. Delete when done.</p>
+<pre data-lang="html" style="background-color:#2b303b;color:#c0c5ce;" class="language-html "><code class="language-html" data-lang="html"><span>&lt;%@ Page Language=&quot;C#&quot; AutoEventWireup=&quot;true&quot; Debug=&quot;true&quot; %&gt;
+</span><span>
+</span><span>&lt;%@ Import Namespace=&quot;System.Linq&quot; %&gt;
+</span><span>&lt;%-- 
+</span><span>#############################################################
+</span><span>Author: Sean Kearney
+</span><span>Date: 10/04/09
+</span><span>Description: View security set on items
+</span><span>Overview:
+</span><span>
+</span><span>#############################################################
+</span><span>--%&gt;
+</span><span>
+</span><span>&lt;</span><span style="color:#bf616a;">script </span><span style="color:#d08770;">runat</span><span>=&quot;</span><span style="color:#a3be8c;">server</span><span>&quot;&gt;
+</span><span>    </span><span style="color:#bf616a;">protected string StartingPath
+</span><span>    {
+</span><span>        </span><span style="color:#bf616a;">get
+</span><span>        {
+</span><span>            </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">txtStartPath</span><span>.Text;
+</span><span>        }
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#bf616a;">protected </span><span>void </span><span style="color:#bf616a;">Page_Load</span><span>(</span><span style="color:#bf616a;">object sender</span><span>, </span><span style="color:#bf616a;">EventArgs e</span><span>)
+</span><span>    {
+</span><span>    }
+</span><span>    </span><span style="color:#bf616a;">protected </span><span>void </span><span style="color:#bf616a;">btnReport_Click</span><span>(</span><span style="color:#bf616a;">object sender</span><span>, </span><span style="color:#bf616a;">EventArgs e</span><span>)
+</span><span>    {
+</span><span>        </span><span style="color:#bf616a;">Execute</span><span>(</span><span style="color:#d08770;">false</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#bf616a;">protected </span><span>void </span><span style="color:#bf616a;">btnDelete_Click</span><span>(</span><span style="color:#bf616a;">object sender</span><span>, </span><span style="color:#bf616a;">EventArgs e</span><span>)
+</span><span>    {
+</span><span>        </span><span style="color:#bf616a;">Execute</span><span>(</span><span style="color:#d08770;">true</span><span>);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#bf616a;">protected </span><span>void </span><span style="color:#bf616a;">Execute</span><span>(</span><span style="color:#bf616a;">bool </span><span>delete)
+</span><span>    {
+</span><span>        </span><span style="color:#b48ead;">if </span><span>(</span><span style="color:#bf616a;">string</span><span>.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span>(</span><span style="color:#bf616a;">StartingPath</span><span>))
+</span><span>            </span><span style="color:#b48ead;">throw </span><span>new </span><span style="color:#bf616a;">Exception</span><span>(&quot;</span><span style="color:#a3be8c;">Starting Path Not Set</span><span>&quot;);
+</span><span>
+</span><span>        </span><span style="color:#ebcb8b;">Sitecore</span><span>.Data.Database </span><span style="color:#bf616a;">master </span><span>= </span><span style="color:#ebcb8b;">Sitecore</span><span>.Configuration.Factory.</span><span style="color:#bf616a;">GetDatabase</span><span>(&quot;</span><span style="color:#a3be8c;">master</span><span>&quot;);
+</span><span>        </span><span style="color:#ebcb8b;">Response</span><span>.</span><span style="color:#bf616a;">Write</span><span>(&quot;</span><span style="color:#a3be8c;">&lt;html&gt;&lt;head&gt;&lt;style type=&#39;text/css&#39;&gt;*{font-family:monospace;font-size:10pt;}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;table border=1&gt;</span><span>&quot;);
+</span><span>
+</span><span>        </span><span style="color:#bf616a;">using </span><span>(new </span><span style="color:#ebcb8b;">Sitecore</span><span>.SecurityModel.</span><span style="color:#bf616a;">SecurityDisabler</span><span>())
+</span><span>        {
+</span><span>            </span><span style="color:#bf616a;">Recurse</span><span>(</span><span style="color:#bf616a;">master</span><span>.</span><span style="color:#bf616a;">GetItem</span><span>(</span><span style="color:#bf616a;">StartingPath</span><span>), delete);
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#ebcb8b;">Response</span><span>.</span><span style="color:#bf616a;">Write</span><span>(&quot;</span><span style="color:#a3be8c;">&lt;/table&gt;&lt;/body&gt;&lt;/html&gt;</span><span>&quot;);
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#bf616a;">private </span><span>void </span><span style="color:#bf616a;">Recurse</span><span>(</span><span style="color:#ebcb8b;">Sitecore</span><span>.Data.Items.Item </span><span style="color:#bf616a;">item</span><span>, </span><span style="color:#bf616a;">bool reset</span><span>)
+</span><span>    {
+</span><span>        </span><span style="color:#bf616a;">foreach </span><span>(</span><span style="color:#ebcb8b;">Sitecore</span><span>.Data.Items.Item </span><span style="color:#bf616a;">child </span><span>in </span><span style="color:#bf616a;">item</span><span>.Children)
+</span><span>        {
+</span><span>            </span><span style="color:#b48ead;">if </span><span>(!</span><span style="color:#bf616a;">string</span><span>.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span>(</span><span style="color:#bf616a;">child</span><span>[&quot;</span><span style="color:#a3be8c;">__security</span><span>&quot;]))
+</span><span>            {
+</span><span>                </span><span style="color:#ebcb8b;">Response</span><span>.</span><span style="color:#bf616a;">Write</span><span>(&quot;</span><span style="color:#a3be8c;">&lt;tr&gt;&lt;td nowrap=&#39;nowrap&#39;&gt;</span><span>&quot; + </span><span style="color:#bf616a;">child</span><span>.Paths.ContentPath + &quot;</span><span style="color:#a3be8c;">&lt;/td&gt;&lt;td&gt;</span><span>&quot; + </span><span style="color:#bf616a;">child</span><span>[&quot;</span><span style="color:#a3be8c;">__security</span><span>&quot;] + &quot;</span><span style="color:#a3be8c;">&lt;/td&gt;&lt;/tr&gt;</span><span>&quot;);
+</span><span>
+</span><span>                </span><span style="color:#b48ead;">if </span><span>(</span><span style="color:#bf616a;">reset</span><span>)
+</span><span>                {
+</span><span>                    </span><span style="color:#bf616a;">using </span><span>(new </span><span style="color:#ebcb8b;">Sitecore</span><span>.Data.Items.</span><span style="color:#bf616a;">EditContext</span><span>(</span><span style="color:#bf616a;">child</span><span>))
+</span><span>                    {
+</span><span>                        </span><span style="color:#bf616a;">child</span><span>.Fields[&quot;</span><span style="color:#a3be8c;">__security</span><span>&quot;].</span><span style="color:#bf616a;">Reset</span><span>();
+</span><span>                    }
+</span><span>                }
+</span><span>            }
+</span><span>
+</span><span>            </span><span style="color:#65737e;">// don&#39;t dive too deep
+</span><span>            </span><span style="color:#b48ead;">if </span><span>(</span><span style="color:#bf616a;">item</span><span>.Paths.ContentPath.</span><span style="color:#bf616a;">Split</span><span>(&quot;</span><span style="color:#a3be8c;">/</span><span>&quot;.</span><span style="color:#bf616a;">ToCharArray</span><span>()).Length &lt;= </span><span style="color:#d08770;">5</span><span>)
+</span><span>                </span><span style="color:#bf616a;">Recurse</span><span>(</span><span style="color:#bf616a;">child</span><span>, </span><span style="color:#bf616a;">reset</span><span>);
+</span><span>        }
+</span><span>    }
+</span><span>    
+</span><span>&lt;/</span><span style="color:#bf616a;">script</span><span>&gt;
+</span><span>
+</span><span>&lt;</span><span style="color:#bf616a;">html</span><span>&gt;
+</span><span>&lt;</span><span style="color:#bf616a;">body</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#bf616a;">form </span><span style="color:#8fa1b3;">id</span><span>=&quot;</span><span style="color:#a3be8c;">form1</span><span>&quot; </span><span style="color:#d08770;">runat</span><span>=&quot;</span><span style="color:#a3be8c;">server</span><span>&quot;&gt;
+</span><span>    &lt;</span><span style="color:#bf616a;">fieldset</span><span>&gt;
+</span><span>        Starting Path
+</span><span>        &lt;</span><span style="color:#bf616a;">asp:TextBox </span><span style="color:#d08770;">ID</span><span>=&quot;</span><span style="color:#a3be8c;">txtStartPath</span><span>&quot; </span><span style="color:#d08770;">runat</span><span>=&quot;</span><span style="color:#a3be8c;">server</span><span>&quot; </span><span style="color:#d08770;">Text</span><span>=&quot;</span><span style="color:#a3be8c;">/sitecore/content/home</span><span>&quot;&gt;&lt;/</span><span style="color:#bf616a;">asp:TextBox</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">asp:Button </span><span style="color:#d08770;">ID</span><span>=&quot;</span><span style="color:#a3be8c;">btnReport</span><span>&quot; </span><span style="color:#d08770;">runat</span><span>=&quot;</span><span style="color:#a3be8c;">server</span><span>&quot; </span><span style="color:#d08770;">OnClick</span><span>=&quot;</span><span style="color:#a3be8c;">btnReport_Click</span><span>&quot; </span><span style="color:#d08770;">Text</span><span>=&quot;</span><span style="color:#a3be8c;">Run Report</span><span>&quot; /&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">asp:Button </span><span style="color:#d08770;">ID</span><span>=&quot;</span><span style="color:#a3be8c;">btnDelete</span><span>&quot; </span><span style="color:#d08770;">runat</span><span>=&quot;</span><span style="color:#a3be8c;">server</span><span>&quot; </span><span style="color:#d08770;">Text</span><span>=&quot;</span><span style="color:#a3be8c;">Reset &#39;__security&#39; to standard values</span><span>&quot; </span><span style="color:#d08770;">OnClick</span><span>=&quot;</span><span style="color:#a3be8c;">btnDelete_Click</span><span>&quot; /&gt;
+</span><span>    &lt;/</span><span style="color:#bf616a;">fieldset</span><span>&gt;
+</span><span>    &lt;/</span><span style="color:#bf616a;">form</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#bf616a;">body</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#bf616a;">html</span><span>&gt;
+</span></code></pre>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;dmitry-vasilinenko-continuous-integration-for-sitecore-projects&#x2F;">Re: Continuous Integration for Sitecore Projects</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-rules-engine-and-regex&#x2F;">Sitecore Rules Engine and RegEx</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

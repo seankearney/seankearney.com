@@ -1,0 +1,15 @@
+id: 634240500540000000
+date: 2010-10-30T15:40:54.0000000Z
+name: Alistair Deneys
+avatar: http://www.gravatar.com/avatar/b4591048ba49c1111162c1db646f4147.jpg?d=robohash
+message: >-
+  Vote 1 for outside webroot.
+
+
+  I also find myself creating lots of small projects to try out ideas like John does (for my blog), and I find it much easier to have separate projects outside my webroot and use MSBuild to copy the files over to a Sitecore instance on my local machine I share between all these small projects. Spinning up a whole new instance of Sitecore, complete with it's own set of DBs just to try out a little idea feels much too heavy.
+
+
+  I understand people's frustrations of having their website restart each time you update, even for something like a CSS file (cause that should be stored in your project too; separation of ownership). I guess I've just learnt to live with it and value to separation over the convenience.
+
+
+  Just to cover off Rasmus' and Nick's questions (for how I do it anyway), presentation components still need to be created in Sitecore, then XSLTs copied to the project and ASCX / ASPX created manually (for proper code behind) in the solution. Just make sure the path of the ASCX / ASPX is the same as the component you created. You might also want to have a look into the VS2010 plugin Sitecore Rocks! which let's you create these components inside VS. As for the modules, I install those then move the package files off to a separate folder and use MSBuild to copy those files across as a post-build step.

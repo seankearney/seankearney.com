@@ -1,0 +1,14 @@
+id: 634232244310000000
+date: 2010-10-21T02:20:31.0000000Z
+name: Nick Wesselman
+avatar: http://www.gravatar.com/avatar/93308b41863a5f67a5d6e5c62a98314c.jpg?d=robohash
+message: >-
+  Sean,
+
+
+  How do you handle Sitecore module installs? It seems like after installing, you'd need them added to the base Sitecore &quot;image&quot; that all developers use, and that is used for deploying new environments. But then how do you isolate the &quot;image&quot; from the code deployed on top of it?
+
+
+  Thanks,
+
+  Nick
