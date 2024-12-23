@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2012-07-23
 slug = "checking-if-a-sitecore-field-has-a-value"
 title = "Checking if a Sitecore field has a value"

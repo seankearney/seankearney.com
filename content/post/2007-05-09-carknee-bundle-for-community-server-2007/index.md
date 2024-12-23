@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-05-09
 slug = "carknee-bundle-for-community-server-2007"
 title = "CarKnee Bundle for Community Server 2007"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2006-12-18
 slug = "what-is-in-a-name"
 title = "What is in a name?"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2008-02-12
 slug = "my-life-will-be-forever-different"
 title = "My life will be forever different!!!"

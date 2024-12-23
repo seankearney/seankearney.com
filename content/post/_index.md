@@ -18,7 +18,7 @@ template = "post-list.html"
 # will always use the closest to itself.
 # However, a page's own `template` variable will always have priority.
 # Not set by default.
-#page_template =
+page_template = "post.html"
 
 # This sets the number of pages to be displayed per paginated page.
 # No pagination will happen if this isn't set or if the value is 0.
@@ -40,7 +40,7 @@ paginate_path = "page"
 
 # If set to "true", the section homepage is rendered.
 # Useful when the section is used to organize pages (not used directly).
-#render = true
+render = false
 
 # This determines whether to redirect when a user lands on the section. Defaults to not being set.
 # Useful for the same reason as `render` but when you don't want a 404 when
@@ -51,7 +51,7 @@ paginate_path = "page"
 # If set to "true", the section will pass its pages on to the parent section. Defaults to `false`.
 # Useful when the section shouldn't split up the parent section, like
 # sections for each year under a posts section.
-#transparent = false
+transparent = true
 
 # Use aliases if you are moving content but want to redirect previous URLs to the
 # current one. This takes an array of paths, not URLs.

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2010-10-01
 slug = "visual-studio-projects-and-sitecore"
 title = "Visual Studio Projects and Sitecore"

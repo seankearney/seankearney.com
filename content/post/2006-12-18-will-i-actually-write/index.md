@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2006-12-18
 slug = "will-i-actually-write"
 title = "Will I actually write?"

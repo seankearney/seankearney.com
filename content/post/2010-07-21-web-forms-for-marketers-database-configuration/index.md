@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2010-07-21
 slug = "web-forms-for-marketers-database-configuration"
 title = "Web Forms for Marketers - Database Configuration"

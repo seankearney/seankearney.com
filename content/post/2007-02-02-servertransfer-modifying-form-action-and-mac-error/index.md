@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-02-02
 slug = "servertransfer-modifying-form-action-and-mac-error"
 title = "Server.Transfer, Modifying Form Action, and MAC Error"

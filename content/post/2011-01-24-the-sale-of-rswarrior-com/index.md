@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2011-01-24
 slug = "the-sale-of-rswarrior-com"
 title = "Selling RSWarrior.com"

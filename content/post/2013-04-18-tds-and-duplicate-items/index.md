@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2013-04-18
 slug = "tds-and-duplicate-items"
 title = "TDS And Duplicate Items"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-15
 slug = "drivers-on-a-floppy"
 title = "Drivers on a Floppy?"

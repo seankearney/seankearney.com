@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2016-03-23
 slug = "tds-deployment-properties-report"
 title = "TDS Deployment Properties Report"

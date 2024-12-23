@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2009-07-06
 slug = "coveo-with-sitecore-media"
 title = "Coveo with Sitecore Media"

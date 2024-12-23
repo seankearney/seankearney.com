@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-05-08
 slug = "site-upgraded-to-cs-2007"
 title = "Site Upgraded to CS 2007"

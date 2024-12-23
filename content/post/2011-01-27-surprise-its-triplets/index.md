@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2011-01-27
 slug = "surprise-its-triplets"
 title = "Big News of 2010: Surprise, it's triplets!"

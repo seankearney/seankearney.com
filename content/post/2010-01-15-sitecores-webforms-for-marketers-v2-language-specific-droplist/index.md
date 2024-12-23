@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2010-01-15
 slug = "sitecores-webforms-for-marketers-v2-language-specific-droplist"
 title = "Sitecore's Webforms for Marketers (v2) Language Specific DropList"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2010-09-09
 slug = "learnsitecore-podcast-2-team-development-for-sitecore"
 title = "LearnSitecore Podcast 2 - Team Development for Sitecore"

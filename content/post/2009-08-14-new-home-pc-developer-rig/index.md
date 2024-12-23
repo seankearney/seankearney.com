@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2009-08-14
 slug = "new-home-pc-developer-rig"
 title = "New Home PC / Developer Rig"

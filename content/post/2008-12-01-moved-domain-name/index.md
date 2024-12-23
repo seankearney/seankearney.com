@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2008-12-01
 slug = "moved-domain-name"
 title = "Moved Domain Name"

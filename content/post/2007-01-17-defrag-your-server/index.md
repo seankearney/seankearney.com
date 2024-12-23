@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-17
 slug = "defrag-your-server"
 title = "Defrag your server"

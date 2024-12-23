@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-09
 slug = "iphone"
 title = "iPhone"

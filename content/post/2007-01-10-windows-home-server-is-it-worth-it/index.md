@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-10
 slug = "windows-home-server-is-it-worth-it"
 title = "Windows Home Server. Is it worth it?"

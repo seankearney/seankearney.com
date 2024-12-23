@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2008-11-07
 slug = "sitecore-diagrams-part-2"
 title = "Sitecore Diagrams Part 2"

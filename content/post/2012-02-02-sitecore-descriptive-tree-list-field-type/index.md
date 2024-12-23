@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2012-02-02
 slug = "sitecore-descriptive-tree-list-field-type"
 title = "Sitecore Descriptive Tree List Field Type"

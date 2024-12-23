@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2008-08-14
 slug = "upgraded-digital-dj-pool"
 title = "Upgraded Digital DJ Pool"

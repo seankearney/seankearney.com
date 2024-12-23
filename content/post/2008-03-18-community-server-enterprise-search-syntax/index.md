@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2008-03-18
 slug = "community-server-enterprise-search-syntax"
 title = "Community Server Enterprise Search Syntax"

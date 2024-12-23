@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2010-08-13
 slug = "using-luke-to-view-lucene-indexes-in-sitecore-6"
 title = "Using Luke to view Lucene indexes in Sitecore 6"

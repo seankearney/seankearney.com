@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2011-07-07
 slug = "sitecore-security-report-and-reset"
 title = "Sitecore Security Report and Reset"

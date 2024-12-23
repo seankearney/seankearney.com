@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2011-01-11
 slug = "sitecore-item-and-version-design-flaw"
 title = "Sitecore item and version design flaw"

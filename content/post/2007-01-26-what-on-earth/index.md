@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-26
 slug = "what-on-earth"
 title = "What on Earth?"

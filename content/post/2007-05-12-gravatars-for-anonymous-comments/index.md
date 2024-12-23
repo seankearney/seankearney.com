@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-05-12
 slug = "gravatars-for-anonymous-comments"
 title = "Gravatars for Anonymous Comments"

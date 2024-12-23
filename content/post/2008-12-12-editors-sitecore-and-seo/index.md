@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2008-12-12
 slug = "editors-sitecore-and-seo"
 title = "Editors, Sitecore, and SEO"

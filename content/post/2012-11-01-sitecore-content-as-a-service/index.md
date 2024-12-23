@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2012-11-01
 slug = "sitecore-content-as-a-service"
 title = "Sitecore Content as a Service"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2014-08-04
 slug = "sitecore-needs-a-nuget-feed-for-their-assemblies"
 title = "Sitecore needs a NuGet feed for their assemblies"

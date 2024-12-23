@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2006-12-19
 slug = "google-maps-with-waypoints"
 title = "Google Maps with Waypoints"

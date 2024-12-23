@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-02
 slug = "how-to-handle-multiple-domain-names-for-your-site"
 title = "How to handle multiple domain names for your site."

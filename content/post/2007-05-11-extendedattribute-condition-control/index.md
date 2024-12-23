@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-05-11
 slug = "extendedattribute-condition-control"
 title = "ExtendedAttribute Condition Control"

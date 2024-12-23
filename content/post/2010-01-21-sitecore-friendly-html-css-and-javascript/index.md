@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2010-01-21
 slug = "sitecore-friendly-html-css-and-javascript"
 title = "Sitecore friendly html, css and javascript"

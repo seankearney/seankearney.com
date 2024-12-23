@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-10
 slug = "top-posters-role-management-community-server-job"
 title = "Top Posters Role Management Community Server Job"

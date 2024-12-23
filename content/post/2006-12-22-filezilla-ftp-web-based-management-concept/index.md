@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2006-12-22
 slug = "filezilla-ftp-web-based-management-concept"
 title = "FileZilla FTP Web Based Management: Concept"

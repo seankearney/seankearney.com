@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2012-07-12
 slug = "field-containsstandardvalue-in-sitecore-is-buggy"
 title = "Field.ContainsStandardValue in Sitecore is Buggy"

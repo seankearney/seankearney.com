@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-02-13
 slug = "community-server-and-robotstxt"
 title = "Community Server and robots.txt"

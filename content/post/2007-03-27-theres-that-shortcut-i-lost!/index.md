@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-03-27
 slug = "theres-that-shortcut-i-lost!"
 title = "There's that shortcut I lost!"

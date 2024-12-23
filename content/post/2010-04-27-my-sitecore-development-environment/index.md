@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2010-04-27
 slug = "my-sitecore-development-environment"
 title = "My Sitecore Development Environment"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-30
 slug = "embed-an-mp3-player-in-community-server-posts"
 title = "Embed an MP3 Player in Community Server Posts"

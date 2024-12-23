@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2016-04-01
 slug = "is-your-sitecore-module-development-and-build-process-ideal"
 title = "Is your Sitecore module development and build process ideal?"

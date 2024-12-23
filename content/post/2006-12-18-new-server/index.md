@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2006-12-18
 slug = "new-server"
 title = "New Server"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2011-09-29
 slug = "sitecore-rules-engine-and-regex"
 title = "Sitecore Rules Engine and RegEx"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2013-03-08
 slug = "the-twitter-sitecore-scrum"
 title = "The Twitter Sitecore Scrum"

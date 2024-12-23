@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-23
 slug = "identicons-for-community-server"
 title = "Identicons for Community Server"

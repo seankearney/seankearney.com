@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2010-08-05
 slug = "sitecore-media-url"
 title = "Sitecore Media URL"

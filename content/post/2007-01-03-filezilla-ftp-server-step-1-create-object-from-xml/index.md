@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-03
 slug = "filezilla-ftp-server-step-1-create-object-from-xml"
 title = "FileZilla FTP Server Step 1: Create Object From XML"

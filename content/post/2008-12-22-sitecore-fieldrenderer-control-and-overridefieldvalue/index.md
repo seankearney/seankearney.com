@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2008-12-22
 slug = "sitecore-fieldrenderer-control-and-overridefieldvalue"
 title = "Sitecore FieldRenderer Control and OverrideFieldValue"

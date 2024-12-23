@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-03-29
 slug = "aspnet-confirmation-controls"
 title = "ASP.NET Confirmation Controls"

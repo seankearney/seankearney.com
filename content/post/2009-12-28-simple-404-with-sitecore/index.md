@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2009-12-28
 slug = "simple-404-with-sitecore"
 title = "Simple 404 with Sitecore"

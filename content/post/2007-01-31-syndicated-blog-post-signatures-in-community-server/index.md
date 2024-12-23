@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-31
 slug = "syndicated-blog-post-signatures-in-community-server"
 title = "Syndicated Blog Post Signatures in Community Server"

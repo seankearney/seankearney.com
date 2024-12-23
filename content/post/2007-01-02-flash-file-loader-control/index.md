@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-02
 slug = "flash-file-loader-control"
 title = "Flash File (.swf) Loader Control"

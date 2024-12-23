@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2011-05-16
 slug = "sitecore-virtual-users-group"
 title = "Sitecore Virtual Users Group"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-10
 slug = "dvr-rant"
 title = "DVR Rant"

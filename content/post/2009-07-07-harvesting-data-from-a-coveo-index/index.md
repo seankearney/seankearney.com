@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2009-07-07
 slug = "harvesting-data-from-a-coveo-index"
 title = "Harvesting data from a Coveo index"

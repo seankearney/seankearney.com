@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-05-11
 slug = "save-authors-email-for-anonymous-blog-comments"
 title = "Save Author's Email for Anonymous Blog Comments"

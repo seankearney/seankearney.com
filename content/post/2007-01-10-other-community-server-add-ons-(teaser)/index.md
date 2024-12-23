@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-10
 slug = "other-community-server-add-ons-(teaser)"
 title = "Other Community Server Add-Ons (Teaser)"

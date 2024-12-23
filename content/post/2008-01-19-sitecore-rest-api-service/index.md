@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2008-01-19
 slug = "sitecore-rest-api-service"
 title = "Sitecore REST API Service"

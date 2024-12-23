@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2016-04-02
 slug = "working-around-the-missing-sitecore-nuget-feed"
 title = "Working around the missing Sitecore NuGet feed"

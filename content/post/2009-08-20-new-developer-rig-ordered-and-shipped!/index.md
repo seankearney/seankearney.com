@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2009-08-20
 slug = "new-developer-rig-ordered-and-shipped!"
 title = "New Developer Rig Ordered and Shipped!"

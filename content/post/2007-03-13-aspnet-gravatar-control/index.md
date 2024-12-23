@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-03-13
 slug = "aspnet-gravatar-control"
 title = "ASP.NET Gravatar Control"

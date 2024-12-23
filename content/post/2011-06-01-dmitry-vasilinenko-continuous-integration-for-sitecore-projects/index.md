@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2011-06-01
 slug = "dmitry-vasilinenko-continuous-integration-for-sitecore-projects"
 title = "Re: Continuous Integration for Sitecore Projects"

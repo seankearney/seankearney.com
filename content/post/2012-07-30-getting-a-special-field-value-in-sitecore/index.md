@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2012-07-30
 slug = "getting-a-special-field-value-in-sitecore"
 title = "Getting a special field value in Sitecore"

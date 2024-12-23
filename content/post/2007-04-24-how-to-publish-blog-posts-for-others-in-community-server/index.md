@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-04-24
 slug = "how-to-publish-blog-posts-for-others-in-community-server"
 title = "How to publish blog posts for others in Community Server"

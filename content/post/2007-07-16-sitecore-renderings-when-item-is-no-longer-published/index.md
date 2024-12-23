@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-07-16
 slug = "sitecore-renderings-when-item-is-no-longer-published"
 title = "Sitecore Renderings when item is no longer published"

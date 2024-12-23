@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-01-20
 slug = "blocking-new-users-by-email-address-in-community-server"
 title = "Blocking new users by email address in Community Server"

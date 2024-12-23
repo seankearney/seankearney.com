@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2012-05-03
 slug = "team-development-for-sitecore-and-configuration-management"
 title = "Team Development for Sitecore and Configuration Management"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-03-06
 slug = "a-simple-web-site-monitor"
 title = "A Simple Web Site Monitor"

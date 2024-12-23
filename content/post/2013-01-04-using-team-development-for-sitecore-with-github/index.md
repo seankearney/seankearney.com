@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2013-01-04
 slug = "using-team-development-for-sitecore-with-github"
 title = "Using Team Development for Sitecore (TDS) with GitHub"

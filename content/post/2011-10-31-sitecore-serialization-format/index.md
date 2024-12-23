@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2011-10-31
 slug = "sitecore-serialization-format"
 title = "Sitecore Serialization Format"

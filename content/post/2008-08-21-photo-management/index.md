@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2008-08-21
 slug = "photo-management"
 title = "Photo Management"

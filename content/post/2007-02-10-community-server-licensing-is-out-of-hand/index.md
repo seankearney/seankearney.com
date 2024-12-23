@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2007-02-10
 slug = "community-server-licensing-is-out-of-hand"
 title = "Community Server licensing is out of hand."

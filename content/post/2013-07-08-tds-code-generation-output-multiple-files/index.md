@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2013-07-08
 slug = "tds-code-generation-output-multiple-files"
 title = "TDS Code Generation Output Multiple Files"

@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2012-07-10
 slug = "sitecore-content-fallback-and-the-field-fallback-module"
 title = "Sitecore - Content Fallback and the Field Fallback Module"

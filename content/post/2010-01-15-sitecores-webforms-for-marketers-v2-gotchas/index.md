@@ -1,5 +1,4 @@
 +++
-template = "post.html"
 date = 2010-01-15
 slug = "sitecores-webforms-for-marketers-v2-gotchas"
 title = "Sitecore's Webforms for Marketers (v2) Gotchas"
