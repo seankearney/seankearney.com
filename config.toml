@@ -1,15 +1,31 @@
 # The URL the site will be built for
 base_url = "https://seankearney.com"
 
+theme = "codinfox-zola"
+
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = true
 
+# When set to "true", a feed is automatically generated.
+generate_feeds = true
+
+# The filenames to use for the feeds. Used as the template filenames, too.
+# Defaults to ["atom.xml"], which has a built-in template that renders an Atom 1.0 feed.
+# There is also a built-in template "rss.xml" that renders an RSS 2.0 feed.
+feed_filenames = ["rss.xml"]
+
 taxonomies = [
   {name = "tags"}
 ]
+
+# When set to "false", Sitemap.xml is not generated
+generate_sitemap = true
+
+# When set to "false", robots.txt is not generated
+generate_robots_txt = true
 
 [markdown]
 # Whether to do syntax highlighting
@@ -17,4 +33,10 @@ taxonomies = [
 highlight_code = true
 
 [extra]
-# Put all your custom variables here
+
+###
+# codinfox-zola theme variables
+google_analytics_token = "UA-74650-7"
+
+# show or not the reading time based on https://help.medium.com/hc/en-us/articles/214991667-Read-time
+read_time = true
