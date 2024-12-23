@@ -1,0 +1,14 @@
+id: 634215714330000000
+date: 2010-10-01T23:10:33.0000000Z
+name: Admin
+avatar: http://www.gravatar.com/avatar/e9ac5d1ba61b7b128136ec1c2db82f2c.jpg?d=robohash
+message: >-
+  @John,
+
+  I would say that if I did what you did then I would probably do something like you have outlined; essentially a way to test out various things quickly.
+
+
+  However, my issue is that the majority of people reading your blog aren't doing what you do. I would think the majority are working on their own &quot;in-house&quot; site, or, as in my case, many sites for many clients. Therefore, being that the majority probably aren't doing what you do, then they probably shouldn't work the way you do either.
+
+
+  As for the dynamic compilation... it sounds like using the 'web site model' with Sitecore. Then maybe using web deploy projects you can compile that for production release. Interesting idea.

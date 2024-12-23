@@ -1,0 +1,5 @@
+id: 633143777110000000
+date: 2007-05-10T07:08:31.0000000Z
+name: Sean Kearney
+avatar: https://robohash.org/cd7897511d257d1932178812f5aca46a.jpg
+message: JRedekop, did you download and read the documentation in the zip file? All of this was accounted for (sort of)! The flash vars can be set, but they are set site wide in the communityserver.config file. You can set the width/height on a per post basis though.

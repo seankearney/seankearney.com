@@ -1,0 +1,16 @@
+id: 633095883780000000
+date: 2007-03-15T20:46:18.0000000Z
+name: Sean Kearney
+avatar: https://robohash.org/cd7897511d257d1932178812f5aca46a.jpg
+message: >+
+  Hi Dave,
+
+  The Gravatar control isn't for Community Server. In order to make it work with CS I would need to modify the "Leave a Comment" form to store an email address and I don't see the point with CS 2007 hanging overhead.
+
+
+  Now, with CS 2007 and Ben's nice Utility Controls we can hook this up without any core changes!
+
+
+  This was just a silly 15 minute exercise to take my mind off my existing projects.
+
+

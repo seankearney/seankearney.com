@@ -1,0 +1,8 @@
+id: 634218344050000000
+date: 2010-10-05T00:13:25.0000000Z
+name: Ivan
+avatar: http://www.gravatar.com/avatar/ef25aabf9027c35b2e4b73cdb27c9b61.jpg?d=robohash
+message: >-
+  I think Alex is right. 
+
+  I am also sure it would be much easier and understandable to make some step for deploying/build script. That step can remove all the *.cs files from under webroot of preparing build.

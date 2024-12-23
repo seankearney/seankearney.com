@@ -1,0 +1,5 @@
+id: 634781669640000000
+date: 2012-07-18T00:09:24.0000000Z
+name: John West
+avatar: http://www.gravatar.com/avatar/aaa73f5f0902061a7be6642aabfbd2a3.jpg?d=robohash
+message: "This (excellent) post makes me realize that none of these invoke the renderField pipeline. It seems like the `Sitecore.Data.Fields.Field` class should have a Render() method that does this. Here&#39;s one attempt:\n\nnamespace Sitecore.Sharedsource.Data.Fields\n{\n  public static class Field\n  {\n    public static string Render(\n      this Sitecore.Data.Fields.Field field)\n    {\n      return Sitecore.Web.UI.WebControls.FieldRenderer.Render(\n        field.Item,\n        field.ID.ToString());\n    }\n  }\n}\n\nYou have to include this line in any .cs file that uses this extension:\n\nusing Sitecore.Sharedsource.Data.Fields;\n\nThen you can use it like this:\n\n// throws ex if field does not exist\nsomeItem.Fields[&quot;fieldName&quot;].Render() \n\nor:\n\nsomeField.Render()\n\nIt could be smarter, such as only calling the pipeline for field types that actually need it. "
