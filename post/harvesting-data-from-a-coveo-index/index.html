@@ -1,0 +1,295 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    Harvesting data from a Coveo index &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">Harvesting data from a Coveo index</h1>
+          <span class="post-date">2009-07-07</span>
+           |
+            
+            <a href="https://seankearney.com/tags/search/" class="post-tag">Search</a>
+            
+            <a href="https://seankearney.com/tags/coveo/" class="post-tag">Coveo</a>
+            
+          
+          <article>
+            <p>I've been working peripherally with <a href="http://www.coveo.com">Coveo</a> for the past couple years now. It hasn't been until recently that I've actually needed to start diving into the “API” to try and harvest the data. This, however, proved to be more difficult than one would expect from a Search product!</p>
+<span id="continue-reading"></span>
+<p>You see, Coveo wrote a lot of fancy controls (complete with AJAXy functions) that work intimately with their index. They have an “interface editor” that is supposed to help you customize the way these controls function and look. In a perfect world you will tailor your interface using this editor, drop a single user control on your page and you are up and running. However, there are times when these stock controls just don't cut it; you will either want to change the look, or function, to drastically to be handled with the interface editor. I found myself in such a position.</p>
+<p>Coveo lists a few APIs in its online help section (<a href="http://www.coveo.com/en/support/online-help#-7b0HYBxJliUmL23Ke39K9UrX4HShCIBgEyTYkEAQ7MGIzeaS7B1pRyMpqyqBymVWZV1mFkDM7Z28995777333nvvvfe6O51OJ%2Fff%2Fz9cZmQBbPbOStrJniGAqsgfP358Hz8ifvzHd3%2FXL5dlscy%2FnZer3%2FXHf3zv9%2F1dd%2Fc%2F3d17eO%2Fh%2Fu%2F7u%2F6%2Bvyv9vfP7%2Fq7be%2Fv07%2B7vSw12f9%2Ff9%2Ff9Xdtqih9oLg810l9Olxdl0cz3T3ZOzEev86yeztOzZZvX59k0T49fnpnv7P8NaPcB9fi7TttyZ%2F93q343%2FNzlf3d%2Bt7rhtvi%2B%2Fz9653f9fwA%3D">Search Interface API</a>, Converter API, Connector API, and Security API), but none of them tell you how to get access to the raw data!</p>
+<p>Before Coveo I was using <a href="http://lucene.apache.org/">Lucene</a> for various projects and it had a decent API that you can use to get access to your search results. You were then responsible for rendering these results. This is what I would have expected in terms of an API from Coveo. The Coveo Search Interface API is nothing more than a collection of the aforementioned ASP.NET controls that you can try to use in your Interface. I wasn't able to find any samples about how to get my data with some API calls, there was however, some MSDN style <a href="http://www.coveo.com/en/support/online-help#-7b0HYBxJliUmL23Ke39K9UrX4HShCIBgEyTYkEAQ7MGIzeaS7B1pRyMpqyqBymVWZV1mFkDM7Z28995777333nvvvfe6O51OJ%2Fff%2Fz9cZmQBbPbOStrJniGAqsgfP358Hz8ifvzHd3%2FXL5dlscy%2FnZer3%2FXHf3zv9%2F1dd%2Fc%2F3d17eO%2Fh%2Fu%2F7u%2F6%2Bv%2BuD3%2Fd33fl9f9ftvX36d%2Ff3pQa7v%2B%2Fv%2B%2Fv%2Brm01xQ80l4ca6S%2Bny4uyaOb7Jzsn5qPXeVZP5%2BnZss3r82yap8cvz8x39v8GtPuAevxdp225s%2F%2B7Vb8bfu7yvzu%2FW91wW3zf%2F9%2FBw72dA7y%2FLdB%2B19%2F1d%2F1%2FAA%3D%3D">class documentation</a>.</p>
+<p>After some playing around I was able to perform a search using the following code. You need to specify the Collection ID you want to search on as well as the Query to perform. The results will then be populated into the resultArray object. There are many parameters you can set on the <a href="http://www.coveo.com/en/support/online-help#-7b0HYBxJliUmL23Ke39K9UrX4HShCIBgEyTYkEAQ7MGIzeaS7B1pRyMpqyqBymVWZV1mFkDM7Z28995777333nvvvfe6O51OJ%2Fff%2Fz9cZmQBbPbOStrJniGAqsgfP358Hz8ifvzHd3%2FXL5dlscy%2FnZer3%2FXHf3zv9%2F1dd%2Fc%2F3d17eO%2Fh%2Fu%2F7u%2F6%2Bv%2BuD3%2Fd33fl9f9ftvX36d%2Ff3pQa7v%2B%2Fv%2B%2Fv%2Brm01xQ80l4ca6S%2Bny4uyaOb7Jzsn5qPXeVZP5%2BnZss3r82yap8cvz8x39v8GtPuAevxdp225s%2F%2B7Vb8bfu7yvzu%2FW91wW3zf%2F9%2FBw72dA7y%2FLdB%2B19%2F1d%2F1%2FAA%3D%3D">SearchBuilder</a> object, which you can read about in the doc. This code will be used in an upcoming post about how to write an autocomplete text box with jQuery and Coveo.</p>
+<pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">using </span><span>Coveo.CES.Web.Search;  
+</span><span style="color:#b48ead;">using </span><span>Coveo.CES.Web.Search.Controls;  
+</span><span style="color:#b48ead;">using </span><span>Coveo.CES.Web.Search.Providers;  
+</span><span>
+</span><span style="color:#65737e;">// ....  
+</span><span>
+</span><span>ICESSearchProvider </span><span style="color:#bf616a;">provider </span><span>= </span><span style="color:#bf616a;">SearchUtilities</span><span>.</span><span style="color:#bf616a;">CreateDefaultSearchProvider</span><span>();  
+</span><span>SearchBuilder </span><span style="color:#bf616a;">builder </span><span>= new SearchBuilder();  
+</span><span style="color:#bf616a;">builder</span><span>.</span><span style="color:#bf616a;">AddCollection</span><span>(</span><span style="color:#d08770;">1234</span><span>); </span><span style="color:#65737e;">// add your collection id here  
+</span><span style="color:#bf616a;">builder</span><span>.</span><span style="color:#bf616a;">Provider </span><span>= </span><span style="color:#bf616a;">provider</span><span>;  
+</span><span style="color:#bf616a;">builder</span><span>.</span><span style="color:#bf616a;">ExpandQuery </span><span>= </span><span style="color:#d08770;">true</span><span>;  
+</span><span style="color:#bf616a;">builder</span><span>.</span><span style="color:#bf616a;">RetrieveFirstSentences </span><span>= </span><span style="color:#d08770;">false</span><span>;  
+</span><span style="color:#bf616a;">builder</span><span>.</span><span style="color:#bf616a;">ExcerptSize </span><span>= </span><span style="color:#d08770;">0</span><span>;  
+</span><span style="color:#bf616a;">builder</span><span>.</span><span style="color:#bf616a;">FilterDuplicates </span><span>= </span><span style="color:#d08770;">true</span><span>;  
+</span><span>builder.AddBasicEx </span><span style="color:#bf616a;">pres sion</span><span>(&quot;</span><span style="color:#bf616a;">Search for Me</span><span>&quot;</span><span style="background-color:#bf616a;color:#2b303b;">)</span><span>;  
+</span><span>
+</span><span style="color:#b48ead;">if </span><span>(</span><span style="color:#bf616a;">builder</span><span>.</span><span style="color:#bf616a;">ExecuteQuery</span><span>)  
+</span><span>{  
+</span><span>    QueryWrapper </span><span style="color:#bf616a;">newQueryWrapper </span><span>= </span><span style="color:#bf616a;">QueryWrapperFactory</span><span>.</span><span style="color:#bf616a;">GetNewQueryWrapper</span><span>(</span><span style="color:#bf616a;">builder</span><span>);  
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">totalResults </span><span>= </span><span style="color:#bf616a;">newQueryWrapper</span><span>.</span><span style="color:#bf616a;">TotalCount</span><span>;  
+</span><span>    ICESResult[] </span><span style="color:#bf616a;">resultArray </span><span>= </span><span style="color:#bf616a;">newQueryWrapper</span><span>.</span><span style="color:#bf616a;">GetResults</span><span>(</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">100</span><span>);  
+</span><span>}
+</span></code></pre>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;coveo-with-sitecore-media&#x2F;">Coveo with Sitecore Media</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;new-home-pc-developer-rig&#x2F;">New Home PC &#x2F; Developer Rig</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

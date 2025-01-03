@@ -1,0 +1,440 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    ASP.NET Gravatar Control &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">ASP.NET Gravatar Control</h1>
+          <span class="post-date">2007-03-13</span>
+           |
+            
+            <a href="https://seankearney.com/tags/asp-net/" class="post-tag">ASP.NET</a>
+            
+            <a href="https://seankearney.com/tags/gravatar/" class="post-tag">Gravatar</a>
+            
+          
+          <article>
+            <p><a href="http://site.gravatar.com/">Gravatar 2.0</a> has been out for a few weeks now and I didn't see any ASP.NET implementation <a href="http://site.gravatar.com/site/implement">listed</a> on their site so I figured I would wip one up.</p>
+<span id="continue-reading"></span>
+<p>It is pretty simple to implement a Gravatar. All you need to do is set the <em>src</em> attribute of an <em>img</em> tag to a location on Gravatar's domain. The <em>src</em> attribute has a few parameters, but the only "tricky" one is an MD5 hash of the users email address.</p>
+<p>Here is the code:</p>
+<pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">public class </span><span style="color:#ebcb8b;">Gravatar </span><span style="color:#eff1f5;">: System.Web.UI.WebControls.</span><span style="color:#a3be8c;">Image
+</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">Rating property
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public enum </span><span style="color:#eff1f5;">GravatarRating { </span><span style="color:#d08770;">G</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">PG</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">R</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">X </span><span style="color:#eff1f5;">}
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#eff1f5;">GravatarRating </span><span style="color:#bf616a;">_Rating </span><span>= </span><span style="color:#bf616a;">GravatarRating</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">G</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public </span><span style="color:#eff1f5;">GravatarRating </span><span style="color:#bf616a;">Rating
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">_Rating</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// get
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">set </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_Rating </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// set
+</span><span style="color:#eff1f5;">    }</span><span style="color:#65737e;">// property
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#endregion
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">Size property
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private int </span><span style="color:#bf616a;">_Size </span><span>= </span><span style="color:#d08770;">80</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// 
+</span><span style="color:#65737e;">    /// An optional &quot;size&quot; parameter may follow that specifies the desired width and height of the gravatar. Valid values are from 1 to 80 inclusive. Any size other than 80 will cause the original gravatar image to be downsampled using bicubic resampling before output.
+</span><span style="color:#65737e;">    /// 
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public int </span><span style="color:#bf616a;">Size
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_Size </span><span>&lt;= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">80</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_Size </span><span>&gt; </span><span style="color:#d08770;">80</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">80</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">_Size</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">set
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">_Size </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Width </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Height </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        }</span><span style="color:#65737e;">// set
+</span><span style="color:#eff1f5;">    }</span><span style="color:#65737e;">// property
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#endregion
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">Email property
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private string </span><span style="color:#bf616a;">_Email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public string </span><span style="color:#bf616a;">Email
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">_Email</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// get
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">set </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_Email </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// set
+</span><span style="color:#eff1f5;">    }</span><span style="color:#65737e;">// property
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#endregion
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">DefaultImageUrl property
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private string </span><span style="color:#bf616a;">_DefaultImageUrl</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public string </span><span style="color:#bf616a;">DefaultImageUrl
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">_DefaultImageUrl</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// get
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">set </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_DefaultImageUrl </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// set
+</span><span style="color:#eff1f5;">    }</span><span style="color:#65737e;">// property
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#endregion
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">Hide some members
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">new private string </span><span style="color:#bf616a;">ImageUrl </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Empty</span><span style="color:#eff1f5;">; } }
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">/// Gravatar only supports a size property
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">new private int </span><span style="color:#bf616a;">Width </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">Size</span><span style="color:#eff1f5;">; } }
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">new private int </span><span style="color:#bf616a;">Height </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">Size</span><span style="color:#eff1f5;">; } }
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#endregion
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">protected override void </span><span style="color:#8fa1b3;">Render</span><span style="color:#eff1f5;">(System.Web.UI.HtmlTextWriter </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        System.Text.StringBuilder </span><span style="color:#bf616a;">image </span><span>= new </span><span style="color:#eff1f5;">System.Text.StringBuilder();
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">image</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Append</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">http://www.gravatar.com/avatar.php?</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">image</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Append</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">gravatar_id=</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">image</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Append</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">MD5HashMe</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">Email</span><span style="color:#eff1f5;">));
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">image</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Append</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">&amp;rating=</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">image</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Append</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">Rating</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToString</span><span style="color:#eff1f5;">());
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">image</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Append</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">&amp;size=</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">image</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Append</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">Size</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToString</span><span style="color:#eff1f5;">());
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">DefaultImageUrl</span><span style="color:#eff1f5;">))
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">image</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Append</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">&amp;default=</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">image</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Append</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">System</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Web</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">HttpUtility</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">UrlEncode</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">DefaultImageUrl</span><span style="color:#eff1f5;">));
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ImageUrl </span><span>= </span><span style="color:#bf616a;">image</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToString</span><span style="color:#eff1f5;">();
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Render</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private string </span><span style="color:#8fa1b3;">MD5HashMe</span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">email</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        System.Text.Encoder </span><span style="color:#bf616a;">enc </span><span>= </span><span style="color:#bf616a;">System</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Text</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Encoding</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Unicode</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">GetEncoder</span><span style="color:#eff1f5;">();
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[] </span><span style="color:#bf616a;">unicodeText </span><span>= new </span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[</span><span style="color:#bf616a;">email</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Length </span><span>* </span><span style="color:#d08770;">2</span><span style="color:#eff1f5;">];
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">enc</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">GetBytes</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">email</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToCharArray</span><span style="color:#eff1f5;">(), </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">email</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Length</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">unicodeText</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        System.Security.Cryptography.MD5 </span><span style="color:#bf616a;">md5 </span><span>= new </span><span style="color:#eff1f5;">System.Security.Cryptography.MD5CryptoServiceProvider();
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">byte</span><span style="color:#eff1f5;">[] </span><span style="color:#bf616a;">result </span><span>= </span><span style="color:#bf616a;">md5</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ComputeHash</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">unicodeText</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        System.Text.StringBuilder </span><span style="color:#bf616a;">sb </span><span>= new </span><span style="color:#eff1f5;">System.Text.StringBuilder();
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">for </span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">i </span><span>= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">; </span><span style="color:#bf616a;">i </span><span>&lt; </span><span style="color:#bf616a;">result</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Length</span><span style="color:#eff1f5;">; </span><span style="color:#bf616a;">i</span><span>++</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">sb</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Append</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">result</span><span style="color:#eff1f5;">[</span><span style="color:#bf616a;">i</span><span style="color:#eff1f5;">].</span><span style="color:#bf616a;">ToString</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">X2</span><span>&quot;</span><span style="color:#eff1f5;">));
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">sb</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToString</span><span style="color:#eff1f5;">();
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>To use this control all you need to do is add the following to your <em>.aspx</em> page:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>&lt;%@ Register TagPrefix=&quot;CC&quot; Assembly=&quot;CarKnee.Controls&quot; Namespace=&quot;CarKnee.Controls&quot; %&gt;
+</span></code></pre>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;a-simple-web-site-monitor&#x2F;">A Simple Web Site Monitor</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;theres-that-shortcut-i-lost&#x2F;">There&#x27;s that shortcut I lost!</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+          
+
+          <div id="633095570860000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="https:&#x2F;&#x2F;robohash.org&#x2F;1199e304ade646d6d5496d80eb77fa40.jpg" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Dave Burke</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#633095570860000000">
+                    2007-03-15T12:04:46.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                I don't get it, Carknee.  Looks like you did a great job on the .NET implementation though.  If you feel like blogging about it after you've used it a bit with an example of it in action, that would help thick guys like me understand its usefulness.  Regards!
+
+            </p>
+        </div>
+          
+          
+             
+          
+          
+          
+
+          <div id="633095883780000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="https:&#x2F;&#x2F;robohash.org&#x2F;cd7897511d257d1932178812f5aca46a.jpg" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Sean Kearney</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#633095883780000000">
+                    2007-03-15T20:46:18.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Hi Dave,
+The Gravatar control isn't for Community Server. In order to make it work with CS I would need to modify the "Leave a Comment" form to store an email address and I don't see the point with CS 2007 hanging overhead.
+
+Now, with CS 2007 and Ben's nice Utility Controls we can hook this up without any core changes!
+
+This was just a silly 15 minute exercise to take my mind off my existing projects.
+
+
+
+            </p>
+        </div>
+          
+          
+             
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

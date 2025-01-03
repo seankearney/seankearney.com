@@ -1,0 +1,402 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    A Simple Web Site Monitor &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">A Simple Web Site Monitor</h1>
+          <span class="post-date">2007-03-06</span>
+           |
+            
+            <a href="https://seankearney.com/tags/web-server/" class="post-tag">Web Server</a>
+            
+          
+          <article>
+            <p>One of my web servers had been having all sorts of problems over the last few months. It turned out to be the RAID controller, but that is another post. Because of the problems we were having I wanted a simple way to get a notification of when the site we were hosting went down. I didn't want anything fancy, just a simple email when the sites stopped responding. Here is what I found...</p>
+<span id="continue-reading"></span>
+<p>First, I downloaded <a href="http://msdn.microsoft.com/coding4fun/windows/utility/article.aspx?articleid=912382">SystemMonitor from MSDN's Coding4Fun.</a> This is an extensible application that can be run in your system tray and notifies you of events. I then wrote up a quick "Monitor" to send a request to the sites. The monitor makes an HttpWebRequest to a site looking for a specific file. Any errors returned (404/500/etc...) will fire off a notification from the SystemMonitor. If a status code of 200 is returned, the monitor will check for "site running" in the content of the page. If "site running" is not found then a notification will be sent.</p>
+<p>The advantage with this method is that you can specify the URI of the page you want to test. This page can be .txt, .htm, .asp, .aspx, .whatever. So, if your web server is ok, bu[tags:Web Server, Programming]t your database server has a habit of going down then you can point the SystemMonitor to test for a  page that will test your DB connection. As long as the response status code 200 and the page returned "site running" in the content of the page it will not fire off a notification.</p>
+<p>To install the Site Monitor you need to download the SystemMonitor from Coding4Fun. Once downloaded, add my SiteMonitor (and any needed references) to the project and recompile. Once recompiled you just need to add the settings to the App.config file. The config section, as shown below, is pretty self explanatory. The one setting that may be a little abstract is the localIP variable. The machine I installed this on has multiple IP addresses assigned to the NIC. One has access to the Internet and the other doesn't. By setting the localIP variable you can control what IP the monitor will bind to when trying to make a request.</p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#c0c5ce;" class="language-xml "><code class="language-xml" data-lang="xml"><span>&lt;</span><span style="color:#bf616a;">monitor </span><span style="color:#d08770;">runFrequency</span><span>=&quot;</span><span style="color:#a3be8c;">00:10</span><span>&quot;  </span><span style="color:#d08770;">type</span><span>=&quot;</span><span style="color:#a3be8c;">SystemMonitor.Monitors.SiteMonitor,SystemMonitor</span><span>&quot;&gt;
+</span><span>    &lt;</span><span style="color:#bf616a;">settings</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">setting </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">url</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">http://www.example.com/Utility/uptime.aspx</span><span>&quot; /&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">setting </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">localIP</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;&quot; /&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">setting </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">proxy.enable</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">false</span><span>&quot; /&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">setting </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">proxy.ip</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">192.168.0.1</span><span>&quot; /&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">setting </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">proxy.port</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">8080</span><span>&quot; /&gt;
+</span><span>    &lt;/</span><span style="color:#bf616a;">settings</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#bf616a;">notifiers</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">notifier </span><span style="color:#d08770;">type</span><span>=&quot;</span><span style="color:#a3be8c;">SystemMonitor.Notifiers.MessageBoxNotifier,SystemMonitor</span><span>&quot; /&gt;
+</span><span>    &lt;/</span><span style="color:#bf616a;">notifiers</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#bf616a;">monitor</span><span>&gt;
+</span></code></pre>
+<p>The Code for the Site Monitor is show below, and available for download <a href="http://www.carknee.com/files/folders/code/entry352.aspx">here</a>.</p>
+<pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">SiteMonitor </span><span style="color:#eff1f5;">: </span><span style="color:#a3be8c;">MonitorBase
+</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">_localIP</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">bool </span><span style="color:#bf616a;">_enableProxy </span><span>= </span><span style="color:#d08770;">false</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">_proxyIP</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">_proxyPort </span><span>= -</span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">Binding the WebRequest to a Local IP with a Delegate
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public delegate </span><span style="color:#eff1f5;">IPEndPoint </span><span style="color:#bf616a;">BindIPEndPoint</span><span style="color:#eff1f5;">(ServicePoint </span><span style="color:#bf616a;">servicePoint</span><span style="color:#eff1f5;">, IPEndPoint </span><span style="color:#bf616a;">remoteEndPoint</span><span style="color:#eff1f5;">, </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">retryCount</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#eff1f5;">IPEndPoint </span><span style="color:#8fa1b3;">BindIPEndPointCallback</span><span style="color:#eff1f5;">(ServicePoint </span><span style="color:#bf616a;">servicePoint</span><span style="color:#eff1f5;">, IPEndPoint </span><span style="color:#bf616a;">remoteEndPoint</span><span style="color:#eff1f5;">, </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">retryCount</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">retryCount </span><span>&lt; </span><span style="color:#d08770;">3</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span>new </span><span style="color:#eff1f5;">IPEndPoint(</span><span style="color:#bf616a;">IPAddress</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Parse</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_localIP</span><span style="color:#eff1f5;">), </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">else
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span>new </span><span style="color:#eff1f5;">IPEndPoint(</span><span style="color:#bf616a;">IPAddress</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Any</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#endregion
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public override void </span><span style="color:#8fa1b3;">Execute</span><span style="color:#eff1f5;">()
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        HttpWebRequest </span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        HttpWebResponse </span><span style="color:#bf616a;">response</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">errTitle </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Empty</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Empty</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">try
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">request </span><span>= </span><span style="color:#eff1f5;">(HttpWebRequest)</span><span style="color:#bf616a;">WebRequest</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Create</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Timeout </span><span>= </span><span style="color:#d08770;">1000</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            
+</span><span style="color:#eff1f5;">            </span><span style="color:#65737e;">// bind to a specific local ip
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_localIP</span><span style="color:#eff1f5;">))
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ServicePoint</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">BindIPEndPointDelegate </span><span>= new </span><span style="color:#eff1f5;">System.Net.BindIPEndPoint(</span><span style="color:#bf616a;">BindIPEndPointCallback</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_enableProxy </span><span>&amp;&amp; !</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_proxyIP</span><span style="color:#eff1f5;">) </span><span>&amp;&amp; </span><span style="color:#bf616a;">_proxyPort </span><span>&gt;= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Proxy </span><span>= new </span><span style="color:#eff1f5;">System.Net.WebProxy(</span><span style="color:#bf616a;">_proxyIP</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_proxyPort</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">response </span><span>= </span><span style="color:#eff1f5;">(HttpWebResponse)</span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">GetResponse</span><span style="color:#eff1f5;">();
+</span><span style="color:#eff1f5;">            HttpStatusCode </span><span style="color:#bf616a;">status </span><span>= </span><span style="color:#bf616a;">response</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">StatusCode</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">status </span><span>!= </span><span style="color:#bf616a;">HttpStatusCode</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">OK</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">            {
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">errTitle </span><span>= &quot;</span><span style="color:#a3be8c;">Failed Contacting Web Server</span><span>&quot;</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;"> Returned Http Status Code: </span><span style="color:#d08770;">{1}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{2}</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">, (</span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;">)</span><span style="color:#bf616a;">status</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">status</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToString</span><span style="color:#eff1f5;">());
+</span><span style="color:#eff1f5;">            }
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">else
+</span><span style="color:#eff1f5;">            {
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">                StreamReader </span><span style="color:#bf616a;">reader </span><span>= new </span><span style="color:#eff1f5;">StreamReader(</span><span style="color:#bf616a;">response</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">GetResponseStream</span><span style="color:#eff1f5;">());
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">content </span><span>= </span><span style="color:#bf616a;">reader</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ReadToEnd</span><span style="color:#eff1f5;">();
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">                </span><span style="color:#65737e;">// LOOK FOR [SITE RUNNING]
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">content</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToLower</span><span style="color:#eff1f5;">().</span><span style="color:#bf616a;">IndexOf</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">site running</span><span>&quot;</span><span style="color:#eff1f5;">) </span><span>&lt; </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">                {
+</span><span style="color:#eff1f5;">                    </span><span style="color:#bf616a;">errTitle </span><span>= &quot;</span><span style="color:#a3be8c;">Web Server Returned Invalid Response</span><span>&quot;</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">                    </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;"> Returned Invalid Response</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">                }
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">reader</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Close</span><span style="color:#eff1f5;">(); </span><span style="color:#bf616a;">reader</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Dispose</span><span style="color:#eff1f5;">(); </span><span style="color:#bf616a;">reader </span><span>= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">catch </span><span style="color:#eff1f5;">(WebException </span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">) </span><span style="color:#65737e;">// this will catch 404&#39;s
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">errTitle </span><span>= &quot;</span><span style="color:#a3be8c;">Failed Contacting Web Server</span><span>&quot;</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Response </span><span>!= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">            {
+</span><span style="color:#eff1f5;">                HttpWebResponse </span><span style="color:#bf616a;">r </span><span>= </span><span style="color:#eff1f5;">(HttpWebResponse)</span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Response</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;"> Returned </span><span style="color:#d08770;">{1}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{2}</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">, (</span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;">)</span><span style="color:#bf616a;">r</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">StatusCode</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">r</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">StatusDescription</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            }
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">else
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Message</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">catch </span><span style="color:#eff1f5;">(Exception </span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">errTitle </span><span>= &quot;</span><span style="color:#a3be8c;">Failed Monitoring Site</span><span>&quot;</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#b48ead;">string</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">&#39;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;">&#39; failed with an exception: </span><span style="color:#d08770;">{1}</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Message</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">finally
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">response </span><span>= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">request </span><span>= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// fire off the Notifier
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">errTitle</span><span style="color:#eff1f5;">))
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">Notify</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">errTitle</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">errMessage</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">protected override void </span><span style="color:#8fa1b3;">Initialize</span><span style="color:#eff1f5;">(Dictionary&lt;</span><span style="color:#b48ead;">string</span><span style="color:#eff1f5;">, </span><span style="color:#b48ead;">string</span><span style="color:#eff1f5;">&gt; </span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">_url </span><span>= </span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">[</span><span>&quot;</span><span style="color:#a3be8c;">url</span><span>&quot;</span><span style="color:#eff1f5;">];
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">_localIP </span><span>= </span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">[</span><span>&quot;</span><span style="color:#a3be8c;">localIP</span><span>&quot;</span><span style="color:#eff1f5;">];
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">_proxyIP </span><span>= </span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">[</span><span>&quot;</span><span style="color:#a3be8c;">proxy.ip</span><span>&quot;</span><span style="color:#eff1f5;">];
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">try</span><span style="color:#eff1f5;">{</span><span style="color:#bf616a;">_enableProxy </span><span>= </span><span style="color:#b48ead;">bool</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Parse</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">[</span><span>&quot;</span><span style="color:#a3be8c;">proxy.enable</span><span>&quot;</span><span style="color:#eff1f5;">]);}
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">catch </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_enableProxy </span><span>= </span><span style="color:#d08770;">false</span><span style="color:#eff1f5;">; }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">try </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_proxyPort </span><span>= </span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Parse</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">[</span><span>&quot;</span><span style="color:#a3be8c;">proxy.port</span><span>&quot;</span><span style="color:#eff1f5;">]); }
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">catch </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_proxyPort </span><span>= -</span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">; }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public override string </span><span style="color:#bf616a;">Description
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return string</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">Testing &#39;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;">&#39;.</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">); }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public override </span><span style="color:#eff1f5;">MonitorType </span><span style="color:#bf616a;">MonitorType
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">MonitorType</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Scheduled</span><span style="color:#eff1f5;">; }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public override </span><span style="color:#eff1f5;">Icon </span><span style="color:#bf616a;">Icon
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">Properties</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Resources</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">PingIcon</span><span style="color:#eff1f5;">; }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;im-in&#x2F;">I&#x27;m In.</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;aspnet-gravatar-control&#x2F;">ASP.NET Gravatar Control</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

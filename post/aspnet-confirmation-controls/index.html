@@ -1,0 +1,372 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    ASP.NET Confirmation Controls &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">ASP.NET Confirmation Controls</h1>
+          <span class="post-date">2007-03-29</span>
+           |
+            
+            <a href="https://seankearney.com/tags/asp-net/" class="post-tag">ASP.NET</a>
+            
+            <a href="https://seankearney.com/tags/front-end/" class="post-tag">Front End</a>
+            
+          
+          <article>
+            <p>I have been (slowly) working on the <a href="/tags/filezilla">Web Based FileZilla Administration</a> project. One of the issues that I could predict happening would be the creation of a user/group/setting and then the end user would leave the page without saving their changes. There are many ways to handle this type of issue, but I wanted a fairly simple implementation.</p>
+<span id="continue-reading"></span>
+<p>What I did was inherit a few of the base controls (TextBox, CheckBox, Button) and added an *onchange *attribute to them. The onchange attribute works with a client script that gets injected into the page.</p>
+<p>Here is the code for the TextBox (CheckBox is almost identical):</p>
+<pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">public class </span><span style="color:#ebcb8b;">TextBox </span><span style="color:#eff1f5;">: System.Web.UI.WebControls.</span><span style="color:#a3be8c;">TextBox
+</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">   </span><span style="color:#b48ead;">protected override void </span><span style="color:#8fa1b3;">OnLoad</span><span style="color:#eff1f5;">(EventArgs </span><span style="color:#bf616a;">e</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">   {
+</span><span style="color:#eff1f5;">      </span><span style="color:#65737e;">// load the javascript
+</span><span style="color:#eff1f5;">      </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">Page</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ClientScript</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsClientScriptBlockRegistered</span><span style="color:#eff1f5;">(</span><span>typeof</span><span style="color:#eff1f5;">(ConfirmChangeScript), </span><span>&quot;</span><span style="color:#a3be8c;">PageScript</span><span>&quot;</span><span style="color:#eff1f5;">))
+</span><span style="color:#eff1f5;">         </span><span style="color:#bf616a;">Page</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ClientScript</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">RegisterClientScriptBlock</span><span style="color:#eff1f5;">(</span><span>typeof</span><span style="color:#eff1f5;">(ConfirmChangeScript), </span><span>&quot;</span><span style="color:#a3be8c;">PageScript</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">ConfirmChangeScript</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">PageScript</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">OnLoad</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">e</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">   }
+</span><span style="color:#eff1f5;">   </span><span style="color:#b48ead;">protected override void </span><span style="color:#8fa1b3;">Render</span><span style="color:#eff1f5;">(HtmlTextWriter </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">   {
+</span><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Attributes</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Add</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">onchange</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">ConfirmChangeScript</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">OnChange</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">      </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Render</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">   }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>Here is the ConfirmChangeScript:</p>
+<pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">public class </span><span style="color:#ebcb8b;">ConfirmChangeScript </span><span style="color:#eff1f5;">: System.Web.UI.</span><span style="color:#a3be8c;">Control
+</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public  static string </span><span style="color:#bf616a;">PageScript
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            System.Text.StringBuilder </span><span style="color:#bf616a;">script </span><span>= new </span><span style="color:#eff1f5;">System.Text.StringBuilder();
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">      var isDirty = false; </span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">      var showConfirm = true; </span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">      window.onbeforeunload = confirmExit;</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">      function confirmExit()</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;      </span><span style="color:#96b5b4;">{{</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">        if (!showConfirm) return; </span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">        if (isDirty) </span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">            return </span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">You have attempted to leave this page.  If you have made any changes to the </span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">fields without clicking the Save button, your changes will be lost.  Are you sure you want to exit </span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;</span><span style="color:#a3be8c;">this page?</span><span style="color:#96b5b4;">&quot;&quot;</span><span style="color:#a3be8c;">;</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">AppendFormat</span><span style="color:#eff1f5;">(</span><span>@&quot;      </span><span style="color:#96b5b4;">}}</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">script</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToString</span><span style="color:#eff1f5;">();
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public static string </span><span style="color:#bf616a;">OnChange
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span>&quot;</span><span style="color:#a3be8c;">isDirty=true</span><span>&quot;</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>And finally, here is the Button. There is an additional attribute for the button to suppress the confirmation. This would be used in the event that you want to show the confirmation upon clicking the button.</p>
+<pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">public class </span><span style="color:#ebcb8b;">Button </span><span style="color:#eff1f5;">: System.Web.UI.WebControls.</span><span style="color:#a3be8c;">Button
+</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">EnableShowConfirm property
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private bool </span><span style="color:#bf616a;">_SupressConfirm </span><span>= </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public bool </span><span style="color:#bf616a;">SupressConfirm
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">_SupressConfirm</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// get
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">set </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_SupressConfirm </span><span>= </span><span style="color:#bf616a;">value</span><span style="color:#eff1f5;">; }</span><span style="color:#65737e;">// set
+</span><span style="color:#eff1f5;">    }</span><span style="color:#65737e;">// property
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#endregion
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">protected override void </span><span style="color:#8fa1b3;">OnLoad</span><span style="color:#eff1f5;">(EventArgs </span><span style="color:#bf616a;">e</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">Page</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ClientScript</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsClientScriptBlockRegistered</span><span style="color:#eff1f5;">(</span><span>typeof</span><span style="color:#eff1f5;">(ConfirmChangeScript), </span><span>&quot;</span><span style="color:#a3be8c;">PageScript</span><span>&quot;</span><span style="color:#eff1f5;">))
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">Page</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ClientScript</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">RegisterClientScriptBlock</span><span style="color:#eff1f5;">(</span><span>typeof</span><span style="color:#eff1f5;">(ConfirmChangeScript), </span><span>&quot;</span><span style="color:#a3be8c;">PageScript</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">ConfirmChangeScript</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">PageScript</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">OnLoad</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">e</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">protected override void </span><span style="color:#8fa1b3;">Render</span><span style="color:#eff1f5;">(HtmlTextWriter </span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">SupressConfirm</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Attributes</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Add</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">onclick</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span>&quot;</span><span style="color:#a3be8c;">showConfirm=false;</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Render</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">writer</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>Just add the reference in your .aspx page and drop in a TextBox and Button control. If you edit the contents of the textbox and then try to leave the page it will prompt you to confirm.</p>
+<p>You can download the source <a href="/blogs/files/ConfirmChangeControls.zip">here</a>.</p>
+<p>These controls, and code, are very simple and have at least one known bug. For a more advanced approach try looking at <a href="http://www.4guysfromrolla.com/webtech/100604-1.shtml">Scott Michell's method</a>.</p>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;home-offices&#x2F;">Home Office&#x27;s</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;how-to-publish-blog-posts-for-others-in-community-server&#x2F;">How to publish blog posts for others in Community Server</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+          
+
+          <div id="633108260350000000" class="alt vcard comment">
+            <p class="gravatar">
+                <img class="photo" src="https:&#x2F;&#x2F;robohash.org&#x2F;d79c711b9f7cb233ac526860873933f9.jpg" alt="" width="50" height="50">
+            </p>
+            <div style="float: left;">
+                <cite>
+                    <span class="fn">Ryan Farley</span>
+                </cite>
+                says:
+                <br>
+                <small class="commentmetadata"><a href="#633108260350000000">
+                    2007-03-30T04:33:55.0000000Z
+                </a>                  
+                </small>
+            </div>
+            <div style="clear: both;">
+            </div>
+            <p>
+                Pretty cool. Thanks.
+            </p>
+        </div>
+          
+          
+             
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

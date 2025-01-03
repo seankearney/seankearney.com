@@ -1,0 +1,367 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    Sitecore Serialization Format &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">Sitecore Serialization Format</h1>
+          <span class="post-date">2011-10-31</span>
+           |
+            
+            <a href="https://seankearney.com/tags/sitecore/" class="post-tag">Sitecore</a>
+            
+            <a href="https://seankearney.com/tags/serialization/" class="post-tag">Serialization</a>
+            
+          
+          <article>
+            <p>We, at <a href="http://www.hhogdev.com">Hedgehog Development</a>, have been intimately working with Sitecore serialization since it was released with Sitecore 6.0 in 2008. Specifically our interest has been in helping developers bring their Sitecore items into Visual Studio and essentially allow you to treat your Sitecore items as code. We do this with our <a href="http://teamdevelopmentforsitecore.com">Team Development for Sitecore</a> product.</p>
+<p>I was having a discussion the other day and was asked to elaborate on the serialization format that Sitecore uses. I figured I would have some notes, or official documentation, on the format, but I couldn't find any! I figured this is a good a place as any to describe the serialization format that Sitecore uses.</p>
+<span id="continue-reading"></span>
+<p>Serialized files are UTF-8 encoded and the first line in a serialized item must be <code>----item----</code></p>
+<p>Immediately following the item declaration are the properties of the item that are the same regardless of version or language. The properties are:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Version: always 1
+</span><span>Id: The Sitecore ID of the item
+</span><span>Database: The database this item came from
+</span><span>Path: The path where the item should be
+</span><span>Parent: The ID of its parent
+</span><span>Name: The name of the item
+</span><span>Master: The branch template used for creation
+</span><span>Template: The ID of the template that this item is based on
+</span><span>TemplateKey: The name of the template
+</span></code></pre>
+<p>Notes:</p>
+<ul>
+<li>Version is always 1
+<ul>
+<li>The path property isn't used for reverting.</li>
+</ul>
+</li>
+<li>The Parent ID property is used for placing the item in the tree.</li>
+<li>The Name property is used for naming the item
+<ul>
+<li>The TemplateKey isn't used for reverting.</li>
+<li>The Template ID property specifies the template to be used.</li>
+</ul>
+</li>
+</ul>
+<p>Immediately following the item properties, but before the first <code>----version----</code> we have any 'shared' fields that may exist. Shared field are special in that the value of a shared field is shared amonst all languages and versions of an item.</p>
+<p>The field serialization format is rather simple. All text values are written to the serialization file exactly as they are stored in Sitecore. In the case of binary fields the data is base-64 encoded. The field definition with a line with <code>----field----</code> and then we have the following properties:</p>
+<ul>
+<li><code>Field</code>: The ID of the field</li>
+<li><code>Name</code>: The name of the field</li>
+<li><code>Key</code>: The lowercase name of the field</li>
+<li><code>Content Length</code>: The number of unicode characters in the field value</li>
+</ul>
+<p>Immediately following the content length property we have an empty line (<code>\n\n</code>). The subsequent line(s) contains the content of the specified length. Afrter the field value we must have another empty line (<code>\n\n</code>). There then may be any number of empty lines before the next section.</p>
+<p>Notes:</p>
+<ul>
+<li>The name or key properties aren't used with update/revert.</li>
+<li>The ID property is used to identify the field for setting the value.</li>
+</ul>
+<p>Once we have defined the shared fields we come into the definition for a specific language and version. This is signified by a <code>----version----</code> line. The version definition simply defines the following properties:</p>
+<ul>
+<li><code>Language</code>: The language of the version</li>
+<li><code>Version</code>: The number version</li>
+<li><code>Revision</code>: The ID of the version</li>
+</ul>
+<p>Proceeding the version definition is any field definitions specific to that version of the item. Field definitions are repeated until a new version definition, or the end of the file, appears.</p>
+<p>Sample:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>----item----
+</span><span>version: 1
+</span><span>id: {BC5CA70D-1567-40D4-B710-8B711D8A399F}
+</span><span>database: master
+</span><span>path: /sitecore/content/Home/Item Name
+</span><span>parent: {110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}
+</span><span>name: Item Name
+</span><span>master: {00000000-0000-0000-0000-000000000000}
+</span><span>template: {A5828170-FFCD-4634-A3A0-525604920993}
+</span><span>templatekey: Sample Template
+</span><span>
+</span><span>----field----
+</span><span>field: {35BED290-4531-4518-AE89-86E05455E951}
+</span><span>name: Shared
+</span><span>key: shared
+</span><span>content-length: 21
+</span><span>
+</span><span>value of shared field
+</span><span>----field----
+</span><span>field: {44B60993-4B91-4276-A2A7-02DD3AC31DED}
+</span><span>name: UnversionedShared
+</span><span>key: unversionedshared
+</span><span>content-length: 33
+</span><span>
+</span><span>value of unversioned shared field
+</span><span>----version----
+</span><span>language: da
+</span><span>version: 1
+</span><span>revision: 19ffb2ef-b370-4e04-94b6-fcca3876a15e
+</span><span>
+</span><span>----field----
+</span><span>field: {3E92B1BE-11EA-451A-99BC-34D3B6EB7E41}
+</span><span>name: Field 1
+</span><span>key: field 1
+</span><span>content-length: 38
+</span><span>
+</span><span>{872C8B70-8F6E-485D-A054-B6174E62494C}
+</span><span>----version----
+</span><span>language: en
+</span><span>version: 1
+</span><span>revision: 2be76b57-6f0f-471f-900a-266c1a58188a
+</span><span>
+</span><span>----field----
+</span><span>field: {3E92B1BE-11EA-451A-99BC-34D3B6EB7E41}
+</span><span>name: Field 1
+</span><span>key: field 1
+</span><span>content-length: 38
+</span><span>
+</span><span>{BC5CA70D-1567-40D4-B710-8B711D8A399F}
+</span></code></pre>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-rules-engine-and-regex&#x2F;">Sitecore Rules Engine and RegEx</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-descriptive-tree-list-field-type&#x2F;">Sitecore Descriptive Tree List Field Type</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

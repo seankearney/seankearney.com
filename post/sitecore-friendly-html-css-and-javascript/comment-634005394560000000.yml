@@ -1,0 +1,9 @@
+id: 634005394560000000
+date: 2010-01-31T12:57:36.0000000Z
+name: Nick Tzanev
+avatar: https://robohash.org/781533de5d740574f5f1e536961bc7e1.jpg
+message: >
+  Sean, thanks a bunch. I also like the idea bout css-related images being placed in a folder inside and relative to the css files themselves. In our case, we use the same branding across several web apps where each may have its own images (or not) – it would make sense to copy a “css” folder from one project to the next instead of fishing for gifs or jpgs. 
+
+
+  On a separate note, one important thing to point out about Sitecore, CSS and their Telerik HTML editor is that in certain cases, what-you-see-is -not-what-you-get or, WYSI(n)WYG  in fact, the rad control that's built into Sitecore can be given its own stylesheet so that your custom design features can be forced to display accordingly and show up in the little drop-down as a choice to your users… For example, if you choose to style all of your bulleted lists in any way, the editor will still display them as black dots and your content contributors will begin calling you to tweak their designs. 

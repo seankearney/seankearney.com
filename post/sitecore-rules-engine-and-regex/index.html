@@ -1,0 +1,312 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    Sitecore Rules Engine and RegEx &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">Sitecore Rules Engine and RegEx</h1>
+          <span class="post-date">2011-09-29</span>
+           |
+            
+            <a href="https://seankearney.com/tags/sitecore/" class="post-tag">Sitecore</a>
+            
+            <a href="https://seankearney.com/tags/bug/" class="post-tag">Bug</a>
+            
+            <a href="https://seankearney.com/tags/rules-engine/" class="post-tag">Rules Engine</a>
+            
+          
+          <article>
+            <p>I was having some fun with the Sitecore (6.5.0.110818) rules engine over the last couple days. Specifically, I was trying to show content editor warnings as well as control icons for templates based on the name of the item. However the Item name comparison, when using a regular expression, was never evaluating to true.</p>
+<span id="continue-reading"></span>
+<p>Upon inspection of</p>
+<p><code>Sitecore.Rules.Conditions.StringOperatorCondition&lt;T&gt;</code></p>
+<p>I noticed that the RegEx call has the parameters flip-flopped! This means that any condition that uses the RegEx String Operator to compare will fail (assuming your regular express isn't exacly the string you are matching). The list of problem conditions is:</p>
+<ul>
+<li>Item Id</li>
+<li>Item Name</li>
+<li>Item Path</li>
+<li>Language</li>
+<li>Parent Name</li>
+<li>Domain Name</li>
+<li>User Name</li>
+<li>User Profile</li>
+<li>Database Name</li>
+<li>Device Name</li>
+<li>Website Name</li>
+<li>When Field</li>
+</ul>
+<p>Being I was only working with the Item Name condition I re-wrote it as such:</p>
+<pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">public class </span><span style="color:#ebcb8b;">MyItemNameCondition</span><span style="color:#eff1f5;">&lt;T&gt; : Sitecore.Rules.Conditions.ItemConditions.</span><span style="color:#a3be8c;">ItemNameCondition</span><span style="color:#eff1f5;">&lt;T&gt; </span><span style="color:#b48ead;">where </span><span style="color:#eff1f5;">T : </span><span style="color:#a3be8c;">RuleContext
+</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">protected override bool </span><span style="color:#8fa1b3;">Execute</span><span style="color:#eff1f5;">(T </span><span style="color:#bf616a;">ruleContext</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">Assert</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ArgumentNotNull</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">ruleContext</span><span style="color:#eff1f5;">, </span><span>&quot;</span><span style="color:#a3be8c;">ruleContext</span><span>&quot;</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        Item </span><span style="color:#bf616a;">item </span><span>= </span><span style="color:#bf616a;">ruleContext</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Item</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">item </span><span>== </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span style="color:#d08770;">false</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">            
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// Sitecore flipped the params in Sitecore.Rules.Conditions.StringOperatorCondition&lt;T&gt;
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// when using regex compare here we switch them back
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">GetOperator</span><span style="color:#eff1f5;">() </span><span>== </span><span style="color:#bf616a;">StringConditionOperator</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">MatchesRegularExpression</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Compare</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Value </span><span>?? </span><span style="color:#b48ead;">string</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Empty</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">item</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Name</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">else
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">base</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Execute</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">ruleContext</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">    }       
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>This works for me, but if I need to use any of those other conditions I would hope to get a hotfix from Sitecore. I did log this bug (DefectId 352659) and hopefully it is addressed soon.</p>
+
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-security-report-and-reset&#x2F;">Sitecore Security Report and Reset</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-serialization-format&#x2F;">Sitecore Serialization Format</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

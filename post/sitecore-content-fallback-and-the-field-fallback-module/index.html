@@ -1,0 +1,292 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+
+    
+    
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+
+    
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+
+    
+    
+<title>
+    
+    Sitecore - Content Fallback and the Field Fallback Module &middot; 
+    
+</title>
+
+
+
+    
+  <!-- CSS -->
+  <link rel="stylesheet" href="https:&#x2F;&#x2F;seankearney.com/main.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700%7CPT+Sans:400">
+
+
+    
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="https:&#x2F;&#x2F;seankearney.com/apple-touch-icon-precomposed.png">
+  <link rel="shortcut icon" href="https:&#x2F;&#x2F;seankearney.com/favicon.ico">
+
+
+    
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-3 left sidebar" id="sidebar">
+          
+          <div>
+            
+  <div class="sidebar-item">
+    <div class="sidebar-personal-info">
+      <div class="sidebar-personal-info-section">
+        <img src="http://www.gravatar.com/avatar/180c1b0844c902abbfef963baa491b94?s=350" title="Sean Kearney" alt="Sean Kearney" />
+      </div>
+      <div class="sidebar-personal-info-section">
+        <p>Sean Kearney</p>
+      </div>
+      
+      
+      
+      <div class="sidebar-personal-info-section">
+        <p>
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney">
+          <i class="fa fa-stack-overflow" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney">
+          <i class="fa fa-twitter" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        
+        
+        <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&#x2F;">
+          <i class="fa fa-linkedin" aria-hidden="true"></i>
+        </a>
+        
+        |
+        
+        </p>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+            
+   
+  <nav class="sidebar-nav">
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;">
+          Home
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;tags&#x2F;">
+          Categories
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;archive&#x2F;">
+          Archive
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;about&#x2F;">
+          About
+        </a>
+      </span>
+
+    
+      
+      
+      
+        
+      
+
+      <span class="">
+        <a class="sidebar-nav-item " href="https:&#x2F;&#x2F;seankearney.com&#x2F;rss.xml">
+          Feed
+        </a>
+      </span>
+
+    
+
+  </nav>
+
+
+
+            
+	<script>
+	(function(){
+	document.addEventListener('DOMContentLoaded', function(){
+	    var children = document.getElementsByClassName('codinfox-changing-keywords')[0].children;
+	    var length = children.length;
+	    var idx = 0;
+	    setInterval(function(){
+		children[idx].className = "hidden";
+		idx = (idx + 1) % length;
+		children[idx].className = "visible";
+	    }, 2000);
+	});
+	})();
+	</script>
+
+          </div>
+          
+        </div>
+        <div class="col-9">
+          
+	      <div class="post">
+          <h1 class="post-title">Sitecore - Content Fallback and the Field Fallback Module</h1>
+          <span class="post-date">2012-07-10</span>
+           |
+            
+            <a href="https://seankearney.com/tags/sitecore/" class="post-tag">Sitecore</a>
+            
+            <a href="https://seankearney.com/tags/shared-source/" class="post-tag">Shared Source</a>
+            
+            <a href="https://seankearney.com/tags/field-fallback/" class="post-tag">Field Fallback</a>
+            
+          
+          <article>
+            <p>A common practice in all of my Sitecore sites is to have some sort of <em>content fallback</em>. What this means is that a field's value can come from somewhere other than the field itself, the source item (if it is a clone), or its standard values.</p>
+<p>Content fallback is an excellent way to increase editor productivity and reduce content redundancy! Here are the three most common scenarios I run into with every project.</p>
+<span id="continue-reading"></span>
+<p><strong>Ancestor Inheritance</strong></p>
+<p>One of the more common scenarios for ancestor inheritance is for things like the text that is to show up in the <code>&lt;title&gt;</code> tag of the HTML document. It is SEO best practice to have a unique title for every page. However, in some sites where there are thousands of pages, having an editor give each page a title may be unrealistic. The general practice we take with the sites we do is that if the "Title" field in null then we should use the value of the nearest set ancestor. This allows an editor to set the title at the 'home' node and guarantee that every page in the site will at least have something set for the <code>&lt;title&gt;</code> tag. This concept can be used for many different scenarios in almost any site!</p>
+<p><strong>Lateral Fallback</strong></p>
+<p>This is a fairly common technique where you may want a "MenuTitle" field to specify the text used in an <code>&lt;a&gt;</code> tag when a link to the item is being generated in a menu. However, in the event there is no "MenuTitle" then we should expect to see the value of the "Title" field.</p>
+<p><strong>Default Fallback</strong></p>
+<p>This type of fallback I typically use with Lateral Fallback. Furthering our Lateral Fallback example, lets suppose that we don't have a value for "MenuTitle" or the "Title" fields. In this case we simply want to have a value with the name of the item. In the event the item is renamed we should show the current name, not the name used at create time.</p>
+<p>There are typically two places where this content fallback logic would live. If the site is using some sort of 'content model' framework such as <a href="http://trac.sitecore.net/CustomItemGenerator">Custom Item Generator</a>, <a href="https://seankearney.com/post/sitecore-content-fallback-and-the-field-fallback-module/trac.sitecore.net/DomainObjects">CorePoint.DomainObjects</a> or <a href="http://glass.lu">Glass Mapper</a> then it would make sense to put the logic there. However, without such a framework the logic would be forced to live in the presentation layer. There are a few problems with these approaches.</p>
+<ol>
+<li>The fallback value isn't obvious to the editors. It doesn't show up in the content editor and they must know there is magic at hand at render time.</li>
+<li>Using the Page Editor can become (more) cumbersome.</li>
+<li>The fallback value is not readily available via standard API calls. The biggest issue is typically that the value isn't indexed for searching.</li>
+<li>Low level caching of the values doesn't happen. Caching is only available at the HTML level.</li>
+</ol>
+<p>When Alex Shyba released his <a href="http://sitecoreblog.alexshyba.com/2010/11/approaching-language-fallback-with.html">language fallback module</a> I immediately envisioned a similar paradigm used for my content fallback scenarios! In my (not so) free time I was able to come up with the newly released <a href="http://trac.sitecore.net/FieldFallback">Field Fallback Shared Source Module</a>! This approach had one huge benefit and that is the editorial team would be able to see the 'fallback value' right there in the content editor! Furthering this it also had the fallback value in a cache thereby eliminating the need to calculate the fallback value multiple times.</p>
+<p>The Field Fallback module will handle the three scenarios above and also provides for a fully pluggable architecture (pipeline based) to handle any other fallback scenarios you may need. This include language fallback! Part of the release includes a port of Alex Shyba's language fallback logic!</p>
+<p>You can grab it from the Shared Source repository here - <a href="https://github.com/HedgehogDevelopment/sitecore-field-fallback">https://github.com/HedgehogDevelopment/sitecore-field-fallback</a></p>
+<p>I am scheduled to present this topic and demonstrate the module in an upcoming <a href="http://sitecoreug.com/events/Field-Fallback">Sitecore Users Virtual Group</a>. Video - <a href="https://www.youtube.com/watch?v=P5q0xOrvCDM">https://www.youtube.com/watch?v=P5q0xOrvCDM</a></p>
+ <iframe
+    src="https://www.youtube.com/embed/P5q0xOrvCDM"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen>
+</iframe>
+          </article>
+        </div>
+
+        <div class="related">
+          <h2>Other Posts</h2>
+          <ul class="related-posts">
+            <li class="previous">
+            
+                <small>Older {</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;team-development-for-sitecore-and-configuration-management&#x2F;">Team Development for Sitecore and Configuration Management</a>
+                <small>}</small>
+            
+            </li>
+            <li class="next">
+            
+                <small>{</small>
+                <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;field-containsstandardvalue-in-sitecore-is-buggy&#x2F;">Field.ContainsStandardValue in Sitecore is Buggy</a>
+                 <small>} Newer</small>
+            
+            </li>
+          </ul>
+        </div>
+
+        <div class="comments">
+          <h2>Comments</h2>
+          
+          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>
