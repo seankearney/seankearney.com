@@ -1,8 +1,5 @@
 +++
-template = "archive.html"
-date = 2024-12-12
 title = "Archives"
-description = "Blog archive"
-
+template = "archive.html"
 sort_by = "date"
 +++

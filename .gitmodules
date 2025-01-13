@@ -1,4 +1,3 @@
-[submodule "themes/codinfox-zola"]
-	path = themes/codinfox-zola
-	url = https://github.com/seankearney/codinfox-zola.git
-	branch = seankearney.com
+[submodule "themes/zola-devin"]
+	path = themes/zola-devin
+	url = https://github.com/seankearney/zola-devin.git

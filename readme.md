@@ -5,7 +5,7 @@ My personal blog! Since 2006, I've been sharing my insights and experiences on s
 ## Technology Stack
 
 - **Static Site Generator**: [Zola](https://www.getzola.org/)
-- **Theme**: codinfox-zola [Modified](https://github.com/seankearney/codinfox-zola)
+- **Theme**: [zola-devin](https://github.com/seankearney/zola-devin)
 - **Hosting**: GitHub Pages
 - **Content Format:** Markdown with TOML front matter
 
@@ -30,11 +30,9 @@ zola serve
 
 ```
 content/
-  _index.md          # Home page
   about.md           # About page
   archive.md         # Archives page
   post/             # Blog posts
-    _index.md
     [year-month-day-slug]/
       index.md      # Post content
       images        # Post images
