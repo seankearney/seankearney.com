@@ -1,10 +1,14 @@
 # The URL the site will be built for
 base_url = "https://seankearney.com"
 
-theme = "codinfox-zola"
+# The site title and description; used in feeds by default
+title = "Sean Kearney"
+description = "A modern blog built with Zola"
+
+theme = "zola-devin"
 
 # Whether to automatically compile all Sass files in the sass directory
-compile_sass = true
+compile_sass = false
 
 # Whether to build a search index to be used later on by a JavaScript library
 build_search_index = true
@@ -33,10 +37,18 @@ generate_robots_txt = true
 highlight_code = true
 
 [extra]
+ 
+# Blog owner configuration
+blog_owner_name = "Sean Kearney"
+blog_owner_image = "./images/hero.jpg"
+blog_owner_description = "A seasoned technology leader, serial entrepreneur, enthusiastic coder, and sporadic blogger. Find me at"
 
-###
-# codinfox-zola theme variables
-google_analytics_token = "UA-74650-7"
+# Social media links
+social_links = [
+    { name = "GitHub", url = "https://github.com/seankearney" },
+    { name = "Twitter", url = "https://twitter.com/seankearney" },
+    { name = "LinkedIn", url = "https://www.linkedin.com/in/skearney" },
+    { name = "StackOverflow", url = "https://stackoverflow.com/users/255194/sean-kearney" }
+]
 
-# show or not the reading time based on https://help.medium.com/hc/en-us/articles/214991667-Read-time
-read_time = true
+google_analytics_gtag_id = "UA-74650-7"
