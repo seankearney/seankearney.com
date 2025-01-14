@@ -3,6 +3,9 @@ date = 2024-12-25
 title = "Devin.ai Builds a Zola Theme"
 description = "After previous failed attempts to get Devin.ai to do some real-world work I had it try some real junior stuff. The results are better."
 
+[extra]
+promo_image = "promo-devinai-builds-zola-theme.jpg"
+
 [taxonomies]
 tags = ["AI", "Zola"]
 +++

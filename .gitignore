@@ -8,3 +8,4 @@ $RECYCLE.BIN/
 
 # Zola
 public/ 
+static/processed_images/

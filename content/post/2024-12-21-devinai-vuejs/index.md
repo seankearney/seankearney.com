@@ -4,6 +4,9 @@ slug = "devinai-vuejs-migration"
 title = "Devin.AI -- Real World with Vue.js Migration"
 description = "My first interaction with Devin AI! Can it migrate a Vue.js 2 application to Vue.js 3?"
 
+[extra]
+promo_image = "promo-devinai-vuejs.jpg"
+
 [taxonomies]
 tags = ["AI"]
 +++

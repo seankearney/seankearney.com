@@ -3,6 +3,9 @@ date = 2025-01-07
 title = "Conflict Resolution in My DJ Cloud Using Timestamps"
 description = "Discover how My DJ Cloud ensures data consistency and integrity with Hybrid Logical Clocks (HLC). Learn about timestamp generation, conflict resolution, and handling concurrent updates across devices."
 
+[extra]
+promo_image = "promo-hybrid-logical-clocks-and-conflict-resolution.jpg"
+
 [taxonomies]
 tags = ["Sync"]
 +++
