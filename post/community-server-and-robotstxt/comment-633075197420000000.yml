@@ -1,0 +1,16 @@
+id: 633075197420000000
+date: 2007-02-19T22:09:02.0000000Z
+name: Sean Kearney
+avatar: https://robohash.org/cd7897511d257d1932178812f5aca46a.jpg
+message: >
+  Okie,
+
+  You should check out http://www.robotstxt.org/ to get an understanding of how the robots.txt file works. In short, it enables you to tell search engines what pages NOT to index. 
+
+
+  You may also want to look into Google's Webmaster Tools:
+
+  http://www.google.com/webmasters/sitemaps/
+
+
+  That will allow you to tell what pages Google SHOULD index. It also provides a way to give descriptions to Google.

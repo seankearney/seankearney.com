@@ -1,0 +1,14 @@
+id: 633063172310000000
+date: 2007-02-06T00:07:11.0000000Z
+name: Sean Kearney
+avatar: https://robohash.org/cd7897511d257d1932178812f5aca46a.jpg
+message: >-
+  Ryan,
+
+  The settings are on a "Per Blog" basis. If Blog A has a signature set, it will be displayed in the MainFeed. If Blog B doesn't have a signature set, then there will be no signature to display in the MainFeed.
+
+
+  If you want all of the blogs on your site to have a signature then you will have to modify the settings for each blog. You could also modify the AggregateRssHandler.cs file in the CS core to alter the text of every post that gets aggregated.
+
+
+  -Sean
