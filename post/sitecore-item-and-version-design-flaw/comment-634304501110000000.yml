@@ -1,0 +1,16 @@
+id: 634304501110000000
+date: 2011-01-12T17:28:31.0000000Z
+name: Brian Pedersen
+avatar: http://www.gravatar.com/avatar/25db0dbe9728e65c205cb902b4aa9741.jpg?d=robohash
+message: >+
+  I just tried it on my Sitecore 6.3.something. If I chose an item, change the language to one without any versions on and click sort/Up or sort/Down, the item magically is assigned a version to the selected language. 
+
+  The children or siblings aren't assigned a language version. That's a small comfort. 
+
+
+  I guess the problem arises because by changing the sort order, you update the &quot;SortOrder&quot; field, and Sitecore needs a version in order to update the field.
+
+
+  I haven't tried to change sort order on items in a Workflow, but I guess you will experience the same issue here, as you in fact does an update of a field when moving an item.
+
+

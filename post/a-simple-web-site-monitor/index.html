@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Simple Web Site Monitor | Sean Kearney</title>
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (!savedTheme) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+            }
+        })();
+    </script>
+    <meta name="search-index" content="https://seankearney.com/search_index.en.js">
+    <link rel="stylesheet" href="https://seankearney.com/tailwind.css">
+    <script src="https://seankearney.com/js/elasticlunr.min.js"></script>
+    <script src="https://seankearney.com/search.js" defer></script>
+    <script src="https://seankearney.com/theme.js" defer></script>
+    <script src="https://seankearney.com/mobile-menu.js" defer></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://seankearney.com/rss.xml">
+</head>
+<body>
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 z-50">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-6">
+                <a href="https://seankearney.com" class="text-xl font-bold text-[var(--color-text-primary)]">Sean Kearney</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="https://seankearney.com/about" class="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">About</a>
+                    <a href="https://seankearney.com/post" class="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">Blog</a>
+                    <a href="https://seankearney.com/tags" class="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">Categories</a>
+                    <a href="https://seankearney.com/archive" class="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)]">Archive</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <input id="search-input" type="search" class="w-48 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]" placeholder="Type to search..." aria-label="Search">
+                    <div id="search-preview" class="absolute right-0 mt-2 w-96 max-w-screen-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50 hidden">
+                    </div>
+                </div>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Toggle dark mode">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-[var(--color-text-primary)]" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <button class="mobile-menu-button md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Menu">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" class="text-[var(--color-text-primary)]" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div class="mobile-menu hidden md:hidden bg-white dark:bg-gray-800 w-full border-t dark:border-gray-700">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+                <a href="https://seankearney.com/about" class="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] py-2">About</a>
+                <a href="https://seankearney.com/post" class="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] py-2">Blog</a>
+                <a href="https://seankearney.com/tags" class="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] py-2">Categories</a>
+                <a href="https://seankearney.com/archive" class="text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] py-2">Archive</a>
+            </div>
+        </div>
+    </header>
+
+    <div id="search-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 transition-opacity duration-200 ease-in-out">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-3xl mx-auto mt-16 sm:mt-20 rounded-lg shadow-xl overflow-hidden transform transition-transform duration-200">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-[var(--color-text-primary)]">Search Results</h2>
+                <button id="close-search" class="text-2xl text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition-colors duration-150" aria-label="Close search">×</button>
+            </div>
+            <div id="search-results" class="max-h-[80vh] sm:max-h-[70vh] overflow-y-auto p-4 space-y-4">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 pt-20 pb-16 min-h-screen">
+        
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <article class="mb-16">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-[var(--text-primary)] mb-4">A Simple Web Site Monitor</h1>
+            <div class="text-gray-500 dark:text-gray-400">
+                <time datetime="2007-03-06">March 06, 2007</time>
+                
+                <span class="mx-2">•</span>
+                <span>
+                    
+                    <a href="https://seankearney.com/tags/web-server/" 
+                       class="text-blue-600 dark:text-blue-400 hover:underline">Web Server</a>
+                    
+                    
+                </span>
+                
+            </div>
+        </header>
+
+        <div class="prose dark:prose-invert max-w-none">
+            <p>One of my web servers had been having all sorts of problems over the last few months. It turned out to be the RAID controller, but that is another post. Because of the problems we were having I wanted a simple way to get a notification of when the site we were hosting went down. I didn't want anything fancy, just a simple email when the sites stopped responding. Here is what I found...</p>
+<span id="continue-reading"></span>
+<p>First, I downloaded <a href="http://msdn.microsoft.com/coding4fun/windows/utility/article.aspx?articleid=912382">SystemMonitor from MSDN's Coding4Fun.</a> This is an extensible application that can be run in your system tray and notifies you of events. I then wrote up a quick "Monitor" to send a request to the sites. The monitor makes an HttpWebRequest to a site looking for a specific file. Any errors returned (404/500/etc...) will fire off a notification from the SystemMonitor. If a status code of 200 is returned, the monitor will check for "site running" in the content of the page. If "site running" is not found then a notification will be sent.</p>
+<p>The advantage with this method is that you can specify the URI of the page you want to test. This page can be .txt, .htm, .asp, .aspx, .whatever. So, if your web server is ok, bu[tags:Web Server, Programming]t your database server has a habit of going down then you can point the SystemMonitor to test for a  page that will test your DB connection. As long as the response status code 200 and the page returned "site running" in the content of the page it will not fire off a notification.</p>
+<p>To install the Site Monitor you need to download the SystemMonitor from Coding4Fun. Once downloaded, add my SiteMonitor (and any needed references) to the project and recompile. Once recompiled you just need to add the settings to the App.config file. The config section, as shown below, is pretty self explanatory. The one setting that may be a little abstract is the localIP variable. The machine I installed this on has multiple IP addresses assigned to the NIC. One has access to the Internet and the other doesn't. By setting the localIP variable you can control what IP the monitor will bind to when trying to make a request.</p>
+<pre data-lang="xml" style="background-color:#2b303b;color:#c0c5ce;" class="language-xml "><code class="language-xml" data-lang="xml"><span>&lt;</span><span style="color:#bf616a;">monitor </span><span style="color:#d08770;">runFrequency</span><span>=&quot;</span><span style="color:#a3be8c;">00:10</span><span>&quot;  </span><span style="color:#d08770;">type</span><span>=&quot;</span><span style="color:#a3be8c;">SystemMonitor.Monitors.SiteMonitor,SystemMonitor</span><span>&quot;&gt;
+</span><span>    &lt;</span><span style="color:#bf616a;">settings</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">setting </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">url</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">http://www.example.com/Utility/uptime.aspx</span><span>&quot; /&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">setting </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">localIP</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;&quot; /&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">setting </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">proxy.enable</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">false</span><span>&quot; /&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">setting </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">proxy.ip</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">192.168.0.1</span><span>&quot; /&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">setting </span><span style="color:#d08770;">name</span><span>=&quot;</span><span style="color:#a3be8c;">proxy.port</span><span>&quot; </span><span style="color:#d08770;">value</span><span>=&quot;</span><span style="color:#a3be8c;">8080</span><span>&quot; /&gt;
+</span><span>    &lt;/</span><span style="color:#bf616a;">settings</span><span>&gt;
+</span><span>    &lt;</span><span style="color:#bf616a;">notifiers</span><span>&gt;
+</span><span>        &lt;</span><span style="color:#bf616a;">notifier </span><span style="color:#d08770;">type</span><span>=&quot;</span><span style="color:#a3be8c;">SystemMonitor.Notifiers.MessageBoxNotifier,SystemMonitor</span><span>&quot; /&gt;
+</span><span>    &lt;/</span><span style="color:#bf616a;">notifiers</span><span>&gt;
+</span><span>&lt;/</span><span style="color:#bf616a;">monitor</span><span>&gt;
+</span></code></pre>
+<p>The Code for the Site Monitor is show below, and available for download <a href="http://www.carknee.com/files/folders/code/entry352.aspx">here</a>.</p>
+<pre data-lang="c#" style="background-color:#2b303b;color:#c0c5ce;" class="language-c# "><code class="language-c#" data-lang="c#"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">SiteMonitor </span><span style="color:#eff1f5;">: </span><span style="color:#a3be8c;">MonitorBase
+</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">_localIP</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">bool </span><span style="color:#bf616a;">_enableProxy </span><span>= </span><span style="color:#d08770;">false</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">_proxyIP</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">_proxyPort </span><span>= -</span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#region </span><span style="color:#8fa1b3;">Binding the WebRequest to a Local IP with a Delegate
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public delegate </span><span style="color:#eff1f5;">IPEndPoint </span><span style="color:#bf616a;">BindIPEndPoint</span><span style="color:#eff1f5;">(ServicePoint </span><span style="color:#bf616a;">servicePoint</span><span style="color:#eff1f5;">, IPEndPoint </span><span style="color:#bf616a;">remoteEndPoint</span><span style="color:#eff1f5;">, </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">retryCount</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#eff1f5;">IPEndPoint </span><span style="color:#8fa1b3;">BindIPEndPointCallback</span><span style="color:#eff1f5;">(ServicePoint </span><span style="color:#bf616a;">servicePoint</span><span style="color:#eff1f5;">, IPEndPoint </span><span style="color:#bf616a;">remoteEndPoint</span><span style="color:#eff1f5;">, </span><span style="color:#b48ead;">int </span><span style="color:#bf616a;">retryCount</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">retryCount </span><span>&lt; </span><span style="color:#d08770;">3</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span>new </span><span style="color:#eff1f5;">IPEndPoint(</span><span style="color:#bf616a;">IPAddress</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Parse</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_localIP</span><span style="color:#eff1f5;">), </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">else
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">return </span><span>new </span><span style="color:#eff1f5;">IPEndPoint(</span><span style="color:#bf616a;">IPAddress</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Any</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">#endregion
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public override void </span><span style="color:#8fa1b3;">Execute</span><span style="color:#eff1f5;">()
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        HttpWebRequest </span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        HttpWebResponse </span><span style="color:#bf616a;">response</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">errTitle </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Empty</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Empty</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">try
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">request </span><span>= </span><span style="color:#eff1f5;">(HttpWebRequest)</span><span style="color:#bf616a;">WebRequest</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Create</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Timeout </span><span>= </span><span style="color:#d08770;">1000</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            
+</span><span style="color:#eff1f5;">            </span><span style="color:#65737e;">// bind to a specific local ip
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_localIP</span><span style="color:#eff1f5;">))
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ServicePoint</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">BindIPEndPointDelegate </span><span>= new </span><span style="color:#eff1f5;">System.Net.BindIPEndPoint(</span><span style="color:#bf616a;">BindIPEndPointCallback</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_enableProxy </span><span>&amp;&amp; !</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">_proxyIP</span><span style="color:#eff1f5;">) </span><span>&amp;&amp; </span><span style="color:#bf616a;">_proxyPort </span><span>&gt;= </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Proxy </span><span>= new </span><span style="color:#eff1f5;">System.Net.WebProxy(</span><span style="color:#bf616a;">_proxyIP</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_proxyPort</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">response </span><span>= </span><span style="color:#eff1f5;">(HttpWebResponse)</span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">GetResponse</span><span style="color:#eff1f5;">();
+</span><span style="color:#eff1f5;">            HttpStatusCode </span><span style="color:#bf616a;">status </span><span>= </span><span style="color:#bf616a;">response</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">StatusCode</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">status </span><span>!= </span><span style="color:#bf616a;">HttpStatusCode</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">OK</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">            {
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">errTitle </span><span>= &quot;</span><span style="color:#a3be8c;">Failed Contacting Web Server</span><span>&quot;</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;"> Returned Http Status Code: </span><span style="color:#d08770;">{1}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{2}</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">, (</span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;">)</span><span style="color:#bf616a;">status</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">status</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToString</span><span style="color:#eff1f5;">());
+</span><span style="color:#eff1f5;">            }
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">else
+</span><span style="color:#eff1f5;">            {
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">                StreamReader </span><span style="color:#bf616a;">reader </span><span>= new </span><span style="color:#eff1f5;">StreamReader(</span><span style="color:#bf616a;">response</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">GetResponseStream</span><span style="color:#eff1f5;">());
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">string </span><span style="color:#bf616a;">content </span><span>= </span><span style="color:#bf616a;">reader</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ReadToEnd</span><span style="color:#eff1f5;">();
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">                </span><span style="color:#65737e;">// LOOK FOR [SITE RUNNING]
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">content</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">ToLower</span><span style="color:#eff1f5;">().</span><span style="color:#bf616a;">IndexOf</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">site running</span><span>&quot;</span><span style="color:#eff1f5;">) </span><span>&lt; </span><span style="color:#d08770;">0</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">                {
+</span><span style="color:#eff1f5;">                    </span><span style="color:#bf616a;">errTitle </span><span>= &quot;</span><span style="color:#a3be8c;">Web Server Returned Invalid Response</span><span>&quot;</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">                    </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;"> Returned Invalid Response</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">                }
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">reader</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Close</span><span style="color:#eff1f5;">(); </span><span style="color:#bf616a;">reader</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Dispose</span><span style="color:#eff1f5;">(); </span><span style="color:#bf616a;">reader </span><span>= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">catch </span><span style="color:#eff1f5;">(WebException </span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">) </span><span style="color:#65737e;">// this will catch 404&#39;s
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">errTitle </span><span>= &quot;</span><span style="color:#a3be8c;">Failed Contacting Web Server</span><span>&quot;</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Response </span><span>!= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">            {
+</span><span style="color:#eff1f5;">                HttpWebResponse </span><span style="color:#bf616a;">r </span><span>= </span><span style="color:#eff1f5;">(HttpWebResponse)</span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Response</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;"> Returned </span><span style="color:#d08770;">{1}</span><span style="color:#a3be8c;">, </span><span style="color:#d08770;">{2}</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">, (</span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;">)</span><span style="color:#bf616a;">r</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">StatusCode</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">r</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">StatusDescription</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            }
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">else
+</span><span style="color:#eff1f5;">                </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Message</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">catch </span><span style="color:#eff1f5;">(Exception </span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">errTitle </span><span>= &quot;</span><span style="color:#a3be8c;">Failed Monitoring Site</span><span>&quot;</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">errMessage </span><span>= </span><span style="color:#b48ead;">string</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">&#39;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;">&#39; failed with an exception: </span><span style="color:#d08770;">{1}</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">ex</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Message</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">finally
+</span><span style="color:#eff1f5;">        {
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">response </span><span>= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">request </span><span>= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#65737e;">// fire off the Notifier
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>!</span><span style="color:#bf616a;">String</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">IsNullOrEmpty</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">errTitle</span><span style="color:#eff1f5;">))
+</span><span style="color:#eff1f5;">            </span><span style="color:#bf616a;">Notify</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">errTitle</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">errMessage</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">protected override void </span><span style="color:#8fa1b3;">Initialize</span><span style="color:#eff1f5;">(Dictionary&lt;</span><span style="color:#b48ead;">string</span><span style="color:#eff1f5;">, </span><span style="color:#b48ead;">string</span><span style="color:#eff1f5;">&gt; </span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">)
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">_url </span><span>= </span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">[</span><span>&quot;</span><span style="color:#a3be8c;">url</span><span>&quot;</span><span style="color:#eff1f5;">];
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">_localIP </span><span>= </span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">[</span><span>&quot;</span><span style="color:#a3be8c;">localIP</span><span>&quot;</span><span style="color:#eff1f5;">];
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">_proxyIP </span><span>= </span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">[</span><span>&quot;</span><span style="color:#a3be8c;">proxy.ip</span><span>&quot;</span><span style="color:#eff1f5;">];
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">try</span><span style="color:#eff1f5;">{</span><span style="color:#bf616a;">_enableProxy </span><span>= </span><span style="color:#b48ead;">bool</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Parse</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">[</span><span>&quot;</span><span style="color:#a3be8c;">proxy.enable</span><span>&quot;</span><span style="color:#eff1f5;">]);}
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">catch </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_enableProxy </span><span>= </span><span style="color:#d08770;">false</span><span style="color:#eff1f5;">; }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">try </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_proxyPort </span><span>= </span><span style="color:#b48ead;">int</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Parse</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">settings</span><span style="color:#eff1f5;">[</span><span>&quot;</span><span style="color:#a3be8c;">proxy.port</span><span>&quot;</span><span style="color:#eff1f5;">]); }
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">catch </span><span style="color:#eff1f5;">{ </span><span style="color:#bf616a;">_proxyPort </span><span>= -</span><span style="color:#d08770;">1</span><span style="color:#eff1f5;">; }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public override string </span><span style="color:#bf616a;">Description
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return string</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Format</span><span style="color:#eff1f5;">(</span><span>&quot;</span><span style="color:#a3be8c;">Testing &#39;</span><span style="color:#d08770;">{0}</span><span style="color:#a3be8c;">&#39;.</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">_url</span><span style="color:#eff1f5;">); }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public override </span><span style="color:#eff1f5;">MonitorType </span><span style="color:#bf616a;">MonitorType
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">MonitorType</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Scheduled</span><span style="color:#eff1f5;">; }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public override </span><span style="color:#eff1f5;">Icon </span><span style="color:#bf616a;">Icon
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">get </span><span style="color:#eff1f5;">{ </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">Properties</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">Resources</span><span style="color:#eff1f5;">.</span><span style="color:#bf616a;">PingIcon</span><span style="color:#eff1f5;">; }
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+
+        </div>
+    </article>
+
+    
+    <nav class="flex justify-between items-center py-8 border-t border-gray-200 dark:border-gray-700">
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;im-in&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            I&#x27;m In.
+        </a>
+        
+
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;aspnet-gravatar-control&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            ASP.NET Gravatar Control
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </a>
+        
+    </nav>
+    
+
+    
+    
+    
+    
+</div>
+
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Social Links -->
+            <div class="flex justify-center space-x-6 mb-6">
+                
+                <a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney" 
+                   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   title="GitHub">
+                    
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney" 
+                   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   title="Twitter">
+                    
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                    
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney" 
+                   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   title="LinkedIn">
+                    
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    
+                </a>
+                
+                <a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney" 
+                   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   title="StackOverflow">
+                    
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.07-10.478-2.187-.453 2.068zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.95zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.36 1.618zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0z"/></svg>
+                    
+                </a>
+                
+            </div>
+
+            <!-- Footer Links -->
+            <div class="text-center space-y-4">
+                <p class="text-gray-600 dark:text-gray-400">
+                    © 2025 Sean Kearney
+                </p>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Powered by <a href="https://www.getzola.org/" class="hover:text-gray-900 dark:hover:text-white transition-colors">Zola</a>
+                    &amp;
+                    <span><a href="https://github.com/seankearney/zola-devin" class="hover:text-gray-900 dark:hover:text-white transition-colors">Devin</a></span>
+                </p>
+                <a href="https://seankearney.com/rss.xml" 
+                   class="inline-block text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                   title="RSS Feed">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
