@@ -4,6 +4,8 @@ slug = "sitecore-content-as-a-service"
 title = "Sitecore Content as a Service"
 description = ""
 
+aliases = ["/post/Sitecore-Content-as-a-Service"]
+
 [taxonomies]
 tags = ["Sitecore"]
 +++
