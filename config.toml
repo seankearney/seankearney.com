@@ -50,3 +50,11 @@ social_links = [
 ]
 
 google_analytics_gtag_id = "UA-74650-7"
+
+# Navigation links shown in the header (desktop and mobile menus)
+nav_links = [
+    { name = "About", url = "/about" },
+    { name = "Blog", url = "/post" },
+    { name = "Categories", url = "/tags" },
+    { name = "Archive", url = "/archive" },
+]
