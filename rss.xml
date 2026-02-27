@@ -1,0 +1,1066 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+      <title>Sean Kearney</title>
+      <link>https://seankearney.com</link>
+      <description>A modern blog built with Zola</description>
+      <generator>Zola</generator>
+      <language>en</language>
+      <atom:link href="https://seankearney.com/rss.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Wed, 22 Jan 2025 00:00:00 +0000</lastBuildDate>
+      <item>
+          <title>Azure Blob Storage: Strategic Configurations for Cost Savings and Speed</title>
+          <pubDate>Wed, 22 Jan 2025 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/azure-blob-storage-strategic-configurations-cost-savings-speed/</link>
+          <guid>https://seankearney.com/post/azure-blob-storage-strategic-configurations-cost-savings-speed/</guid>
+          <description xml:base="https://seankearney.com/post/azure-blob-storage-strategic-configurations-cost-savings-speed/">&lt;p&gt;We all know the saying &quot;storage is cheap&quot; and by all accounts -- yes. &lt;strong&gt;Storing&lt;&#x2F;strong&gt; the data is quite inexepensive, and ingress data is free. However, you are charged for the operations. And that is the rub. You must be very careful trying to balance performance and cost --especially at scale-- because operations add up.&lt;&#x2F;p&gt;
+&lt;p&gt;While we were building My DJ Cloud (a SaaS cloud storage offering) one of the initial, obvious concerns was simply the cost of storage. We&#x27;ve learned a lot over the years, and I&#x27;ll share some of the findings here using some semi-real world examples below.&lt;&#x2F;p&gt;
+&lt;p&gt;For the sake of this article we can assume we are uploading block blobs using the C# SDK as follows:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c#&quot; class=&quot;language-c# &quot;&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;Stream stream = __some data__;
+BlobClient blobClient = blobContainerClient.GetBlobClient(blobName);
+BlobUploadOptions options = new BlobUploadOptions() { 
+    TransferOptions = __StorageTransferOptions__
+};
+_ = await blobClient.UploadAsync(stream, options);
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;So what happens when you call &lt;code&gt;UploadAsync(stream, option)&lt;&#x2F;code&gt;?&lt;&#x2F;p&gt;
+&lt;p&gt;To answer that question it helps to know a few things.&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;What are &quot;operations&quot;&lt;&#x2F;li&gt;
+&lt;li&gt;How many bytes are in the stream&lt;&#x2F;li&gt;
+&lt;li&gt;How is &lt;code&gt;StorageTransferOptions&lt;&#x2F;code&gt; configured&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h2 id=&quot;understanding-upload-operations-and-the-azure-storage-rest-api&quot;&gt;Understanding Upload Operations and the Azure Storage REST API&lt;&#x2F;h2&gt;
+&lt;p&gt;There are three operations we will look at for standard block blob uploads.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;put-blob&quot;&gt;&lt;a href=&quot;https:&#x2F;&#x2F;learn.microsoft.com&#x2F;en-us&#x2F;rest&#x2F;api&#x2F;storageservices&#x2F;put-blob?tabs=microsoft-entra-id&quot;&gt;Put Blob&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;Simply put -- you can upload a blob in &quot;One-shot&quot; meaning that the entire blob is uploaded in a single API call, &lt;code&gt;Put Blob&lt;&#x2F;code&gt;. There are &lt;a href=&quot;https:&#x2F;&#x2F;learn.microsoft.com&#x2F;en-us&#x2F;rest&#x2F;api&#x2F;storageservices&#x2F;put-blob#remarks&quot;&gt;limitations&lt;&#x2F;a&gt; (which change every few years) and at this time you can upload up to 5,000 MiB in &quot;one-shot.&quot;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;put-block-and-put-block-list&quot;&gt;&lt;a href=&quot;https:&#x2F;&#x2F;learn.microsoft.com&#x2F;en-us&#x2F;rest&#x2F;api&#x2F;storageservices&#x2F;put-block?tabs=microsoft-entra-id&quot;&gt;Put Block&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;learn.microsoft.com&#x2F;en-us&#x2F;rest&#x2F;api&#x2F;storageservices&#x2F;put-block-list?tabs=microsoft-entra-id&quot;&gt;Put Block List&lt;&#x2F;a&gt;&lt;&#x2F;h3&gt;
+&lt;p&gt;If you need to upload more than 5,000 MiB, or you want to upload the blob in concurrent sub-transfers, then you need to use &lt;code&gt;Put Block&lt;&#x2F;code&gt; + &lt;code&gt;Put Block List&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;azure-blob-storage-strategic-configurations-cost-savings-speed&#x2F;azure-storage-put-block.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;In this scenario you can create and upload chunks, or blocks, of the file with &lt;em&gt;n&lt;&#x2F;em&gt; calls to &lt;code&gt;Put Block&lt;&#x2F;code&gt;. When all blocks are uploaded, then you must trigger the writing of the blob with a call to &lt;code&gt;Put Block List&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;c-sdk-and-storagetransferoptions&quot;&gt;C# SDK and &lt;code&gt;StorageTransferOptions&lt;&#x2F;code&gt;&lt;&#x2F;h2&gt;
+&lt;p&gt;Now that we have a basic understanding of the underlying storage apis we can focus our attention back to the C# SDK. The &lt;code&gt;StorageTransferOptions&lt;&#x2F;code&gt; configuration can significantly impact both the speed and cost of the operation. Properly tuning these settings can optimize performance and reduce expenses, but it requires careful consideration and testing.&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MaximumConcurrency&lt;&#x2F;strong&gt;: The maximum number of subtransfers that may be used in parallel.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;MaximumTransferSize&lt;&#x2F;strong&gt;: The maximum length of a transfer in bytes.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;strong&gt;InitialTransferSize&lt;&#x2F;strong&gt;: &quot;Defines a separate data size limitation for an initial attempt to do the entire operation at once with no subtransfers.&quot;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;There is typically some confusion on the &lt;code&gt;InitialTransferSize&lt;&#x2F;code&gt;! If the file you are trying to upload is less than this value, then the entire file will be uploaded in &quot;one-shot.&quot; If your file exceeds this amount, your file will be broken down into chunks&#x2F;blocks that are &lt;code&gt;MaximumTransferSize&lt;&#x2F;code&gt; in size (and &lt;code&gt;InitialTransferSize&lt;&#x2F;code&gt; is ignored entirely).&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Number of Operations =
+FileSize &amp;lt; InitialTransferSize ? 1 : (Ceiling(FileSize &#x2F; MaximumTransferSize) + 1)&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;default-storagetransferoptions-for-block-blobs&quot;&gt;Default &lt;code&gt;StorageTransferOptions&lt;&#x2F;code&gt; (for Block Blobs)&lt;&#x2F;h3&gt;
+&lt;p&gt;So if we don&#x27;t provide a &lt;code&gt;StorageTransferOptions&lt;&#x2F;code&gt; then how are blobs uploaded? Microsoft Docs will tell you:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;... the &lt;em&gt;client libraries&lt;&#x2F;em&gt; will use defaults for each individual value, if not provided. &lt;strong&gt;These defaults are typically performant in a data center environment, but not likely to be suitable for home consumer environments.&lt;&#x2F;strong&gt; Poorly tuned &lt;code&gt;StorageTransferOptions&lt;&#x2F;code&gt; can result in excessively long operations and even request timeouts. It&#x27;s best to be proactive in testing the values in &lt;code&gt;StorageTransferOptions&lt;&#x2F;code&gt;, and tuning them based on the needs of your application and environment.
+https:&#x2F;&#x2F;learn.microsoft.com&#x2F;en-us&#x2F;azure&#x2F;storage&#x2F;blobs&#x2F;storage-blobs-tune-upload-download#performance-tuning-with-storagetransferoptions&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Okay, what are the defaults though? That is a great question that I couldn&#x27;t find in documentation. In GitHub we can &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Azure&#x2F;azure-sdk-for-net&#x2F;blob&#x2F;main&#x2F;sdk&#x2F;storage&#x2F;Azure.Storage.Common&#x2F;src&#x2F;Shared&#x2F;Constants.cs#L231&quot;&gt;see&lt;&#x2F;a&gt; that &lt;code&gt;DefaultConcurrentTransfersCount=5&lt;&#x2F;code&gt;. As for the  &lt;code&gt;InitialTransferSize&lt;&#x2F;code&gt; and &lt;code&gt;MaximumTransferSize&lt;&#x2F;code&gt; -- after my experience I&#x27;ve found that the default values are:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c#&quot; class=&quot;language-c# &quot;&gt;&lt;code class=&quot;language-c#&quot; data-lang=&quot;c#&quot;&gt;DefaultConcurrentTransfersCount = 5
+InitialTransferSize = 256 MiB &amp;#x2F;&amp;#x2F; 262,144 KiB -or- 268,435,456 bytes
+MaximumTransferSize = 8 MiB &amp;#x2F;&amp;#x2F; 8,192 KiB -or - 8,388,608 bytes
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Note:
+I have &lt;a href=&quot;&#x2F;post&#x2F;when-is-a-kilboyte-not-a-kilobyte&quot;&gt;posted about KB vs KiB&lt;&#x2F;a&gt;. It is important to point out that MS code says &lt;code&gt;public const int KB = 1024&lt;&#x2F;code&gt;. In my writing, I try to be explicit with &lt;code&gt;KiB&lt;&#x2F;code&gt;, but for this post if you see &lt;code&gt;KB&lt;&#x2F;code&gt;, trust we are talking &lt;code&gt;KiB&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;tuning-for-cost&quot;&gt;Tuning for Cost&lt;&#x2F;h3&gt;
+&lt;p&gt;So now we know, by default, if we were uploading some files of various sizes, we would be looking at the following number of operations.&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;File Size&lt;&#x2F;th&gt;&lt;th&gt;Put Blob Operations&lt;&#x2F;th&gt;&lt;th&gt;Put Block Operations&lt;&#x2F;th&gt;&lt;th&gt;Put Block List Operations&lt;&#x2F;th&gt;&lt;th&gt;Total Write Operations&lt;&#x2F;th&gt;&lt;th&gt;Cost*&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;0 - 255.99 MiB&lt;br&#x2F;&gt;268,435,455 bytes&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;0&lt;&#x2F;td&gt;&lt;td&gt;0&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;$0.0000065&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;256 MiB&lt;br&#x2F;&gt;268,435,456 bytes&lt;&#x2F;td&gt;&lt;td&gt;0&lt;&#x2F;td&gt;&lt;td&gt;32&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;33&lt;&#x2F;td&gt;&lt;td&gt;$0.0002145&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;500 MiB&lt;&#x2F;td&gt;&lt;td&gt;0&lt;&#x2F;td&gt;&lt;td&gt;63&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;td&gt;64&lt;&#x2F;td&gt;&lt;td&gt;$0.0004160&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;* Full &lt;a href=&quot;https:&#x2F;&#x2F;azure.microsoft.com&#x2F;en-us&#x2F;pricing&#x2F;details&#x2F;storage&#x2F;blobs&#x2F;&quot;&gt;pricing&lt;&#x2F;a&gt; is here, but we&#x27;ll use typical Hot blob write cost of $0.065 &#x2F; 10k&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;impact-on-speed&quot;&gt;Impact on Speed&lt;&#x2F;h3&gt;
+&lt;p&gt;Properly tuning these values can improve the speed of data transfers. For example, increasing &lt;code&gt;MaximumConcurrency&lt;&#x2F;code&gt; can allow more parallel subtransfers, potentially speeding up the upload process. However, setting these values too high can lead to resource contention and decreased performance. Unfortunately, there is no real one-size-fits-all solution here and will require testing and potentially crafting various &quot;upload strategies&quot; depending on the situation (file size, connection type, I&#x2F;O, other environmental factors).&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;ll share some real-world, unscientific, numbers from my machine to Azure to give some insight into how the concurrency and blob sizes can change performance.&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;File Size&lt;&#x2F;th&gt;&lt;th&gt;Concurrency&lt;&#x2F;th&gt;&lt;th&gt;Initial Transfer Size&lt;&#x2F;th&gt;&lt;th&gt;Max Transfer Size&lt;&#x2F;th&gt;&lt;th&gt;Milliseconds&lt;&#x2F;th&gt;&lt;th&gt;Write Operations&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;8 MiB&lt;&#x2F;td&gt;&lt;td&gt;10&lt;&#x2F;td&gt;&lt;td&gt;512 KiB&lt;&#x2F;td&gt;&lt;td&gt;512 KiB&lt;&#x2F;td&gt;&lt;td&gt;1,029&lt;&#x2F;td&gt;&lt;td&gt;17&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;8 MiB&lt;&#x2F;td&gt;&lt;td&gt;5&lt;&#x2F;td&gt;&lt;td&gt;256 MiB&lt;&#x2F;td&gt;&lt;td&gt;8 MiB&lt;&#x2F;td&gt;&lt;td&gt;1,144&lt;&#x2F;td&gt;&lt;td&gt;1&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;8 MiB&lt;&#x2F;td&gt;&lt;td&gt;10&lt;&#x2F;td&gt;&lt;td&gt;1 MiB&lt;&#x2F;td&gt;&lt;td&gt;1 MiB&lt;&#x2F;td&gt;&lt;td&gt;1,241&lt;&#x2F;td&gt;&lt;td&gt;9&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;h2 id=&quot;real-world-example&quot;&gt;Real World Example&lt;&#x2F;h2&gt;
+&lt;h3 id=&quot;400-000-8-mib-files&quot;&gt;400,000 8 MiB Files&lt;&#x2F;h3&gt;
+&lt;p&gt;For this exercise, we&#x27;ll assume the files are all 8 MiB each and total data is 3.052 TiB. Using our previously discovered numbers...&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;File Size&lt;&#x2F;th&gt;&lt;th&gt;Concurrency&lt;&#x2F;th&gt;&lt;th&gt;Initial Transfer Size&lt;&#x2F;th&gt;&lt;th&gt;Max Transfer Size&lt;&#x2F;th&gt;&lt;th style=&quot;text-align: right&quot;&gt;Write Operations&lt;&#x2F;th&gt;&lt;th style=&quot;text-align: right&quot;&gt;Estimated Transfer Time&lt;&#x2F;th&gt;&lt;th style=&quot;text-align: right&quot;&gt;Estimated Write Cost&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;8 MiB&lt;&#x2F;td&gt;&lt;td&gt;10&lt;&#x2F;td&gt;&lt;td&gt;512 KiB&lt;&#x2F;td&gt;&lt;td&gt;512 KiB&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;6,800,000&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;114.3 hours&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;$44.20&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;8 MiB&lt;&#x2F;td&gt;&lt;td&gt;5 (default)&lt;&#x2F;td&gt;&lt;td&gt;256 MiB (default)&lt;&#x2F;td&gt;&lt;td&gt;8 MiB (default)&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;400,000&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;127.1 hours&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;$2.60&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;8 MiB&lt;&#x2F;td&gt;&lt;td&gt;10&lt;&#x2F;td&gt;&lt;td&gt;1 MiB&lt;&#x2F;td&gt;&lt;td&gt;1 MiB&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;3,600,000&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;137.9 hours&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;$23.40&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;The results are always very interesting. The default values aren&#x27;t terrible in terms of performance or cost. Because the files are uploaded in one-shot the write operations are at the absolute minimum. However, if you want to shave 13 hours off of the runtime it will cost you $41.60.&lt;&#x2F;p&gt;
+&lt;p&gt;Oh -- and is it &quot;cheap&quot; to store 3.052 TiB (in hot tier)? $57.50&#x2F;month&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h3&gt;
+&lt;p&gt;Changing &lt;code&gt;StorageTransferOptions&lt;&#x2F;code&gt; can have a significant impact on both the speed and cost of uploading data to Azure Blob Storage. By carefully tuning these settings, you can optimize performance and reduce expenses. However, it&#x27;s important to test different configurations to find the best balance for your specific use case.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>When is a Kilobyte not a Kilobyte?</title>
+          <pubDate>Sat, 18 Jan 2025 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/when-is-a-kilboyte-not-a-kilobyte/</link>
+          <guid>https://seankearney.com/post/when-is-a-kilboyte-not-a-kilobyte/</guid>
+          <description xml:base="https://seankearney.com/post/when-is-a-kilboyte-not-a-kilobyte/">&lt;p&gt;This is mainly a rant on the inconsistencies I found with &quot;Kilobyte&quot; while building a cross-platform file backup application.&lt;&#x2F;p&gt;
+&lt;p&gt;We are developers, right? Historically, developers have used KB, and we trusted that it meant 1024 bytes. This assumption holds true in Microsoft codebases where &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;Azure&#x2F;azure-sdk-for-net&#x2F;blob&#x2F;3fb80ad8a72712bd790243ad31283f87bdc20a6d&#x2F;sdk&#x2F;storage&#x2F;Azure.Storage.Common&#x2F;src&#x2F;Shared&#x2F;Constants.cs#L11&quot;&gt;you can see&lt;&#x2F;a&gt; they&#x27;ve defined &lt;code&gt;public const int KB = 1024&lt;&#x2F;code&gt;. The same was true with the code I wrote or reviewed.&lt;&#x2F;p&gt;
+&lt;p&gt;However, in 1998, the International Electrotechnical Commission (IEC) introduced binary prefixes (KiB, MiB, GiB) to create a clear distinction between decimal and binary units. This standard helped resolve the confusion between the two systems, especially as storage capacities grew larger. At some point, in the early 2000s, regular consumers began purchasing computer hardware at their local CompUSA. I remember noticing that hard drives started carrying a disclaimer like &quot;1 MB = 1,000,000 bytes.&quot; Seagate has an excellent article on this &lt;a href=&quot;https:&#x2F;&#x2F;www.seagate.com&#x2F;support&#x2F;kb&#x2F;lacie&#x2F;why-does-my-hard-drive-report-less-capacity-than-indicated-on-the-drives-label-172191en&#x2F;?form=MG0AV3&quot;&gt;here&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Marketing won, and hence the confusion ensued.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;xkcd.com&#x2F;394&#x2F;&quot;&gt;&lt;img src=&quot;https:&#x2F;&#x2F;imgs.xkcd.com&#x2F;comics&#x2F;kilobyte.png&quot; alt=&quot;XKCD 394&quot; &#x2F;&gt;&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;My frustration really cranks up at the union of code, operating systems, and cloud provider billing.&lt;&#x2F;p&gt;
+&lt;p&gt;To be honest, I never paid much attention to the &quot;KiB&quot;, &quot;MiB&quot;, &quot;GiB&quot; units seen in tools like Azure Storage Explorer. I incorrectly assumed &quot;MB == MiB&quot;—why wouldn&#x27;t I, right? Windows Explorer tells me they are the same thing.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;when-is-a-kilboyte-not-a-kilobyte&#x2F;storage-explorer-win.png&quot; alt=&quot;left size: Azure Blob 2.32 MiB, right side: Windows Explorer 2.32 MB&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;But—when you start working cross-platform, pick up a Mac and see this, you get agitated:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;when-is-a-kilboyte-not-a-kilobyte&#x2F;storage-explorer-mac.png&quot; alt=&quot;left size: Azure Blob 2.32 MiB, right side: Windows Explorer 2.4 MB&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;What I&#x27;ve learned is that Windows traditionally uses base-2 (binary) measurements for file sizes (e.g., 1 MB = 1,048,576 bytes), while macOS has adopted base-10 (decimal) measurements since OS X 10.6 Snow Leopard (2009), where 1 MB = 1,000,000 bytes. This difference explains why the same file might show different sizes on different operating systems.&lt;&#x2F;p&gt;
+&lt;p&gt;This led me to the embarrassing realization that the &lt;a href=&quot;https:&#x2F;&#x2F;physics.nist.gov&#x2F;cuu&#x2F;Units&#x2F;binary.html&quot;&gt;difference between KB (Kilobyte) and KiB (Kibibyte)&lt;&#x2F;a&gt; is significant.&lt;&#x2F;p&gt;
+&lt;p&gt;So the same file of &lt;code&gt;2,435,949&lt;&#x2F;code&gt; bytes is seen on&lt;&#x2F;p&gt;
+&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;File Browser&lt;&#x2F;th&gt;&lt;th style=&quot;text-align: right&quot;&gt;Reported Size&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;Windows Explorer&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;2.32 MB&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;macOS finder&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;2.4 MB&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;tr&gt;&lt;td&gt;Azure storage explorer&lt;&#x2F;td&gt;&lt;td style=&quot;text-align: right&quot;&gt;2.32 MiB&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+&lt;p&gt;Now, the fact that Windows and macOS are reporting differently is not a big deal. It certainly is not the only difference between the operating systems. But, if you are using a Microsoft Azure tool (Azure Storage Explorer) to view items (blobs) in storage and you want to figure out how much that storage will cost, you would expect a little consistency, right?&lt;&#x2F;p&gt;
+&lt;p&gt;Many cloud storage providers, including Azure, Google Cloud, and AWS, often use base-2 measurements (GiB) for billing and storage capacity, while some user interfaces might display sizes in base-10 (GB). It is crucial to understand the billing units to avoid surprises in costs.&lt;&#x2F;p&gt;
+&lt;p&gt;Let&#x27;s jump to the &lt;a href=&quot;https:&#x2F;&#x2F;azure.microsoft.com&#x2F;en-us&#x2F;pricing&#x2F;details&#x2F;storage&#x2F;blobs&#x2F;&quot;&gt;Azure Storage Pricing&lt;&#x2F;a&gt;—oh they&#x27;re billing on &lt;code&gt;GB&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;when-is-a-kilboyte-not-a-kilobyte&#x2F;azure-pricing.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;BUT WAIT—THERE&#x27;S A DISCLAIMER&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Azure Blob Storage usage is &lt;strong&gt;calculated in binary Gigabytes (GB)&lt;&#x2F;strong&gt;, where 1 GB = 2^30 bytes. &lt;strong&gt;This unit of measurement is also known as Gibibyte (GiB)&lt;&#x2F;strong&gt;, defined by the International Electrotechnical Commission (IEC). Similarly, 1 TB is 2^40 bytes, i.e. 1,024 GBs.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Azure are you drunk? You&#x27;re telling me &quot;[GB] is also known as Gibibyte (GiB)&quot;?&lt;&#x2F;p&gt;
+&lt;p&gt;Only in marketing.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Conflict Resolution in My DJ Cloud Using Timestamps</title>
+          <pubDate>Tue, 07 Jan 2025 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/hybrid-logical-clocks-and-conflict-resolution/</link>
+          <guid>https://seankearney.com/post/hybrid-logical-clocks-and-conflict-resolution/</guid>
+          <description xml:base="https://seankearney.com/post/hybrid-logical-clocks-and-conflict-resolution/">&lt;p&gt;At My DJ Cloud, one of the earlier problems we needed to solve when building our file synchronization engine was ensuring data consistency and integrity. With multiple machines modifying the same file simultaneously, the Cloud needs to understand how to handle it. We decided to leverage a Hybrid Logical Clock (HLC) to generate our timestamps when handling conflicts and maintain the latest version of files across devices. This post will provide an introduction into how we utilize HLC for conflict resolution and how our cloud-side system determines which version should be used.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Devin.ai Builds a Zola Theme</title>
+          <pubDate>Wed, 25 Dec 2024 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/devinai-builds-zola-theme/</link>
+          <guid>https://seankearney.com/post/devinai-builds-zola-theme/</guid>
+          <description xml:base="https://seankearney.com/post/devinai-builds-zola-theme/">&lt;p&gt;In the world of AI-driven development, Devin.ai showcases remarkable potential (but certainly some &lt;a href=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;devinai-vuejs-migration&#x2F;&quot;&gt;unremarkable results&lt;&#x2F;a&gt;) in automating various tasks. This blog post delves into my experience with Devin.ai as I attempt to create a Zola theme using Tailwind CSS and Vanilla JS.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Devin.AI -- Real World with Vue.js Migration</title>
+          <pubDate>Sat, 21 Dec 2024 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/devinai-vuejs-migration/</link>
+          <guid>https://seankearney.com/post/devinai-vuejs-migration/</guid>
+          <description xml:base="https://seankearney.com/post/devinai-vuejs-migration/">&lt;p&gt;I have a production Electron based app running Vue.js (v2). I want to migrate it to Vue.js v3. These sorts of chores are never fun because in reality it isn&#x27;t just Vue.js that is out of date; it is many npm packages that need to be updated or swapped out. It is a never ending battle of change, break, fix, repeat. This is the sort of task that &lt;a href=&quot;https:&#x2F;&#x2F;devin.ai&quot;&gt;Devin.ai&lt;&#x2F;a&gt; should try to solve for us!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>A New Chapter for My Blog with Zola</title>
+          <pubDate>Thu, 19 Dec 2024 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/migrating-from-blogengine-to-zola/</link>
+          <guid>https://seankearney.com/post/migrating-from-blogengine-to-zola/</guid>
+          <description xml:base="https://seankearney.com/post/migrating-from-blogengine-to-zola/">&lt;p&gt;This website has had quite the journey, moving through different domain names, frameworks, and applications over the years. It all started with static HTML and table-based layouts, then Community Server, Sitecore, and finally &lt;a href=&quot;https:&#x2F;&#x2F;blogengine.io&#x2F;&quot;&gt;BlogEngine.net&lt;&#x2F;a&gt;, where it’s been parked for over a decade. I haven&#x27;t blogged at all since moving on from Hedgehog&#x2F;Sitecore, but it&#x27;s high time I get back to it.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Working around the missing Sitecore NuGet feed</title>
+          <pubDate>Sat, 02 Apr 2016 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/working-around-the-missing-sitecore-nuget-feed/</link>
+          <guid>https://seankearney.com/post/working-around-the-missing-sitecore-nuget-feed/</guid>
+          <description xml:base="https://seankearney.com/post/working-around-the-missing-sitecore-nuget-feed/">&lt;p&gt;This is my second post in the &lt;a href=&quot;&#x2F;post&#x2F;is-your-sitecore-module-development-and-build-process-ideal&quot;&gt;series around Sitecore module development&lt;&#x2F;a&gt; as well as a follow up post to &lt;a href=&quot;&#x2F;post&#x2F;sitecore-needs-a-nuget-feed-for-their-assemblies&quot;&gt;Sitecore needs a NuGet feed for their assemblies&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Is your Sitecore module development and build process ideal?</title>
+          <pubDate>Fri, 01 Apr 2016 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/is-your-sitecore-module-development-and-build-process-ideal/</link>
+          <guid>https://seankearney.com/post/is-your-sitecore-module-development-and-build-process-ideal/</guid>
+          <description xml:base="https://seankearney.com/post/is-your-sitecore-module-development-and-build-process-ideal/">&lt;p&gt;I maintain a fairly well used &quot;&lt;a href=&quot;https:&#x2F;&#x2F;marketplace.sitecore.net&#x2F;en&#x2F;Modules&#x2F;Field_Fallback.aspx&quot;&gt;Field Fallback Module&lt;&#x2F;a&gt;&quot;, which was released in June 2012. The code for this module is &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;HedgehogDevelopment&#x2F;sitecore-field-fallback&quot;&gt;available on GitHub&lt;&#x2F;a&gt; and it has been setup with a very simple build process that has remain unchanged since day one. The module isn&#x27;t under heavy development, but there have been a couple bugs reported lately. I took this opportunity to revisit the build and deploy process and see if we couldn&#x27;t modernize it a bit.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>TDS Deployment Properties Report</title>
+          <pubDate>Wed, 23 Mar 2016 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/tds-deployment-properties-report/</link>
+          <guid>https://seankearney.com/post/tds-deployment-properties-report/</guid>
+          <description xml:base="https://seankearney.com/post/tds-deployment-properties-report/">&lt;p&gt;In the &lt;a href=&quot;http:&#x2F;&#x2F;sitecorechat.slack.com&quot;&gt;Sitecore Slack Team&lt;&#x2F;a&gt;&#x27;s #TDS channel there was a Team Development for Sitecore feature request from &lt;a href=&quot;http:&#x2F;&#x2F;www.kayee.nl&quot;&gt;Robbert Hock&lt;&#x2F;a&gt;. It was:&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore needs a NuGet feed for their assemblies</title>
+          <pubDate>Mon, 04 Aug 2014 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-needs-a-nuget-feed-for-their-assemblies/</link>
+          <guid>https://seankearney.com/post/sitecore-needs-a-nuget-feed-for-their-assemblies/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-needs-a-nuget-feed-for-their-assemblies/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-needs-a-nuget-feed-for-their-assemblies&#x2F;call-to-action.jpg&quot; alt=&quot;&quot; &#x2F;&gt;This is a call to action for Sitecore to start hosting a NuGet feed of all common Sitecore assemblies. However, lets take a look at how the Sitecore development process has changed over the years.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>TDS Code Generation Output Multiple Files</title>
+          <pubDate>Mon, 08 Jul 2013 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/tds-code-generation-output-multiple-files/</link>
+          <guid>https://seankearney.com/post/tds-code-generation-output-multiple-files/</guid>
+          <description xml:base="https://seankearney.com/post/tds-code-generation-output-multiple-files/">&lt;p&gt;A very common feature request we get for &lt;a href=&quot;http:&#x2F;&#x2F;TeamDevelopmentForSitecore.com&quot;&gt;Team Development for Sitecore&lt;&#x2F;a&gt; at &lt;a href=&quot;http:&#x2F;&#x2F;hhogdev.com&quot;&gt;Hedgehog&lt;&#x2F;a&gt; is that people want code generation to create a file per Sitecore template in their project. Currently, when TDS code generation runs it will create a single file with all of the code inside of it. Using partial classes it enabled developers to extend the class with their needs, in a separate file, all the while keeping the code generated part in a file that can be overwritten and updated at any time by TDS. This is very much like the way Linq-to-SQL works.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>TDS And Duplicate Items</title>
+          <pubDate>Thu, 18 Apr 2013 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/tds-and-duplicate-items/</link>
+          <guid>https://seankearney.com/post/tds-and-duplicate-items/</guid>
+          <description xml:base="https://seankearney.com/post/tds-and-duplicate-items/">&lt;p&gt;From time to time we get feature requests for &lt;a href=&quot;http:&#x2F;&#x2F;teamdevelopmentforsitecore.com&quot;&gt;Team Development for Sitecore&lt;&#x2F;a&gt; to support multiple sub-items with the same name as shown below.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>The Twitter Sitecore Scrum</title>
+          <pubDate>Fri, 08 Mar 2013 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/the-twitter-sitecore-scrum/</link>
+          <guid>https://seankearney.com/post/the-twitter-sitecore-scrum/</guid>
+          <description xml:base="https://seankearney.com/post/the-twitter-sitecore-scrum/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;the-twitter-sitecore-scrum&#x2F;twitter-bird-white-on-blue.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;a href=&quot;https:&#x2F;&#x2F;twitter.com&#x2F;dgalvez01&quot;&gt;Dan Galvez&lt;&#x2F;a&gt; and I had come up with an idea for a, sort of, Twitter based Sitecore &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Scrum_(development)#Daily_Scrum&quot;&gt;Scrum&lt;&#x2F;a&gt;. In essence, people would post on Twitter what they are doing today with the hashtag &lt;a href=&quot;https:&#x2F;&#x2F;twitter.com&#x2F;search?q=%23SitecoreScrum&quot;&gt;#SitecoreScrum&lt;&#x2F;a&gt;. Interestingly, another Sitecore developer (&lt;a href=&quot;https:&#x2F;&#x2F;twitter.com&#x2F;mike_i_reynolds&quot;&gt;Mike Reynolds&lt;&#x2F;a&gt;) started this exact same thing the very next day with &lt;a href=&quot;https:&#x2F;&#x2F;twitter.com&#x2F;mike_i_reynolds&#x2F;status&#x2F;310036893557473280&quot;&gt;this tweet&lt;&#x2F;a&gt;.  I&#x27;ve reached out to Mike and we are going to try and keep up with a daily #SitecoreScrum at 10am Eastern time. I don&#x27;t know what will come of this, but it can&#x27;t hurt knowing what others in our realm are doing with Sitecore.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Using Team Development for Sitecore (TDS) with GitHub</title>
+          <pubDate>Fri, 04 Jan 2013 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/using-team-development-for-sitecore-with-github/</link>
+          <guid>https://seankearney.com/post/using-team-development-for-sitecore-with-github/</guid>
+          <description xml:base="https://seankearney.com/post/using-team-development-for-sitecore-with-github/">&lt;p&gt;When using Team Development for Sitecore (TDS) you may need to tell your source control system how to handle certain files. This post is mainly targeted to folks using Git as their source control system, but it could be a general guideline for people using any source control system that isn&#x27;t integrated with Visual Studio.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore Content as a Service</title>
+          <pubDate>Thu, 01 Nov 2012 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-content-as-a-service/</link>
+          <guid>https://seankearney.com/post/sitecore-content-as-a-service/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-content-as-a-service/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-content-as-a-service&#x2F;scaas.jpg&quot; alt=&quot;&quot; &#x2F;&gt;Disclaimer: This post was in a draft state for many, many, months. It was started and subsequently turned into my Sitecore Symposium 2012 talk. Now that SitecoreSym is over I am making this post and the associated code available.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Getting a special field value in Sitecore</title>
+          <pubDate>Mon, 30 Jul 2012 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/getting-a-special-field-value-in-sitecore/</link>
+          <guid>https://seankearney.com/post/getting-a-special-field-value-in-sitecore/</guid>
+          <description xml:base="https://seankearney.com/post/getting-a-special-field-value-in-sitecore/">&lt;p&gt;Did you know that you can access special properties of a Sitecore item the same way you get a typical field&#x27;s value?&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Checking if a Sitecore field has a value</title>
+          <pubDate>Mon, 23 Jul 2012 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/checking-if-a-sitecore-field-has-a-value/</link>
+          <guid>https://seankearney.com/post/checking-if-a-sitecore-field-has-a-value/</guid>
+          <description xml:base="https://seankearney.com/post/checking-if-a-sitecore-field-has-a-value/">&lt;p&gt;When trying to determine if a Sitecore field has a value there are two basic ways.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;Sitecore.Context.Item.Fields[&quot;fieldName&quot;].HasValue&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;or&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;Sitecore.Context.Item.Fields[&quot;fieldName&quot;].Value != &quot;&quot;&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Getting a Sitecore field value</title>
+          <pubDate>Sun, 15 Jul 2012 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/getting-a-sitecore-field-value/</link>
+          <guid>https://seankearney.com/post/getting-a-sitecore-field-value/</guid>
+          <description xml:base="https://seankearney.com/post/getting-a-sitecore-field-value/">&lt;p&gt;There are many ways to get the value of a Sitecore field and each is slightly different.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Field.ContainsStandardValue in Sitecore is Buggy</title>
+          <pubDate>Thu, 12 Jul 2012 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/field-containsstandardvalue-in-sitecore-is-buggy/</link>
+          <guid>https://seankearney.com/post/field-containsstandardvalue-in-sitecore-is-buggy/</guid>
+          <description xml:base="https://seankearney.com/post/field-containsstandardvalue-in-sitecore-is-buggy/">&lt;p&gt;I had discovered a little bug revolving around the &lt;code&gt;Sitecore.Data.Fields.Field.ContainsStandardValue&lt;&#x2F;code&gt; property in Sitecore (at least 6.4.1.101221 through current). You cannot trust the value returned by &lt;code&gt;Field.ContainsStandardValue&lt;&#x2F;code&gt; if you have made any of the following calls:&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore - Content Fallback and the Field Fallback Module</title>
+          <pubDate>Tue, 10 Jul 2012 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-content-fallback-and-the-field-fallback-module/</link>
+          <guid>https://seankearney.com/post/sitecore-content-fallback-and-the-field-fallback-module/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-content-fallback-and-the-field-fallback-module/">&lt;p&gt;A common practice in all of my Sitecore sites is to have some sort of &lt;em&gt;content fallback&lt;&#x2F;em&gt;. What this means is that a field&#x27;s value can come from somewhere other than the field itself, the source item (if it is a clone), or its standard values.&lt;&#x2F;p&gt;
+&lt;p&gt;Content fallback is an excellent way to increase editor productivity and reduce content redundancy! Here are the three most common scenarios I run into with every project.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Team Development for Sitecore and Configuration Management</title>
+          <pubDate>Thu, 03 May 2012 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/team-development-for-sitecore-and-configuration-management/</link>
+          <guid>https://seankearney.com/post/team-development-for-sitecore-and-configuration-management/</guid>
+          <description xml:base="https://seankearney.com/post/team-development-for-sitecore-and-configuration-management/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;team-development-for-sitecore-and-configuration-management&#x2F;pain.jpg&quot; alt=&quot;&quot; &#x2F;&gt;One of the major pain points when deploying &lt;a href=&quot;http:&#x2F;&#x2F;www.sitecore.net&quot;&gt;Sitecore&lt;&#x2F;a&gt; based web sites has always been configuration management. Sitecore has thousands of lines of configuration scattered across more than a dozen files.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore Descriptive Tree List Field Type</title>
+          <pubDate>Thu, 02 Feb 2012 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-descriptive-tree-list-field-type/</link>
+          <guid>https://seankearney.com/post/sitecore-descriptive-tree-list-field-type/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-descriptive-tree-list-field-type/">&lt;p&gt;Have you ever had a TreeList field in Sitecore only to see this when editing an item?&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-descriptive-tree-list-field-type&#x2F;extendedtreelist_1.png&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore Serialization Format</title>
+          <pubDate>Mon, 31 Oct 2011 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-serialization-format/</link>
+          <guid>https://seankearney.com/post/sitecore-serialization-format/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-serialization-format/">&lt;p&gt;We, at &lt;a href=&quot;http:&#x2F;&#x2F;www.hhogdev.com&quot;&gt;Hedgehog Development&lt;&#x2F;a&gt;, have been intimately working with Sitecore serialization since it was released with Sitecore 6.0 in 2008. Specifically our interest has been in helping developers bring their Sitecore items into Visual Studio and essentially allow you to treat your Sitecore items as code. We do this with our &lt;a href=&quot;http:&#x2F;&#x2F;teamdevelopmentforsitecore.com&quot;&gt;Team Development for Sitecore&lt;&#x2F;a&gt; product.&lt;&#x2F;p&gt;
+&lt;p&gt;I was having a discussion the other day and was asked to elaborate on the serialization format that Sitecore uses. I figured I would have some notes, or official documentation, on the format, but I couldn&#x27;t find any! I figured this is a good a place as any to describe the serialization format that Sitecore uses.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore Rules Engine and RegEx</title>
+          <pubDate>Thu, 29 Sep 2011 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-rules-engine-and-regex/</link>
+          <guid>https://seankearney.com/post/sitecore-rules-engine-and-regex/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-rules-engine-and-regex/">&lt;p&gt;I was having some fun with the Sitecore (6.5.0.110818) rules engine over the last couple days. Specifically, I was trying to show content editor warnings as well as control icons for templates based on the name of the item. However the Item name comparison, when using a regular expression, was never evaluating to true.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore Security Report and Reset</title>
+          <pubDate>Thu, 07 Jul 2011 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-security-report-and-reset/</link>
+          <guid>https://seankearney.com/post/sitecore-security-report-and-reset/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-security-report-and-reset/">&lt;p&gt;I have a nice assortment of little scripts that I&#x27;ve written over the years to perform various tasks within Sitecore. Based on &lt;a href=&quot;http:&#x2F;&#x2F;stackoverflow.com&#x2F;questions&#x2F;6614776&#x2F;viewing-and-clearing-all-user-specific-permissions-in-sitecore&quot;&gt;this Stack Overflow question&lt;&#x2F;a&gt; I figured I would release one.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Re: Continuous Integration for Sitecore Projects</title>
+          <pubDate>Wed, 01 Jun 2011 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/dmitry-vasilinenko-continuous-integration-for-sitecore-projects/</link>
+          <guid>https://seankearney.com/post/dmitry-vasilinenko-continuous-integration-for-sitecore-projects/</guid>
+          <description xml:base="https://seankearney.com/post/dmitry-vasilinenko-continuous-integration-for-sitecore-projects/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;dmitry-vasilinenko-continuous-integration-for-sitecore-projects&#x2F;confused.jpg&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore Virtual Users Group</title>
+          <pubDate>Mon, 16 May 2011 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-virtual-users-group/</link>
+          <guid>https://seankearney.com/post/sitecore-virtual-users-group/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-virtual-users-group/">&lt;p&gt;You might be interested to hear about a new initiative that Hedgehog Development is undertaking, the Sitecore Users&#x27; Virtual Group. This user group is dedicated to supporting the Sitecore community wherever they exist across the globe. We have some great speakers lined up for our first sessions, and we&#x27;re looking forward to their deep expertise on Sitecore development. All sessions are free of charge and conducted over the web. The current schedule is at &lt;a href=&quot;http:&#x2F;&#x2F;www.sitecoreug.org&quot;&gt;http:&#x2F;&#x2F;www.sitecoreug.org&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Big News of 2010: Surprise, it&#x27;s triplets!</title>
+          <pubDate>Thu, 27 Jan 2011 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/surprise-its-triplets/</link>
+          <guid>https://seankearney.com/post/surprise-its-triplets/</guid>
+          <description xml:base="https://seankearney.com/post/surprise-its-triplets/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;surprise-its-triplets&#x2F;2010-09-22-tripletssono3_4-2.jpg&quot; alt=&quot;&quot; &#x2F;&gt;Looking back at 2010 I can confidently say the biggest news I was hit with was that I am having triplets. A pair of identicals girls and a singleton girl to be exact. This is, of course, in addition to my &lt;a href=&quot;&#x2F;post&#x2F;my-life-will-be-forever-different&quot;&gt;two year old son&lt;&#x2F;a&gt;. I always wanted four kids so I am pretty stoked!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Selling RSWarrior.com</title>
+          <pubDate>Mon, 24 Jan 2011 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/the-sale-of-rswarrior-com/</link>
+          <guid>https://seankearney.com/post/the-sale-of-rswarrior-com/</guid>
+          <description xml:base="https://seankearney.com/post/the-sale-of-rswarrior-com/">&lt;p&gt;In the Summer of 2002, I was 24 years old, single, had a good number of friends who rode motorcycles, and my 1989 Suzuki GSXR 750 just broke down. I purchased the Yamaha Road Star (Star Cycles) Warrior in June, which, at the time, was one of the fastest and best handling power cruisers in the market. Being that I was coming from the sport bike realm, this was the bike for me.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore item and version design flaw</title>
+          <pubDate>Tue, 11 Jan 2011 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-item-and-version-design-flaw/</link>
+          <guid>https://seankearney.com/post/sitecore-item-and-version-design-flaw/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-item-and-version-design-flaw/">&lt;p&gt;I have a multi-lingual Sitecore (6.2) site that has been having &lt;strong&gt;many&lt;&#x2F;strong&gt; issues with item versions showing up in their site myseteriously. The client has over 12 languages in their site and certain items shouldn&#x27;t be accessible to certain languages. Now, Sitecore says simply don&#x27;t create a version of the item and it won&#x27;t appear in the site for the language. Perfect? Nope.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Visual Studio Projects and Sitecore</title>
+          <pubDate>Fri, 01 Oct 2010 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/visual-studio-projects-and-sitecore/</link>
+          <guid>https://seankearney.com/post/visual-studio-projects-and-sitecore/</guid>
+          <description xml:base="https://seankearney.com/post/visual-studio-projects-and-sitecore/">&lt;p&gt;This is a topic that I&#x27;ve been meaning to cover for some time now, but it is &lt;a href=&quot;http:&#x2F;&#x2F;www.sitecore.net&#x2F;en&#x2F;Community&#x2F;Technical-Blogs&#x2F;John-West-Sitecore-Blog&#x2F;Posts&#x2F;2010&#x2F;09&#x2F;Create-a-Visual-Studio-2010-Project-for-a-Sitecore-Solution.aspx&quot;&gt;this post&lt;&#x2F;a&gt; by &lt;a href=&quot;http:&#x2F;&#x2F;twitter.com&#x2F;sitecorejohn&quot;&gt;John West&lt;&#x2F;a&gt; that pushed me to do it sooner rather than later.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>LearnSitecore Podcast 2 - Team Development for Sitecore</title>
+          <pubDate>Thu, 09 Sep 2010 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/learnsitecore-podcast-2-team-development-for-sitecore/</link>
+          <guid>https://seankearney.com/post/learnsitecore-podcast-2-team-development-for-sitecore/</guid>
+          <description xml:base="https://seankearney.com/post/learnsitecore-podcast-2-team-development-for-sitecore/">&lt;p&gt;I spoke with &lt;a href=&quot;http:&#x2F;&#x2F;twitter.com&#x2F;jens_mikkelsen&quot;&gt;Jens Mikkelsen&lt;&#x2F;a&gt; and &lt;a href=&quot;http:&#x2F;&#x2F;twitter.com&#x2F;JimmiLyhne&quot;&gt;Jimmi Lhyne Anderson&lt;&#x2F;a&gt; from &lt;a href=&quot;http:&#x2F;&#x2F;learnsitecore.cmsuniverse.net&quot;&gt;LearnSitecore&lt;&#x2F;a&gt; the other week about who I am, Dreamcore and &lt;a href=&quot;http:&#x2F;&#x2F;teamdevelopmentforsitecore.com&#x2F;&quot;&gt;Team Development for Sitecore&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>About Sean Kearney</title>
+          <pubDate>Thu, 26 Aug 2010 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/about/</link>
+          <guid>https://seankearney.com/about/</guid>
+          <description xml:base="https://seankearney.com/about/">&lt;p&gt;&lt;img align=&quot;left&quot; width=&quot;200&quot; src=&quot;..&#x2F;images&#x2F;hero.jpg&quot; class=&quot;not-prose&quot;&gt; I&#x27;m Sean Kearney, an entrepreneur, technology leader, and developer. Since 2000, I&#x27;ve been passionate about software development and technology, sharing some of my insights and experiences here. Since about 2017, I&#x27;ve been working on My DJ Cloud and Digital DJ Pool, where I&#x27;m the technical co-founder. I&#x27;ve been primarily focused on .NET, TypeScript, Vue.js, Electron, Azure, and other technologies in the music industry.&lt;&#x2F;p&gt;
+&lt;p&gt;You can find me on &lt;a href=&quot;https:&#x2F;&#x2F;x.com&#x2F;seankearney&quot;&gt;Twitter&#x2F;X&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;seankearney&quot;&gt;GitHub&lt;&#x2F;a&gt;, &lt;a href=&quot;https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney&quot;&gt;Stack Overflow&lt;&#x2F;a&gt;, and &lt;a href=&quot;https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney&quot;&gt;LinkedIn&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;professional-background&quot;&gt;Professional Background&lt;&#x2F;h2&gt;
+&lt;p&gt;Prior to my roles at My DJ Cloud and Digital DJ Pool, I served as the Director of Software Development (and other titles) at Hedgehog Development for 10 years, leading a team of nearly 100 developers and architects. While there, I worked with many well-known companies such as FedEx, The Metropolitan Museum of Art (The Met), The Kennedy Center, DOW Chemical, CamelBak, and more, helping them with their digital transformation goals. My expertise spans a diverse range of technologies, including .NET, Sitecore, Azure, TypeScript, and Vue.js, and I have a track record of creating scalable, innovative solutions. I was a Sitecore MVP from 2009-2017.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;ve started and &lt;a href=&quot;&#x2F;post&#x2F;the-sale-of-rswarrior-com&#x2F;&quot;&gt;sold&lt;&#x2F;a&gt; a number of other businesses, including rswarior.com and longislandboatworld.com. I&#x27;ve also built a number of developer tools, with the most successful being &quot;&lt;a href=&quot;https:&#x2F;&#x2F;www.teamdevelopmentforsitecore.com&#x2F;TDS-Classic&quot;&gt;Team Development for Sitecore&lt;&#x2F;a&gt;&quot; and &quot;&lt;a href=&quot;https:&#x2F;&#x2F;www.teamdevelopmentforsitecore.com&#x2F;Feydra&quot;&gt;Feydra&lt;&#x2F;a&gt;&quot; that are in use by Sitecore developers worldwide.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;random-facts&quot;&gt;Random Facts&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;I was on &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Romper_Room&quot;&gt;Romper Room and Friends&lt;&#x2F;a&gt; as a child in the 80&#x27;s.&lt;&#x2F;li&gt;
+&lt;li&gt;I&#x27;ve surfed since I was a kid (although I am not good) and met my wife while surfing.&lt;&#x2F;li&gt;
+&lt;li&gt;I have four children: a &lt;a href=&quot;&#x2F;post&#x2F;my-life-will-be-forever-different&#x2F;&quot;&gt;son&lt;&#x2F;a&gt; born in 2008 and &lt;a href=&quot;&#x2F;post&#x2F;surprise-its-triplets&#x2F;&quot;&gt;triplet daughters&lt;&#x2F;a&gt; born in 2011.&lt;&#x2F;li&gt;
+&lt;li&gt;I was on &lt;a href=&quot;https:&#x2F;&#x2F;www.nbcnewyork.com&#x2F;entertainment&#x2F;the-scene&#x2F;george-to-the-rescue&#x2F;&quot;&gt;George to the Rescue&lt;&#x2F;a&gt; twice: &lt;a href=&quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v=CsHxE_hW1Fo&quot;&gt;Season 2 Episode 2&lt;&#x2F;a&gt; and &lt;a href=&quot;https:&#x2F;&#x2F;www.peacocktv.com&#x2F;watch-online&#x2F;tv&#x2F;george-to-the-rescue&#x2F;5791501842563312112&#x2F;seasons&#x2F;5&#x2F;episodes&#x2F;revisit-episode-7&#x2F;20a44b16-15eb-3a9c-a0fa-5c10c5d8b4e3&quot;&gt;Season 5 Episode 7&lt;&#x2F;a&gt;.&lt;&#x2F;li&gt;
+&lt;li&gt;I&#x27;m much taller than I look while on a Slack call.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+</description>
+      </item>
+      <item>
+          <title>Using Luke to view Lucene indexes in Sitecore 6</title>
+          <pubDate>Fri, 13 Aug 2010 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/using-luke-to-view-lucene-indexes-in-sitecore-6/</link>
+          <guid>https://seankearney.com/post/using-luke-to-view-lucene-indexes-in-sitecore-6/</guid>
+          <description xml:base="https://seankearney.com/post/using-luke-to-view-lucene-indexes-in-sitecore-6/">&lt;p&gt;As a Sitecore developer who is a fan of leveraging Lucene in my projects I&#x27;ve always been aggravated that, starting with Sitecore 6, I couldn&#x27;t use Luke to view my indexes. As &lt;a href=&quot;http:&#x2F;&#x2F;mcore.wordpress.com&#x2F;2008&#x2F;11&#x2F;05&#x2F;sitecores-lucene-integration&#x2F;&quot;&gt;Jens Mikkelsen&lt;&#x2F;a&gt; points out  this was due to custom compression that Sitecore uses for the Lucene index.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore Media URL</title>
+          <pubDate>Thu, 05 Aug 2010 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-media-url/</link>
+          <guid>https://seankearney.com/post/sitecore-media-url/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-media-url/">&lt;p&gt;For one of my the latest projects the content editors were always trying to get the actual URL to a Sitecore media library item, but there is no easy way to see this in Sitecore. As developers we know it is in the form of &#x2F;&lt;del&gt;&#x2F;media&#x2F;[ShortID].ashx or &#x2F;&lt;&#x2F;del&gt;&#x2F;media&#x2F;[Path].ashx, but editors don&#x27;t want to think about that. They just want it figured out and displayed in front of them.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Web Forms for Marketers - Database Configuration</title>
+          <pubDate>Wed, 21 Jul 2010 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/web-forms-for-marketers-database-configuration/</link>
+          <guid>https://seankearney.com/post/web-forms-for-marketers-database-configuration/</guid>
+          <description xml:base="https://seankearney.com/post/web-forms-for-marketers-database-configuration/">&lt;p&gt;This is more of a &#x27;note to self&#x27; type post, but I am sure some may find it helpful...&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>My Sitecore Development Environment</title>
+          <pubDate>Tue, 27 Apr 2010 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/my-sitecore-development-environment/</link>
+          <guid>https://seankearney.com/post/my-sitecore-development-environment/</guid>
+          <description xml:base="https://seankearney.com/post/my-sitecore-development-environment/">&lt;p&gt;This post if mainly in response to a question that was asked, and subsequent &lt;a href=&quot;http:&#x2F;&#x2F;twitter.com&#x2F;techphoria414&#x2F;statuses&#x2F;12657227972&quot;&gt;tweet&lt;&#x2F;a&gt;, during my session at Dreamcore 2010.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore friendly html, css and javascript</title>
+          <pubDate>Thu, 21 Jan 2010 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-friendly-html-css-and-javascript/</link>
+          <guid>https://seankearney.com/post/sitecore-friendly-html-css-and-javascript/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-friendly-html-css-and-javascript/">&lt;p&gt;&lt;em&gt;Disclaimer: While some of these guidelines may be applied to other Content Management Systems, or .net web forms in general, this is based on my experience with Sitecore.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore&#x27;s Webforms for Marketers (v2) Gotchas</title>
+          <pubDate>Fri, 15 Jan 2010 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecores-webforms-for-marketers-v2-gotchas/</link>
+          <guid>https://seankearney.com/post/sitecores-webforms-for-marketers-v2-gotchas/</guid>
+          <description xml:base="https://seankearney.com/post/sitecores-webforms-for-marketers-v2-gotchas/">&lt;p&gt;I&#x27;ve recently been doing some work with the Web Forms for Marketers (2.0) module and I must say I was presently surprised! The first version of this module was a rather good first pass, but it typically came up short when we wanted to use it. Version 2 is a big step forward and we are just about to launch a site using it. While it is a great package, and I recommend everyone check it out, it does have some &quot;gotchas.&quot;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore&#x27;s Webforms for Marketers (v2) Language Specific DropList</title>
+          <pubDate>Fri, 15 Jan 2010 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecores-webforms-for-marketers-v2-language-specific-droplist/</link>
+          <guid>https://seankearney.com/post/sitecores-webforms-for-marketers-v2-language-specific-droplist/</guid>
+          <description xml:base="https://seankearney.com/post/sitecores-webforms-for-marketers-v2-language-specific-droplist/">&lt;p&gt;Sitecore&#x27;s Webforms for Marketers (v2) module is pretty impressive out of the gate. There was an issue, however, with a recent project that had a few different languages. We needed a Droplist in the form that showed a list of items from Sitecore and while the module does this out of the box it has a &lt;a href=&quot;&#x2F;archive&#x2F;2010&#x2F;01&#x2F;15&#x2F;sitecore-webforms-gotchas.aspx&quot;&gt;gotcha&lt;&#x2F;a&gt; to it; it won&#x27;t remove items from the drop list that do not have a version in the context language.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Simple 404 with Sitecore</title>
+          <pubDate>Mon, 28 Dec 2009 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/simple-404-with-sitecore/</link>
+          <guid>https://seankearney.com/post/simple-404-with-sitecore/</guid>
+          <description xml:base="https://seankearney.com/post/simple-404-with-sitecore/">&lt;p&gt;404&#x27;s in Sitecore can be very simple or extremely complicated with site independent designs and functionality. While a blog post on the later would be a worthwhile blog post, this post will cover a very simple example of how to set the StatusCode of any page in your Sitecore installation.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>New Developer Rig Ordered and Shipped!</title>
+          <pubDate>Thu, 20 Aug 2009 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/new-developer-rig-ordered-and-shipped/</link>
+          <guid>https://seankearney.com/post/new-developer-rig-ordered-and-shipped/</guid>
+          <description xml:base="https://seankearney.com/post/new-developer-rig-ordered-and-shipped/">&lt;p&gt;In my last post I wrote what I planned on building for my home developer rig.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>New Home PC &#x2F; Developer Rig</title>
+          <pubDate>Fri, 14 Aug 2009 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/new-home-pc-developer-rig/</link>
+          <guid>https://seankearney.com/post/new-home-pc-developer-rig/</guid>
+          <description xml:base="https://seankearney.com/post/new-home-pc-developer-rig/">&lt;p&gt;In honor of Windows 7, and my increasing frustration with my 4 year old DELL computer, I figured I would pony up and build myself a nice developer rig. Even though it is my home computer my typical usage is work related; Visual Studio(s), SQL Server, IIS, Virtual Machines, etc... My wife&#x27;s typical usage is email and web browsing. We are not gamers at all; not even solitaire! The most graphic intense application I use would be Google Earth.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Harvesting data from a Coveo index</title>
+          <pubDate>Tue, 07 Jul 2009 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/harvesting-data-from-a-coveo-index/</link>
+          <guid>https://seankearney.com/post/harvesting-data-from-a-coveo-index/</guid>
+          <description xml:base="https://seankearney.com/post/harvesting-data-from-a-coveo-index/">&lt;p&gt;I&#x27;ve been working peripherally with &lt;a href=&quot;http:&#x2F;&#x2F;www.coveo.com&quot;&gt;Coveo&lt;&#x2F;a&gt; for the past couple years now. It hasn&#x27;t been until recently that I&#x27;ve actually needed to start diving into the “API” to try and harvest the data. This, however, proved to be more difficult than one would expect from a Search product!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Coveo with Sitecore Media</title>
+          <pubDate>Mon, 06 Jul 2009 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/coveo-with-sitecore-media/</link>
+          <guid>https://seankearney.com/post/coveo-with-sitecore-media/</guid>
+          <description xml:base="https://seankearney.com/post/coveo-with-sitecore-media/">&lt;p&gt;Out of the box, Coveo does a pretty good job of crawling your website and providing search capabilities. In this particular installation we aren&#x27;t using the &quot;Sitecore connector&quot; we are simply letting coveo do its thing walking the site. We encountered an issue where Sitecore media library items, mainly PDF files, were not making it into the index. We figured it must be a filter of some sort blocking access to it and this proved to be the case.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore FieldRenderer Control and OverrideFieldValue</title>
+          <pubDate>Mon, 22 Dec 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-fieldrenderer-control-and-overridefieldvalue/</link>
+          <guid>https://seankearney.com/post/sitecore-fieldrenderer-control-and-overridefieldvalue/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-fieldrenderer-control-and-overridefieldvalue/">&lt;p&gt;The FieldRenderer Control (&lt;code&gt;Sitecore.Web.UI.WebControls.FieldRenderer&lt;&#x2F;code&gt;) has a method called &lt;em&gt;OverrideFieldValue&lt;&#x2F;em&gt; that takes a string and is supposed to be shown instead of the real fields value, but it doesn&#x27;t work.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Editors, Sitecore, and SEO</title>
+          <pubDate>Fri, 12 Dec 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/editors-sitecore-and-seo/</link>
+          <guid>https://seankearney.com/post/editors-sitecore-and-seo/</guid>
+          <description xml:base="https://seankearney.com/post/editors-sitecore-and-seo/">&lt;p&gt;Editors (and some sysadmins) that have been around IIS web sites for a few years seem to have a little trouble grasping what Sitecore can do for them. More specifically, they have trouble grasping what it is &lt;strong&gt;they&lt;&#x2F;strong&gt; don&#x27;t need to do anymore!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Moved Domain Name</title>
+          <pubDate>Mon, 01 Dec 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/moved-domain-name/</link>
+          <guid>https://seankearney.com/post/moved-domain-name/</guid>
+          <description xml:base="https://seankearney.com/post/moved-domain-name/">&lt;p&gt;Almost two years after I thought about &lt;a href=&quot;&#x2F;post&#x2F;what-is-in-a-name&quot;&gt;phasing out my online moniker&lt;&#x2F;a&gt; I have done it. I have officially moved the carknee.com domain to seankearney.com. Redirects are in place and there shouldn&#x27;t be any noticable change for the few people that read this site. The Feedburner feed is unchanged and will remain unchanged for the near future. Maybe at some point I will move to rss.seankearney.com, but not yet.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Photo Management and Backup</title>
+          <pubDate>Mon, 24 Nov 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/photo-management-and-backup/</link>
+          <guid>https://seankearney.com/post/photo-management-and-backup/</guid>
+          <description xml:base="https://seankearney.com/post/photo-management-and-backup/">&lt;p&gt;&lt;img src=&quot;http:&#x2F;&#x2F;farm4.static.flickr.com&#x2F;3282&#x2F;3026400406_811a14876f_m.jpg&quot; alt=&quot;&quot; &#x2F;&gt;This is a follow up post to &quot;&lt;a href=&quot;&#x2F;post&#x2F;photo-management&quot;&gt;Photo Management&lt;&#x2F;a&gt;&quot; on how I am starting to organize my digital images. After looking around at some of my options (Picasa, Adobe products, buying an iMac, …) I have decided to take the cheap way out. Here is my current workflow, which is a work in progress.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore Diagrams Part 2</title>
+          <pubDate>Fri, 07 Nov 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-diagrams-part-2/</link>
+          <guid>https://seankearney.com/post/sitecore-diagrams-part-2/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-diagrams-part-2/">&lt;p&gt;We have been doing some pretty fun work with &lt;a href=&quot;http:&#x2F;&#x2F;www.sitecore.net&#x2F;&quot;&gt;Sitecore&lt;&#x2F;a&gt; 6 here at &lt;a href=&quot;http:&#x2F;&#x2F;www.hhogdev.com&quot;&gt;Hedgehog Development&lt;&#x2F;a&gt;... I started doing some work with &lt;a href=&quot;&#x2F;post&#x2F;sitecore-template-diagrams&quot;&gt;Sitecore Template Diagrams&lt;&#x2F;a&gt; a while back and I got to talking with some colleagues and we decided to take this to another level. While I can&#x27;t get into the specifics (just yet) about the entire project I can show you the diagrams being generated!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Photo Management</title>
+          <pubDate>Thu, 21 Aug 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/photo-management/</link>
+          <guid>https://seankearney.com/post/photo-management/</guid>
+          <description xml:base="https://seankearney.com/post/photo-management/">&lt;p&gt;I am running into a problem. I have never been much of a picture taking kind of guy... that is, until I got a dog and a son. Now I am snapping pictures like a mad man with my &lt;a href=&quot;http:&#x2F;&#x2F;www.usa.canon.com&#x2F;consumer&#x2F;controller?act=ModelInfoAct&amp;amp;fcategoryid=139&amp;amp;modelid=16303&quot;&gt;Canon Xsi&lt;&#x2F;a&gt; and amassing thousands of pictures named IMG_9321.jpg. I need help!!!!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>It&#x27;s a sad day for DMB fans</title>
+          <pubDate>Wed, 20 Aug 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/its-a-sad-day-for-dmb-fans/</link>
+          <guid>https://seankearney.com/post/its-a-sad-day-for-dmb-fans/</guid>
+          <description xml:base="https://seankearney.com/post/its-a-sad-day-for-dmb-fans/">&lt;p&gt;What &lt;a href=&quot;http:&#x2F;&#x2F;www.dmbnews.net&#x2F;2008&#x2F;08&#x2F;leroi-moore-dead-at-46-saxophonist-was.html&quot;&gt;sad news&lt;&#x2F;a&gt;. LeRoi Moore, The &lt;a href=&quot;http:&#x2F;&#x2F;www.dmband.com&#x2F;&quot;&gt;Dave Matthews Band&lt;&#x2F;a&gt; saxophonist has died.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Upgraded Digital DJ Pool</title>
+          <pubDate>Thu, 14 Aug 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/upgraded-digital-dj-pool/</link>
+          <guid>https://seankearney.com/post/upgraded-digital-dj-pool/</guid>
+          <description xml:base="https://seankearney.com/post/upgraded-digital-dj-pool/">&lt;p&gt;DigitalDJPool.com is the online equivalent of a &quot;&lt;a href=&quot;http:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Record_pool&quot;&gt;record pool&lt;&#x2F;a&gt;&quot; more commonly known now as a &quot;Digital Pool.&quot; For those who aren&#x27;t aware, a record pool is a &lt;a href=&quot;http:&#x2F;&#x2F;digitaldjpool.com&quot;&gt;source for DJ&#x27;s to get promotional music&lt;&#x2F;a&gt; from record labels for use in clubs&#x2F;radio&#x2F;etc... The record labels provide the music to &quot;the pool&quot; and the pool can then provide feedback to the label. Now that MP3&#x27;s are being used more than vinyl, DigitalDJPool.com provides DJ&#x27;s with promotional MP3&#x27;s rather than shipping crates of records!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>iPhone Part Deux</title>
+          <pubDate>Tue, 10 Jun 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/iphone-part-deux/</link>
+          <guid>https://seankearney.com/post/iphone-part-deux/</guid>
+          <description xml:base="https://seankearney.com/post/iphone-part-deux/">&lt;p&gt;This isn&#x27;t an iPhone review blog post. There have been hundreds in the last hour since it was announced.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore Template Diagrams</title>
+          <pubDate>Wed, 09 Apr 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-template-diagrams/</link>
+          <guid>https://seankearney.com/post/sitecore-template-diagrams/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-template-diagrams/">&lt;p&gt;With &lt;a href=&quot;http:&#x2F;&#x2F;www.sitecore.net&#x2F;&quot;&gt;Sitecore&lt;&#x2F;a&gt; templates, unlike C#, you are allowed to inherit from multiple bases. This allows Sitecore developers to be extremely flexible in their implementations, but as with most applications, flexibility adds complexity.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Community Server Enterprise Search Syntax</title>
+          <pubDate>Tue, 18 Mar 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/community-server-enterprise-search-syntax/</link>
+          <guid>https://seankearney.com/post/community-server-enterprise-search-syntax/</guid>
+          <description xml:base="https://seankearney.com/post/community-server-enterprise-search-syntax/">&lt;p&gt;Everyone (?) knows that Community Server uses Lucene for its Enterprise Search. The one problem I found is that I couldn&#x27;t find any search syntax documentation in the CS Docs. Here is a list of all index fields that CS uses:&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>My life will be forever different!!!</title>
+          <pubDate>Tue, 12 Feb 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/my-life-will-be-forever-different/</link>
+          <guid>https://seankearney.com/post/my-life-will-be-forever-different/</guid>
+          <description xml:base="https://seankearney.com/post/my-life-will-be-forever-different/">&lt;p&gt;So, in my last post title, &quot;&lt;a href=&quot;&#x2F;post&#x2F;my-life-may-be-forever-different&quot;&gt;My life may be forever different&lt;&#x2F;a&gt;,&quot; I shared with you that I am getting a dog. I did get the dog, and his name is &lt;a href=&quot;&#x2F;photos&#x2F;carknee&#x2F;tags&#x2F;Wilson&#x2F;default.aspx&quot;&gt;Wilson&lt;&#x2F;a&gt;. Has my life been changed, absolutely. Having Wilson has been a fun experience with its doses of pain and adjustment. But, I digress, this post isn&#x27;t about Wilson and how my life has changed. This post is about how my life &lt;strong&gt;will surely&lt;&#x2F;strong&gt; change...&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore REST API Service</title>
+          <pubDate>Sat, 19 Jan 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-rest-api-service/</link>
+          <guid>https://seankearney.com/post/sitecore-rest-api-service/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-rest-api-service/">&lt;p&gt;If you are a Sitecore developer, go search the Sitecore Developer Network (SDN) for &quot;REST&quot; and tell me what you find. Nothing. Anyone who develops with Sitecore knows that documentation is lacking, but shouldn&#x27;t this be something worth mentioning on your site? I digress.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>For god sake man... Backup Everything</title>
+          <pubDate>Sun, 06 Jan 2008 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/for-god-sake-man-backup-everything/</link>
+          <guid>https://seankearney.com/post/for-god-sake-man-backup-everything/</guid>
+          <description xml:base="https://seankearney.com/post/for-god-sake-man-backup-everything/">&lt;p&gt;I had a fun Friday. I woke up at my usual time (6am) and dove into my usual routine. While the wife is in the shower I jumped on the computer and my browsers default home page (www.carknee.com) wasn&#x27;t coming up. humm. Checked a different site on the same server (www.rswarrior.com) and that wasn&#x27;t responding. Can I ping it? Nope. &lt;em&gt;dang&lt;&#x2F;em&gt; I tried pinging a couple other servers in the facility, but they weren&#x27;t responding either. Double dang. I went to work and figured a bad switch was being replaced and it would be back up when I got to the office.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Sitecore Renderings when item is no longer published</title>
+          <pubDate>Mon, 16 Jul 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/sitecore-renderings-when-item-is-no-longer-published/</link>
+          <guid>https://seankearney.com/post/sitecore-renderings-when-item-is-no-longer-published/</guid>
+          <description xml:base="https://seankearney.com/post/sitecore-renderings-when-item-is-no-longer-published/">&lt;p&gt;This is more of a note to self post...&lt;&#x2F;p&gt;
+&lt;p&gt;I was creating a Sitecore (5.3.1) XSL rendering and I was looping over items. I noticed, however, that when one of those items is no longer published it was still looping through it! What you need to do it change your if statement from:&amp;lt;xsl:if test=&quot;$itm_id&quot;&amp;gt; to: &amp;lt;xsl:if test=&quot;sc:item($itm_id,.)&quot;&amp;gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Moving On</title>
+          <pubDate>Wed, 30 May 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/moving-on/</link>
+          <guid>https://seankearney.com/post/moving-on/</guid>
+          <description xml:base="https://seankearney.com/post/moving-on/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;moving-on&#x2F;MovingOn.jpg&quot; alt=&quot;&quot; &#x2F;&gt;It is time for me to move on from my &lt;a href=&quot;http:&#x2F;&#x2F;www.ddc-web.com&quot;&gt;current employer&lt;&#x2F;a&gt;. I have been with this company since 2000 (with a brief stint elsewhere) and it is really time to go. As is the case with most developers, if you don&#x27;t learn new things on a daily basis your job can get pretty boring. I tried to keep myself going here since, in general, it is a great company to work for, but I know I have to go. I believe that I have reached the limit to what I can learn on my own.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Gravatars for Anonymous Comments</title>
+          <pubDate>Sat, 12 May 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/gravatars-for-anonymous-comments/</link>
+          <guid>https://seankearney.com/post/gravatars-for-anonymous-comments/</guid>
+          <description xml:base="https://seankearney.com/post/gravatars-for-anonymous-comments/">&lt;p&gt;With Community Server, when a registered user makes a blog comment it is very common to show their avatar next to their comment. If the person making the comment is not a registered user, then typically the &quot;anonymous avatar&quot; would be shown. I had gone and implemented an &lt;a href=&quot;&#x2F;post&#x2F;identicons-for-community-server&quot;&gt;Identicon&lt;&#x2F;a&gt; control for anonymous comments and now I am going another step and implementing a &lt;a href=&quot;http:&#x2F;&#x2F;www.gravatar.com&#x2F;&quot;&gt;Gravatar&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>ExtendedAttribute Condition Control</title>
+          <pubDate>Fri, 11 May 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/extendedattribute-condition-control/</link>
+          <guid>https://seankearney.com/post/extendedattribute-condition-control/</guid>
+          <description xml:base="https://seankearney.com/post/extendedattribute-condition-control/">&lt;p&gt;I was working a new control for the &lt;a href=&quot;&#x2F;tags&#x2F;carknee-bundle&#x2F;&quot;&gt;bundle&lt;&#x2F;a&gt; and was in need of a &lt;a href=&quot;http:&#x2F;&#x2F;getben.com&#x2F;archive&#x2F;2007&#x2F;01&#x2F;15&#x2F;introduction-to-chameleon-condition-controls.aspx&quot;&gt;condition control&lt;&#x2F;a&gt; within Community Server that didn&#x27;t appear to exist. What I needed was a condition control that checked against a WeblogPost&#x27;s ExtendedAttributes. What I came up with was the &quot;&lt;em&gt;PostExtendedAttributeComparison.&lt;&#x2F;em&gt;&quot;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Save Author&#x27;s Email for Anonymous Blog Comments</title>
+          <pubDate>Fri, 11 May 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/save-authors-email-for-anonymous-blog-comments/</link>
+          <guid>https://seankearney.com/post/save-authors-email-for-anonymous-blog-comments/</guid>
+          <description xml:base="https://seankearney.com/post/save-authors-email-for-anonymous-blog-comments/">&lt;p&gt;I am working on a control for Community Server where I need to capture the email address of the person making a comment. However, I don&#x27;t need to store the email address if the person is already a registered member of the site since this information is stored already. What I did was utilize the &lt;a href=&quot;http:&#x2F;&#x2F;getben.com&#x2F;archive&#x2F;2007&#x2F;01&#x2F;16&#x2F;introduction-to-chameleon-action-controls.aspx&quot;&gt;&lt;em&gt;CustomAction&lt;&#x2F;em&gt;&lt;&#x2F;a&gt; feature for the WeblogPostCommentForm and set the &quot;AuthorEmail&quot; extended attribute.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>CarKnee Bundle for Community Server 2007</title>
+          <pubDate>Wed, 09 May 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/carknee-bundle-for-community-server-2007/</link>
+          <guid>https://seankearney.com/post/carknee-bundle-for-community-server-2007/</guid>
+          <description xml:base="https://seankearney.com/post/carknee-bundle-for-community-server-2007/">&lt;p&gt;Now that Community Server 2007 has been out for a while I figured it was time to update the &lt;a href=&quot;&#x2F;tags&#x2F;carknee-bundle&#x2F;&quot;&gt;bundle&lt;&#x2F;a&gt;! The Jobs have become Tasks, the Identicon control now has implicit databinding and the CSModules have some little upgrades ;p The new version is now 3.0 to keep in step with the official version of CS2007 3.0&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>My life may be forever different...</title>
+          <pubDate>Tue, 08 May 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/my-life-may-be-forever-different/</link>
+          <guid>https://seankearney.com/post/my-life-may-be-forever-different/</guid>
+          <description xml:base="https://seankearney.com/post/my-life-may-be-forever-different/">&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;my-life-may-be-forever-different&#x2F;OurPup_3.jpg&quot; alt=&quot;&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Site Upgraded to CS 2007</title>
+          <pubDate>Tue, 08 May 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/site-upgraded-to-cs-2007/</link>
+          <guid>https://seankearney.com/post/site-upgraded-to-cs-2007/</guid>
+          <description xml:base="https://seankearney.com/post/site-upgraded-to-cs-2007/">&lt;p&gt;This site was upgraded to Community Server 2007 in all of about 10 minutes! The CS team made it real easy to upgrade with the new config file overrides! Nice job.&lt;&#x2F;p&gt;
+&lt;p&gt;I will be upgrading and testing the &lt;a href=&quot;&#x2F;tags&#x2F;carknee-bundle&#x2F;&quot;&gt;bundle&lt;&#x2F;a&gt; to work with CS 2007 and publish it asap!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>How to publish blog posts for others in Community Server</title>
+          <pubDate>Tue, 24 Apr 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/how-to-publish-blog-posts-for-others-in-community-server/</link>
+          <guid>https://seankearney.com/post/how-to-publish-blog-posts-for-others-in-community-server/</guid>
+          <description xml:base="https://seankearney.com/post/how-to-publish-blog-posts-for-others-in-community-server/">&lt;p&gt;A few members, myself included, are looking for some sort of &quot;content manager&quot; capability with the blog system of Community Server. By &quot;Content Manager&quot; I am meaning that I do not want the individual people to actually make the posts. Rather, I would like to have a &quot;manager&quot; that will publish the post on the authors behalf.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>ASP.NET Confirmation Controls</title>
+          <pubDate>Thu, 29 Mar 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/aspnet-confirmation-controls/</link>
+          <guid>https://seankearney.com/post/aspnet-confirmation-controls/</guid>
+          <description xml:base="https://seankearney.com/post/aspnet-confirmation-controls/">&lt;p&gt;I have been (slowly) working on the &lt;a href=&quot;&#x2F;tags&#x2F;filezilla&quot;&gt;Web Based FileZilla Administration&lt;&#x2F;a&gt; project. One of the issues that I could predict happening would be the creation of a user&#x2F;group&#x2F;setting and then the end user would leave the page without saving their changes. There are many ways to handle this type of issue, but I wanted a fairly simple implementation.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Home Office&#x27;s</title>
+          <pubDate>Thu, 29 Mar 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/home-offices/</link>
+          <guid>https://seankearney.com/post/home-offices/</guid>
+          <description xml:base="https://seankearney.com/post/home-offices/">&lt;p&gt;OK. So I have been in my house for a few weeks now, but I still don&#x27;t have my home office setup the way I need it. I &lt;strong&gt;really&lt;&#x2F;strong&gt; need a hand trying to find a good desk that works well as a normal desk as well as a computer desk with my 2 monitors. The only real restrictions that I have is that:&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>There&#x27;s that shortcut I lost!</title>
+          <pubDate>Tue, 27 Mar 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/theres-that-shortcut-i-lost/</link>
+          <guid>https://seankearney.com/post/theres-that-shortcut-i-lost/</guid>
+          <description xml:base="https://seankearney.com/post/theres-that-shortcut-i-lost/">&lt;p&gt;Big thanks to &lt;a href=&quot;http:&#x2F;&#x2F;www.codinghorror.com&#x2F;blog&#x2F;archives&#x2F;000825.html&quot;&gt;Jeff Atwood&lt;&#x2F;a&gt; for bringing this up! Being an ex-Internet Explorer user I have IE shortcuts etched into my brain. Unfortunately, FireFox didn&#x27;t bring my favorite one with it. The functionality of the F4 key.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>ASP.NET Gravatar Control</title>
+          <pubDate>Tue, 13 Mar 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/aspnet-gravatar-control/</link>
+          <guid>https://seankearney.com/post/aspnet-gravatar-control/</guid>
+          <description xml:base="https://seankearney.com/post/aspnet-gravatar-control/">&lt;p&gt;&lt;a href=&quot;http:&#x2F;&#x2F;site.gravatar.com&#x2F;&quot;&gt;Gravatar 2.0&lt;&#x2F;a&gt; has been out for a few weeks now and I didn&#x27;t see any ASP.NET implementation &lt;a href=&quot;http:&#x2F;&#x2F;site.gravatar.com&#x2F;site&#x2F;implement&quot;&gt;listed&lt;&#x2F;a&gt; on their site so I figured I would wip one up.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>A Simple Web Site Monitor</title>
+          <pubDate>Tue, 06 Mar 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/a-simple-web-site-monitor/</link>
+          <guid>https://seankearney.com/post/a-simple-web-site-monitor/</guid>
+          <description xml:base="https://seankearney.com/post/a-simple-web-site-monitor/">&lt;p&gt;One of my web servers had been having all sorts of problems over the last few months. It turned out to be the RAID controller, but that is another post. Because of the problems we were having I wanted a simple way to get a notification of when the site we were hosting went down. I didn&#x27;t want anything fancy, just a simple email when the sites stopped responding. Here is what I found...&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>I&#x27;m In.</title>
+          <pubDate>Tue, 06 Mar 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/im-in/</link>
+          <guid>https://seankearney.com/post/im-in/</guid>
+          <description xml:base="https://seankearney.com/post/im-in/">&lt;p&gt;In my &lt;a href=&quot;http:&#x2F;&#x2F;www.carknee.com&#x2F;archive&#x2F;2007&#x2F;02&#x2F;21&#x2F;it-is-coming-to-a-head-now.aspx&quot;&gt;last post&lt;&#x2F;a&gt; I mentioned that I am moving into my new house. I am living amongst boxes right now, but I am in. No new pics yet, but I will take some when we are settled. Right now we are getting furniture delivered and unpacking slowly.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>It is coming to a head now.</title>
+          <pubDate>Wed, 21 Feb 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/it-is-coming-to-a-head-now/</link>
+          <guid>https://seankearney.com/post/it-is-coming-to-a-head-now/</guid>
+          <description xml:base="https://seankearney.com/post/it-is-coming-to-a-head-now/">&lt;p&gt;My wife and I purchased a house in mid-December. The house needed a lot more work than we originally had expected, but we are winding down and moving in this weekend!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Community Server and robots.txt</title>
+          <pubDate>Tue, 13 Feb 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/community-server-and-robotstxt/</link>
+          <guid>https://seankearney.com/post/community-server-and-robotstxt/</guid>
+          <description xml:base="https://seankearney.com/post/community-server-and-robotstxt/">&lt;p&gt;A couple or members lately have had issues (&lt;a href=&quot;http:&#x2F;&#x2F;communityserver.org&#x2F;forums&#x2F;566086&#x2F;ShowThread.aspx&quot;&gt;#1&lt;&#x2F;a&gt; + &lt;a href=&quot;http:&#x2F;&#x2F;communityserver.org&#x2F;forums&#x2F;567914&#x2F;ShowThread.aspx&quot;&gt;#2&lt;&#x2F;a&gt;) with the way search engines have been indexing their sites.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Community Server licensing is out of hand.</title>
+          <pubDate>Sat, 10 Feb 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/community-server-licensing-is-out-of-hand/</link>
+          <guid>https://seankearney.com/post/community-server-licensing-is-out-of-hand/</guid>
+          <description xml:base="https://seankearney.com/post/community-server-licensing-is-out-of-hand/">&lt;p&gt;Where do I start? This story has been told many times before and I don&#x27;t claim to be the first to bitch about it.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Server.Transfer, Modifying Form Action, and MAC Error</title>
+          <pubDate>Fri, 02 Feb 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/servertransfer-modifying-form-action-and-mac-error/</link>
+          <guid>https://seankearney.com/post/servertransfer-modifying-form-action-and-mac-error/</guid>
+          <description xml:base="https://seankearney.com/post/servertransfer-modifying-form-action-and-mac-error/">&lt;p&gt;I had been getting this error:&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Syndicated Blog Post Signatures in Community Server</title>
+          <pubDate>Wed, 31 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/syndicated-blog-post-signatures-in-community-server/</link>
+          <guid>https://seankearney.com/post/syndicated-blog-post-signatures-in-community-server/</guid>
+          <description xml:base="https://seankearney.com/post/syndicated-blog-post-signatures-in-community-server/">&lt;p&gt;Another day, another Community Server add-on!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Embed an MP3 Player in Community Server Posts</title>
+          <pubDate>Tue, 30 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/embed-an-mp3-player-in-community-server-posts/</link>
+          <guid>https://seankearney.com/post/embed-an-mp3-player-in-community-server-posts/</guid>
+          <description xml:base="https://seankearney.com/post/embed-an-mp3-player-in-community-server-posts/">&lt;p&gt;A member on the Community Server forums asked about &lt;a href=&quot;http:&#x2F;&#x2F;communityserver.org&#x2F;forums&#x2F;565695&#x2F;ShowThread.aspx&quot;&gt;embedding an MP3&lt;&#x2F;a&gt; player in his blog posts and I thought this would be a great addition to the bundle!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Job Titles Come and Go</title>
+          <pubDate>Mon, 29 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/job-titles-come-and-go/</link>
+          <guid>https://seankearney.com/post/job-titles-come-and-go/</guid>
+          <description xml:base="https://seankearney.com/post/job-titles-come-and-go/">&lt;p&gt;I&#x27;ll keep with a trend this morning since my last post was about job finding sites, I will just point to a good article about the &lt;a href=&quot;http:&#x2F;&#x2F;blog.rightbrainnetworks.com&#x2F;2007&#x2F;01&#x2F;28&#x2F;who-killed-the-webmaster&#x2F;&quot;&gt;Webmaster&lt;&#x2F;a&gt; job title. The blog post is a must read for anyone who has been in the web development area for the better half of a decade!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Snap no more!</title>
+          <pubDate>Fri, 26 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/snap-no-more/</link>
+          <guid>https://seankearney.com/post/snap-no-more/</guid>
+          <description xml:base="https://seankearney.com/post/snap-no-more/">&lt;p&gt;Apparently I am not the only one to think that &quot;Snap&quot; is one of the most &lt;a href=&quot;http:&#x2F;&#x2F;scripting.wordpress.com&#x2F;2007&#x2F;01&#x2F;25&#x2F;scripting-news-for-1252007&quot;&gt;annoying trends&lt;&#x2F;a&gt; in the web&#x2F;blog-sphere these days! When I mouse over a link I almost always am doing it to either 1) click on it or 2) see where it is pointing to in the status bar. When that window pops up it always grabs my attention and usually leads to an explicative flying out of my mouth.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>What on Earth?</title>
+          <pubDate>Fri, 26 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/what-on-earth/</link>
+          <guid>https://seankearney.com/post/what-on-earth/</guid>
+          <description xml:base="https://seankearney.com/post/what-on-earth/">&lt;p&gt;I was just browsing some spots on Google Maps and noticed some &lt;a href=&quot;http:&#x2F;&#x2F;www.google.com&#x2F;maps?q=Anchorage,+AK&amp;amp;ie=UTF8&amp;amp;z=9&amp;amp;ll=61.143235,-114.274292&amp;amp;spn=0.861633,3.47168&amp;amp;t=h&amp;amp;om=1&quot;&gt;pretty strange looking water&lt;&#x2F;a&gt;!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Identicons for Community Server</title>
+          <pubDate>Tue, 23 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/identicons-for-community-server/</link>
+          <guid>https://seankearney.com/post/identicons-for-community-server/</guid>
+          <description xml:base="https://seankearney.com/post/identicons-for-community-server/">&lt;p&gt;Jeff Atwood posted up a &lt;a href=&quot;http:&#x2F;&#x2F;www.codinghorror.com&#x2F;blog&#x2F;archives&#x2F;000774.html&quot;&gt;C# implementation of Identicons&lt;&#x2F;a&gt; the other day. While I do not see them being all that useful, they are pretty neat. I whipped up a little Community Server Add-on that can display an Identicon.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Blocking new users by email address in Community Server</title>
+          <pubDate>Sat, 20 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/blocking-new-users-by-email-address-in-community-server/</link>
+          <guid>https://seankearney.com/post/blocking-new-users-by-email-address-in-community-server/</guid>
+          <description xml:base="https://seankearney.com/post/blocking-new-users-by-email-address-in-community-server/">&lt;p&gt;A couple of members on the &lt;a href=&quot;http:&#x2F;&#x2F;communityserver.org&#x2F;&quot;&gt;Community Server&lt;&#x2F;a&gt; forums wanted a way to &lt;a href=&quot;http:&#x2F;&#x2F;communityserver.org&#x2F;forums&#x2F;thread&#x2F;561844.aspx&quot;&gt;block new members&lt;&#x2F;a&gt; based on known SPAM domains. This sounded like a great idea for a CSModule. I looked at the list of events and saw that there is an event fired off before and after a user is created! Great! The PostUserUpdate event fires off after the user has been added to the database. This seems like the perfect place to change their account status, or moderation level, based on their email address.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Defrag your server</title>
+          <pubDate>Wed, 17 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/defrag-your-server/</link>
+          <guid>https://seankearney.com/post/defrag-your-server/</guid>
+          <description xml:base="https://seankearney.com/post/defrag-your-server/">&lt;p&gt;It seems that my fancy dancy server needs to run defrag every couple days. The site is running a well visited site (and some other not so visited sites) and is creating 300MB Log Files from IIS, as well as user uploaded files, etc... All of this is really fragmenting my nice and speedy data drive (actually, 2 drives in a RAID 1 configuration).&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Drivers on a Floppy?</title>
+          <pubDate>Mon, 15 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/drivers-on-a-floppy/</link>
+          <guid>https://seankearney.com/post/drivers-on-a-floppy/</guid>
+          <description xml:base="https://seankearney.com/post/drivers-on-a-floppy/">&lt;p&gt;A little rant here...&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>DVR Rant</title>
+          <pubDate>Wed, 10 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/dvr-rant/</link>
+          <guid>https://seankearney.com/post/dvr-rant/</guid>
+          <description xml:base="https://seankearney.com/post/dvr-rant/">&lt;p&gt;I just want to rant a little about &lt;a href=&quot;http:&#x2F;&#x2F;www.optimum.com&#x2F;io&#x2F;dvr&#x2F;dvr.jsp&quot;&gt;Cablevision&#x27;s IO HD DVR&lt;&#x2F;a&gt;. The thing sucks! Sure, DVR&#x27;s are great; when they work! I have been really busy every night working on the house and last night I quit early and wanted to catch up on last Thursday&#x27;s episodes of &quot;&lt;a href=&quot;http:&#x2F;&#x2F;www.nbc.com&#x2F;My_Name_Is_Earl&#x2F;&quot;&gt;My Name is Earl&lt;&#x2F;a&gt;&quot; and &quot;&lt;a href=&quot;http:&#x2F;&#x2F;www.nbc.com&#x2F;The_Office&#x2F;&quot;&gt;The Office&lt;&#x2F;a&gt;&quot;. Guess what. &quot;The Office&quot; didn&#x27;t record for some unknown reason. &lt;em&gt;ARGH&lt;&#x2F;em&gt; Looking back over my recorded list I am seeing a few programs didn&#x27;t get recorded. I am annoyed.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Other Community Server Add-Ons (Teaser)</title>
+          <pubDate>Wed, 10 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/other-community-server-add-ons-teaser/</link>
+          <guid>https://seankearney.com/post/other-community-server-add-ons-teaser/</guid>
+          <description xml:base="https://seankearney.com/post/other-community-server-add-ons-teaser/">&lt;p&gt;I am posting this just as a teaser, and to force myself to keep to my word... I have other CS Add-Ons that I will try to release when I get time to package them up. I wrote a few good ones about 6 months ago and have yet to release them. My favorite of the bunch is a &quot;Site Supporter Add-On!&quot;&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Top Posters Role Management Community Server Job</title>
+          <pubDate>Wed, 10 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/top-posters-role-management-community-server-job/</link>
+          <guid>https://seankearney.com/post/top-posters-role-management-community-server-job/</guid>
+          <description xml:base="https://seankearney.com/post/top-posters-role-management-community-server-job/">&lt;p&gt;&quot;Rocket City Web&quot; of the Community Server forums &lt;a href=&quot;http:&#x2F;&#x2F;communityserver.org&#x2F;forums&#x2F;thread&#x2F;563175.aspx&quot;&gt;asked&lt;&#x2F;a&gt; if it is possible to limit top posting members to a certain forum. At first, I had though the member points system would be perfect for this. However, Member Points is an add-on and not available for the &quot;Personal Edition&quot; of Community Server. Dave Burke mentioned that you should just add top posting users to a specific Role and grant that Role access. I thought this would be perfect for a CSJob!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Windows Home Server. Is it worth it?</title>
+          <pubDate>Wed, 10 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/windows-home-server-is-it-worth-it/</link>
+          <guid>https://seankearney.com/post/windows-home-server-is-it-worth-it/</guid>
+          <description xml:base="https://seankearney.com/post/windows-home-server-is-it-worth-it/">&lt;p&gt;I am running a &lt;a href=&quot;http:&#x2F;&#x2F;www.linksys.com&#x2F;servlet&#x2F;Satellite?c=L_Product_C2&amp;amp;childpagename=US%2FLayout&amp;amp;cid=1119460471050&amp;amp;pagename=Linksys%2FCommon%2FVisitorWrapper&quot;&gt;Linksys NSLU2&lt;&#x2F;a&gt; with the &lt;a href=&quot;http:&#x2F;&#x2F;www.nslu2-linux.org&#x2F;wiki&#x2F;Unslung&#x2F;HomePage&quot;&gt;uNSLUng&lt;&#x2F;a&gt; firmware with &lt;a href=&quot;http:&#x2F;&#x2F;www.twonkyvision.com&#x2F;Products&#x2F;TwonkyMedia&#x2F;index.html&quot;&gt;TwonkyVision Media Server&lt;&#x2F;a&gt; installed.  Attached to my NSLU is a standard external 300GB USB drive that holds my MP3s, movies, pictures, etc... On the home theater side of the equation I have the &lt;a href=&quot;http:&#x2F;&#x2F;www.dlink.com&#x2F;products&#x2F;?sec=0&amp;amp;pid=438&quot;&gt;D-Link DSM-520&lt;&#x2F;a&gt;.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>iPhone</title>
+          <pubDate>Tue, 09 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/iphone/</link>
+          <guid>https://seankearney.com/post/iphone/</guid>
+          <description xml:base="https://seankearney.com/post/iphone/">&lt;p&gt;I skimmed the Steve Jobs Keynote from &lt;a href=&quot;http:&#x2F;&#x2F;www.engadget.com&#x2F;2007&#x2F;01&#x2F;09&#x2F;live-from-macworld-2007-steve-jobs-keynote&#x2F;&quot;&gt;Engadget&lt;&#x2F;a&gt; and I must say... that &lt;a href=&quot;http:&#x2F;&#x2F;www.apple.com&#x2F;iphone&#x2F;&quot;&gt;iPhone&lt;&#x2F;a&gt; does look nice! lol.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>FileZilla FTP Server Step 1: Create Object From XML</title>
+          <pubDate>Wed, 03 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/filezilla-ftp-server-step-1-create-object-from-xml/</link>
+          <guid>https://seankearney.com/post/filezilla-ftp-server-step-1-create-object-from-xml/</guid>
+          <description xml:base="https://seankearney.com/post/filezilla-ftp-server-step-1-create-object-from-xml/">&lt;p&gt;The first step in administering the users of FileZilla FTP Server with an ASP.NET front end is to get the XML Schema for the config file.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Flash File (.swf) Loader Control</title>
+          <pubDate>Tue, 02 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/flash-file-loader-control/</link>
+          <guid>https://seankearney.com/post/flash-file-loader-control/</guid>
+          <description xml:base="https://seankearney.com/post/flash-file-loader-control/">&lt;p&gt;All web developers and designers should know by now that you should not use the traditional &lt;code&gt;&amp;lt;object&amp;gt;&amp;lt;embed&amp;gt;&lt;&#x2F;code&gt;... method for placing Flash content on your site. &lt;a href=&quot;http:&#x2F;&#x2F;www.adobe.com&#x2F;devnet&#x2F;activecontent&#x2F;&quot;&gt;Macromedia (Adobe) recommends&lt;&#x2F;a&gt; using javascript to load the Flash content and it works just fine. However, if you are a .NET programmer and have a lot of flash content it is fairly easy to create a Control that handles the repetitive tasks.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>How to handle multiple domain names for your site.</title>
+          <pubDate>Tue, 02 Jan 2007 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/how-to-handle-multiple-domain-names-for-your-site/</link>
+          <guid>https://seankearney.com/post/how-to-handle-multiple-domain-names-for-your-site/</guid>
+          <description xml:base="https://seankearney.com/post/how-to-handle-multiple-domain-names-for-your-site/">&lt;p&gt;&lt;a href=&quot;http:&#x2F;&#x2F;nayyeri.net&#x2F;archive&#x2F;2006&#x2F;12&#x2F;22&#x2F;remove-www-from-urls-in-asp-net.aspx&quot;&gt;Keyvan Nayyeri&lt;&#x2F;a&gt; wrote up an article (and HttpModule) on how he handles removing the &lt;em&gt;www&lt;&#x2F;em&gt; from the URI when people visit his site. I wrote something similar to this a while back for a site I develop. This particular company has about 10 domain names that all point to the companies main web site. Back in 2000, before I started working for the company, the search engines had indexed all of the domain names. While this may be good I have always been worried about &lt;a href=&quot;http:&#x2F;&#x2F;www.google.com&#x2F;search?q=site%3Awww.mattcutts.com+%22duplicate+content%22&quot;&gt;duplicate content&lt;&#x2F;a&gt; in Google&#x27;s Index.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>FileZilla FTP Web Based Management: Concept</title>
+          <pubDate>Fri, 22 Dec 2006 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/filezilla-ftp-web-based-management-concept/</link>
+          <guid>https://seankearney.com/post/filezilla-ftp-web-based-management-concept/</guid>
+          <description xml:base="https://seankearney.com/post/filezilla-ftp-web-based-management-concept/">&lt;p&gt;With (almost) all of my FTP servers now running &lt;a href=&quot;http:&#x2F;&#x2F;sourceforge.net&#x2F;projects&#x2F;filezilla&#x2F;&quot;&gt;FileZilla&lt;&#x2F;a&gt; I need a way to maintain users with an easy web based tool. To be more specific, I don&#x27;t need it, but I delegate the management of FTP users to someone else who does not have remote access to the server, therefore I need it for them.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Google Maps with Waypoints</title>
+          <pubDate>Tue, 19 Dec 2006 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/google-maps-with-waypoints/</link>
+          <guid>https://seankearney.com/post/google-maps-with-waypoints/</guid>
+          <description xml:base="https://seankearney.com/post/google-maps-with-waypoints/">&lt;p&gt;Finally! Google has finally added the feature of &lt;a href=&quot;http:&#x2F;&#x2F;googlemapsmania.blogspot.com&#x2F;2006&#x2F;12&#x2F;google-maps-get-from-point-to-b-then-c.html&quot;&gt;adding waypoints&lt;&#x2F;a&gt; into its &lt;a href=&quot;http:&#x2F;&#x2F;maps.google.com&quot;&gt;mapping product&lt;&#x2F;a&gt;!&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Server Configuration: Directories</title>
+          <pubDate>Tue, 19 Dec 2006 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/server-configuration-directories/</link>
+          <guid>https://seankearney.com/post/server-configuration-directories/</guid>
+          <description xml:base="https://seankearney.com/post/server-configuration-directories/">&lt;p&gt;I have been running my own web server for a few years now and like everyone who does this I have my own ways to do things. One of the things I wanted to revisit, before setting the new machine out into the wild, was my typical directory structure. While this may seem like a trivial concept to many, things can get out of control quikly when you start throwing in many domains, sub domains, Log files, databases, etc...&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Server Configuration: FTP</title>
+          <pubDate>Tue, 19 Dec 2006 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/server-configuration-ftp/</link>
+          <guid>https://seankearney.com/post/server-configuration-ftp/</guid>
+          <description xml:base="https://seankearney.com/post/server-configuration-ftp/">&lt;p&gt;In the spirit of trying to keep writing, I figured I would write about by new found love of FTP. Well that is a bit of an exaggeration, but on my previous box I used the FTP service built into IIS 5. What a nightmare! Don&#x27;t get me wrong, the service worked fine and it was stable. The problem came out only when I needed to give someone else access. You need to create an account on the computer, deal with permissions, blah blah blah. I felt it was overly complicated.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>1st Post</title>
+          <pubDate>Mon, 18 Dec 2006 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/1st-post/</link>
+          <guid>https://seankearney.com/post/1st-post/</guid>
+          <description xml:base="https://seankearney.com/post/1st-post/">&lt;p&gt;Hello World&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>New Server</title>
+          <pubDate>Mon, 18 Dec 2006 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/new-server/</link>
+          <guid>https://seankearney.com/post/new-server/</guid>
+          <description xml:base="https://seankearney.com/post/new-server/">&lt;p&gt;In my first post, all of an hour ago, I mentioned that a new server was one of the reasons I renewed my interest in blogging.&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>What is in a name?</title>
+          <pubDate>Mon, 18 Dec 2006 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/what-is-in-a-name/</link>
+          <guid>https://seankearney.com/post/what-is-in-a-name/</guid>
+          <description xml:base="https://seankearney.com/post/what-is-in-a-name/">&lt;p&gt;What is in a name?&lt;&#x2F;p&gt;
+</description>
+      </item>
+      <item>
+          <title>Will I actually write?</title>
+          <pubDate>Mon, 18 Dec 2006 00:00:00 +0000</pubDate>
+          <author>Unknown</author>
+          <link>https://seankearney.com/post/will-i-actually-write/</link>
+          <guid>https://seankearney.com/post/will-i-actually-write/</guid>
+          <description xml:base="https://seankearney.com/post/will-i-actually-write/">&lt;p&gt;Will I actually write?&lt;&#x2F;p&gt;
+</description>
+      </item>
+    </channel>
+</rss>

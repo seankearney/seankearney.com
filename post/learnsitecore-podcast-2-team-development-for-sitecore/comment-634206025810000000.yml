@@ -1,0 +1,17 @@
+id: 634206025810000000
+date: 2010-09-20T18:03:01.0000000Z
+name: Sean Kearney
+avatar: http://www.gravatar.com/avatar/e9ac5d1ba61b7b128136ec1c2db82f2c.jpg?d=robohash
+message: >-
+  James,
+
+  What you wrote sounds correct. We have objects that mirror a Sitecore template. There are more than a few people out there doing this sort of thing. Perhaps the best known is &quot;DomainObjects,&quot; which is distributed as a &quot;Shared Source Module&quot; @ http://trac.sitecore.net/DomainObjects
+
+
+  I do not use this specific module as we came up with something similar, but that is something worth considering.
+
+
+  Our goal with TDS will be to generated the code automatically for you and cut down development time even further! There are also code generation modules out there, but the one thing lacking is the integration into Visual Studio.
+
+
+  As for working backwards (code -&gt; Sitecore) that is an interesting idea. I am not sure where that fits in with TDS, but it could be a fun exercise. This was just posted the other day, which sounds similar http://www.karlkopp.com/blog/2010/9/16/html-to-sitecore-in-one-click

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    
+    <title>Devin.ai Builds a Zola Theme | Sean Kearney</title>
+    <meta name="description" content="After previous failed attempts to get Devin.ai to do some real-world work I had it try some real junior stuff. The results are better.">
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;devinai-builds-zola-theme&#x2F;">
+    <meta property="og:site_name" content="Sean Kearney">
+    <meta property="og:title" content="Devin.ai Builds a Zola Theme | Sean Kearney">
+    <meta property="og:description" content="After previous failed attempts to get Devin.ai to do some real-world work I had it try some real junior stuff. The results are better.">
+    <meta property="og:image" content="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;devinai-builds-zola-theme&#x2F;promo-devinai-builds-zola-theme.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Devin.ai Builds a Zola Theme | Sean Kearney">
+    <meta name="twitter:description" content="After previous failed attempts to get Devin.ai to do some real-world work I had it try some real junior stuff. The results are better.">
+    <meta name="twitter:image" content="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;devinai-builds-zola-theme&#x2F;promo-devinai-builds-zola-theme.jpg">
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (!savedTheme) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+            }
+        })();
+    </script>
+    <meta name="search-index" content="https://seankearney.com/search_index.en.js">
+    <link rel="stylesheet" href="https://seankearney.com/tailwind.css">
+    <script src="https://seankearney.com/js/elasticlunr.min.js" defer></script>
+    <script src="https://seankearney.com/search.js" defer></script>
+    <script src="https://seankearney.com/theme.js" defer></script>
+    <script src="https://seankearney.com/mobile-menu.js" defer></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://seankearney.com/rss.xml">
+</head>
+<body>
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 z-50">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-6">
+                <a href="https://seankearney.com" class="text-xl font-bold text-slate-900 dark:text-white">Sean Kearney</a>
+                <div class="hidden md:flex space-x-4">
+                    
+                    <a href="https://seankearney.com/about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">About</a>
+                    
+                    <a href="https://seankearney.com/post" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Blog</a>
+                    
+                    <a href="https://seankearney.com/tags" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Categories</a>
+                    
+                    <a href="https://seankearney.com/archive" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Archive</a>
+                    
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative hidden md:block">
+                    <input id="search-input" type="search" class="w-48 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Type to search..." aria-label="Search">
+                    <div id="search-preview" class="absolute right-0 mt-2 w-96 max-w-screen-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50 hidden">
+                    </div>
+                </div>
+                <button id="mobile-search-button" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Search" aria-expanded="false" aria-controls="search-modal">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Toggle dark mode">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <button class="mobile-menu-button md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Menu" aria-expanded="false">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div class="mobile-menu hidden md:hidden bg-white dark:bg-gray-800 w-full border-t dark:border-gray-700">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+                
+                <a href="https://seankearney.com/about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">About</a>
+                
+                <a href="https://seankearney.com/post" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Blog</a>
+                
+                <a href="https://seankearney.com/tags" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Categories</a>
+                
+                <a href="https://seankearney.com/archive" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Archive</a>
+                
+            </div>
+        </div>
+    </header>
+
+    <div id="search-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 transition-opacity duration-200 ease-in-out">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-3xl mx-auto mt-16 sm:mt-20 rounded-lg shadow-xl overflow-hidden transform transition-transform duration-200">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Search Results</h2>
+                <button id="close-search" class="text-2xl text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition-colors duration-150" aria-label="Close search">×</button>
+            </div>
+            <div class="p-4 border-b dark:border-gray-700 md:hidden">
+                <input id="modal-search-input" type="search" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Type to search..." aria-label="Search">
+            </div>
+            <div id="search-results" class="max-h-[80vh] sm:max-h-[70vh] overflow-y-auto p-4 space-y-4">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 pt-20 pb-16 min-h-screen">
+        
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <article class="mb-16">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-slate-900 dark:text-white mb-4">Devin.ai Builds a Zola Theme</h1>
+            <div class="text-gray-500 dark:text-gray-400">
+                <time datetime="2024-12-25">December 25, 2024</time>
+                
+                <span class="mx-2">•</span>
+                <span>
+                    
+                    <a href="https://seankearney.com/tags/ai/" 
+                       class="text-blue-600 dark:text-blue-400 hover:underline">AI</a>
+                    , 
+                    
+                    <a href="https://seankearney.com/tags/zola/" 
+                       class="text-blue-600 dark:text-blue-400 hover:underline">Zola</a>
+                    
+                    
+                </span>
+                
+            </div>
+        </header>
+
+        <div class="prose dark:prose-invert max-w-none">
+            <p>In the world of AI-driven development, Devin.ai showcases remarkable potential (but certainly some <a href="https://seankearney.com/post/devinai-vuejs-migration/">unremarkable results</a>) in automating various tasks. This blog post delves into my experience with Devin.ai as I attempt to create a Zola theme using Tailwind CSS and Vanilla JS.</p>
+<span id="continue-reading"></span>
+<blockquote>
+<h4 id="tl-dr">TL;DR</h4>
+<ul>
+<li>I'm not a designer.. neither is Devin. BUT Devin is much faster/better at putting something passable together.</li>
+<li>Like all developers -- requirements matter.</li>
+<li>Asking for fixes/changes risks undoing progress.</li>
+</ul>
+</blockquote>
+<h2 id="the-goal">The Goal</h2>
+<p>The high-level goals of this test are:</p>
+<ol>
+<li><strong>Evaluate Devin.ai on basic front-end tasks</strong>: I wanted to see how well Devin could handle basic HTML markup, CSS, and vanilla JavaScript tasks, as these are essential skills for any front-end developer.</li>
+<li><strong>Use Tailwind CSS</strong>: As someone who has never used Tailwind CSS before, this experiment was an opportunity for me to gain exposure and understand its utility and efficiency in a real-world project.</li>
+<li><strong>Create a Zola theme for this site</strong>: The end goal was to create a usable Zola theme for my site, something that could potentially replace the existing theme and improve the overall look and feel.</li>
+</ol>
+<h2 id="the-experiment">The Experiment</h2>
+<h3 id="initial-setup">Initial Setup</h3>
+<p>⚠ I must point out that the GitHub repository at <a href="https://github.com/seankearney/zola-devin">devin-zola</a> <strong>is not</strong> the original repo that Devin worked out of. Devin is tied to my work account and a GitHub organization that I didn't want permanently tied to this theme. So all work (i.e., pull requests) were done elsewhere. When the experiment was complete, I changed commit authors (to remove my work account) and I had to remove a "Co-Authored" disclaimer from every commit that Devin makes. I then pushed to the proper repo. <strong>But every commit is real and actually what Devin did. I did not make any commits to the repo during this time!</strong></p>
+<h3 id="initial-readme">Initial Readme</h3>
+<p>It started with a very simple <a href="https://github.com/seankearney/zola-devin/commit/8ddc70298815716adc29e8ced8f5a1bcf070ccad">readme.md</a>. It was purposefully very vague and without any significant requirements or constraints. I provided it a couple of sample <code>.md</code> files to use as sample content, basic template requirements and asked it to create a Zola theme with Vanilla JS and Tailwind CSS. It asked some reasonable questions, received answers, and went on its way...</p>
+<h3 id="refined-instructions">Refined Instructions</h3>
+<p>The initial result was not great. It was encouraging for sure, but I could see Devin needed more directions. At this point, I decided to move all instructions into a dedicated file called <code>devin-instructions.md</code>. You can see how I refined the requirements and ultimately required Devin to abandon about three attempts in the <a href="https://github.com/seankearney/zola-devin/blame/main/devin-instructions.md">history</a>.</p>
+<h3 id="final-round">Final Round</h3>
+<p>The final attempt is effectively what you see in GitHub at tag <a href="https://github.com/seankearney/zola-devin/tree/devin-final"><code>devin-final</code></a>. This is a working Zola site/theme that met all requirements and looked pretty darn good (better than I'd do in the given time anyway).</p>
+<p><img src="https://seankearney.com/post/devinai-builds-zola-theme/./devin-zola.png" alt="" /></p>
+<h3 id="feedback-rounds">Feedback Rounds</h3>
+<p>At this point, Devin created the PR, and things were promising enough where I felt it was worth reviewing and giving feedback to Devin. I have nine rounds of feedback for Devin, and after each one, the PR looked better and better. You can look at the history and see each commit that Devin made. Each of these commits stems from feedback that I provided. Here are a few examples of the feedback I provided:</p>
+<ol>
+<li>"General Tailwind usage: The styling/colors are pretty terrible... feel free to use https://tailwindcss.com/ as a model for styles/colors/etc for our theme. Additionally, we are missing some base, or global, styles that set defaults for basic elements. The <code>/post/markdown</code> blog post is the litmus test. ""</li>
+<li>"The footer is missing requirements #2, 3, &amp; 5"</li>
+<li>"It appears you may have started using Tailwind Typography plugin, but the npm package isn't specified. I'm unable to run <code>npx tailwindcss -i ./static/input.css -o ./static/tailwind.css</code> -- which is preventing me from seeing the site properly"</li>
+</ol>
+<blockquote>
+<p>📝 The entire chat history is available <a href="https://seankearney.com/post/devinai-builds-zola-theme/chat-log.txt">here</a>, but is not formatted nicely.</p>
+</blockquote>
+<h2 id="insights-and-future-work">Insights and Future Work</h2>
+<h3 id="works-on-devin-s-machine">Works on Devin's Machine</h3>
+<p>Devin did a fairly good job and I've done a quick test of the theme with my site's content. At this point, I've "pulled" Devin off of the job. The site "works on my machine," and it is time to ship this. Unfortunately, getting this to work up in GitHub pages did require a few commits from me, but the <a href="https://seankearney.github.io/zola-devin/">Zola-Devin theme demo</a> site is now running.</p>
+<p>Like most other professional developers, I'm still on the fence with AI coding agents. My experiences are initially impressive, but very quickly things seem to fall apart.</p>
+<p>This particular experience, with Devin, was pretty good. Once we got past the requirements issue, Devin did work like a junior dev and was able to work through with some help. I think the biggest win for me on this one is that the UI "just worked." Could I use Bootstrap or even Tailwind to style a basic blog? Absolutely, but realistically it would take me hours of looking at the docs and crafting the proper UI, whereas Devin got it pretty good very quickly.</p>
+<h3 id="lessons-learned">Lessons Learned</h3>
+<ol>
+<li><strong>Importance of Clear Requirements</strong>: There is no panacea for lack of requirements. In my 20+ years of experience building applications, "the business" doesn't always know what they want, but they always know what they <strong>don't want</strong> when they see it. I'm no exception. I had a rough idea of what I wanted... "A blog." Devin needed more than that. Fair enough.</li>
+<li>I provided Devin with some fairly high-level requirements. I outlined what pages should exist and what should be on those pages. Devin had full control over the design/UI of the site. What it did with Tailwind and my description of a "Hero" and "Cards" was spot-on. A+ here, but I'm not sure the results are reproduceable. If I were to give it the same requirements and start over -- it may miss the mark.</li>
+<li><strong>Effectiveness of Feedback:</strong> The nine rounds of feedback I had to do were a little more than I'd like, and I was getting frustrated. If this were a "real" junior developer, I'd have more patience and desire to help them. But something about an AI agent getting basic things wrong and requiring me to explain it feels like a waste of my time and energy; I love helping junior devs mature, but teaching an AI agent? 🙃🤔</li>
+<li><strong>AI's Learning Curve</strong>: Worth mentioning that the failed attempts were pretty bad. I tried pushing Devin in the right direction, but the changes that were made just made things worse. If Devin doesn't have a clear understanding on the first pass (when the PR is created), you might be better off abandoning the PR and starting over (with better requirements).</li>
+<li>Zola <strong>with</strong> Tailwind -- This feels like an off combination. I had no exposure to Tailwind going into this. It was just a buzzword to me. After seeing what Tailwind <em>really</em> is, I'm not too sure it has a place in a Zola theme. Zola has its own SASS compilation and ability to customize themes. Tailwind requires a CLI and has its own theme customizations. Effectively, the build process for a Zola site using this devin-zola theme will be more complicated.</li>
+</ol>
+<h3 id="future-work-on-zola-devin">Future Work on Zola-Devin</h3>
+<p>This experiment was really to see how Devin did with more basic tasks. The result is a usable Zola theme, but it is certainly not "the best" theme out there for everyone. This theme is very specific to my simple blog's needs and is still missing some basic things like favicons and Google Analytics that even I would require. Going forward, I'll probably enhance this a bit and add in some of these little features. Only time will tell if I stick with the theme, but for now it still interests me.</p>
+
+        </div>
+    </article>
+
+    
+    <nav class="flex justify-between items-center py-8 border-t border-gray-200 dark:border-gray-700">
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;devinai-vuejs-migration&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Devin.AI -- Real World with Vue.js Migration
+        </a>
+        
+
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;hybrid-logical-clocks-and-conflict-resolution&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            Conflict Resolution in My DJ Cloud Using Timestamps
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </a>
+        
+    </nav>
+    
+
+    
+    
+        
+    
+        
+    
+        
+    
+    
+    
+</div>
+
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Social Links -->
+            <div class="flex justify-center space-x-6 mb-6">
+                
+<a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="GitHub">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="Twitter">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="LinkedIn">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="StackOverflow">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.07-10.478-2.187-.453 2.068zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.95zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.35 1.618zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0h.002z"/></svg>
+    
+</a>
+
+
+            </div>
+
+            <!-- Footer Links -->
+            <div class="text-center space-y-4">
+                <p class="text-gray-600 dark:text-gray-400">
+                    © 2026 Sean Kearney
+                </p>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Powered by <a href="https://www.getzola.org/" class="hover:text-gray-900 dark:hover:text-white transition-colors">Zola</a>
+                    &amp;
+                    <span><a href="https://github.com/seankearney/zola-devin" class="hover:text-gray-900 dark:hover:text-white transition-colors">Devin</a></span>
+                </p>
+                <a href="https://seankearney.com/rss.xml" 
+                   class="inline-block text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                   title="RSS Feed">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

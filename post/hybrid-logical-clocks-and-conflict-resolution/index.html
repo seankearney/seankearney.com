@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    
+    <title>Conflict Resolution in My DJ Cloud Using Timestamps | Sean Kearney</title>
+    <meta name="description" content="Discover how My DJ Cloud ensures data consistency and integrity with Hybrid Logical Clocks (HLC). Learn about timestamp generation, conflict resolution, and handling concurrent updates across devices.">
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;hybrid-logical-clocks-and-conflict-resolution&#x2F;">
+    <meta property="og:site_name" content="Sean Kearney">
+    <meta property="og:title" content="Conflict Resolution in My DJ Cloud Using Timestamps | Sean Kearney">
+    <meta property="og:description" content="Discover how My DJ Cloud ensures data consistency and integrity with Hybrid Logical Clocks (HLC). Learn about timestamp generation, conflict resolution, and handling concurrent updates across devices.">
+    <meta property="og:image" content="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;hybrid-logical-clocks-and-conflict-resolution&#x2F;promo-hybrid-logical-clocks-and-conflict-resolution.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Conflict Resolution in My DJ Cloud Using Timestamps | Sean Kearney">
+    <meta name="twitter:description" content="Discover how My DJ Cloud ensures data consistency and integrity with Hybrid Logical Clocks (HLC). Learn about timestamp generation, conflict resolution, and handling concurrent updates across devices.">
+    <meta name="twitter:image" content="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;hybrid-logical-clocks-and-conflict-resolution&#x2F;promo-hybrid-logical-clocks-and-conflict-resolution.jpg">
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (!savedTheme) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+            }
+        })();
+    </script>
+    <meta name="search-index" content="https://seankearney.com/search_index.en.js">
+    <link rel="stylesheet" href="https://seankearney.com/tailwind.css">
+    <script src="https://seankearney.com/js/elasticlunr.min.js" defer></script>
+    <script src="https://seankearney.com/search.js" defer></script>
+    <script src="https://seankearney.com/theme.js" defer></script>
+    <script src="https://seankearney.com/mobile-menu.js" defer></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://seankearney.com/rss.xml">
+</head>
+<body>
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 z-50">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-6">
+                <a href="https://seankearney.com" class="text-xl font-bold text-slate-900 dark:text-white">Sean Kearney</a>
+                <div class="hidden md:flex space-x-4">
+                    
+                    <a href="https://seankearney.com/about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">About</a>
+                    
+                    <a href="https://seankearney.com/post" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Blog</a>
+                    
+                    <a href="https://seankearney.com/tags" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Categories</a>
+                    
+                    <a href="https://seankearney.com/archive" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Archive</a>
+                    
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative hidden md:block">
+                    <input id="search-input" type="search" class="w-48 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Type to search..." aria-label="Search">
+                    <div id="search-preview" class="absolute right-0 mt-2 w-96 max-w-screen-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50 hidden">
+                    </div>
+                </div>
+                <button id="mobile-search-button" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Search" aria-expanded="false" aria-controls="search-modal">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Toggle dark mode">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <button class="mobile-menu-button md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Menu" aria-expanded="false">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div class="mobile-menu hidden md:hidden bg-white dark:bg-gray-800 w-full border-t dark:border-gray-700">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+                
+                <a href="https://seankearney.com/about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">About</a>
+                
+                <a href="https://seankearney.com/post" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Blog</a>
+                
+                <a href="https://seankearney.com/tags" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Categories</a>
+                
+                <a href="https://seankearney.com/archive" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Archive</a>
+                
+            </div>
+        </div>
+    </header>
+
+    <div id="search-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 transition-opacity duration-200 ease-in-out">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-3xl mx-auto mt-16 sm:mt-20 rounded-lg shadow-xl overflow-hidden transform transition-transform duration-200">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Search Results</h2>
+                <button id="close-search" class="text-2xl text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition-colors duration-150" aria-label="Close search">×</button>
+            </div>
+            <div class="p-4 border-b dark:border-gray-700 md:hidden">
+                <input id="modal-search-input" type="search" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Type to search..." aria-label="Search">
+            </div>
+            <div id="search-results" class="max-h-[80vh] sm:max-h-[70vh] overflow-y-auto p-4 space-y-4">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 pt-20 pb-16 min-h-screen">
+        
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <article class="mb-16">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-slate-900 dark:text-white mb-4">Conflict Resolution in My DJ Cloud Using Timestamps</h1>
+            <div class="text-gray-500 dark:text-gray-400">
+                <time datetime="2025-01-07">January 07, 2025</time>
+                
+                <span class="mx-2">•</span>
+                <span>
+                    
+                    <a href="https://seankearney.com/tags/sync/" 
+                       class="text-blue-600 dark:text-blue-400 hover:underline">Sync</a>
+                    
+                    
+                </span>
+                
+            </div>
+        </header>
+
+        <div class="prose dark:prose-invert max-w-none">
+            <p>At My DJ Cloud, one of the earlier problems we needed to solve when building our file synchronization engine was ensuring data consistency and integrity. With multiple machines modifying the same file simultaneously, the Cloud needs to understand how to handle it. We decided to leverage a Hybrid Logical Clock (HLC) to generate our timestamps when handling conflicts and maintain the latest version of files across devices. This post will provide an introduction into how we utilize HLC for conflict resolution and how our cloud-side system determines which version should be used.</p>
+<span id="continue-reading"></span><h2 id="understanding-the-role-of-timestamps">Understanding the Role of Timestamps</h2>
+<p>Timestamps are unique markers that indicate the time at which an event or operation occurred. In My DJ Cloud, as in message-based systems, they serve as a reliable means to order events and resolve conflicts. By associating each operation with a timestamp, we can easily determine the sequence of events and manage concurrent updates.</p>
+<h2 id="hybrid-logical-clocks-hlc">Hybrid Logical Clocks (HLC)</h2>
+<p>Our Hybrid Logical Clock (HLC) is an advanced mechanism that combines physical time (wall clock time), a logical counter, and a unique machine identifier. Unlike simple timestamps, which only represent the physical time, HLCs provide additional information to maintain a causal relationship between events. This helps in resolving conflicts more effectively by capturing the order of events even in distributed environments where system clocks might not be perfectly synchronized. The logical counter ensures that events occurring at the same physical time are ordered correctly, while the machine identifier helps track which device generated the timestamp.</p>
+<ol>
+<li><strong>Wall Clock Time</strong>: The time reported from the operating system (with any adjustments—see clock skew below).</li>
+<li><strong>Logical Counter</strong>: Used to handle events that occur within the same "wall clock time." It ensures that events are ordered correctly even if they happen simultaneously or within very short intervals. The logical counter increments whenever multiple events occur at the same physical time, providing a unique sequence number for each event.</li>
+<li><strong>Unique Machine Identifier</strong>: Identifies a specific machine for a user.</li>
+</ol>
+<h2 id="implementing-hybrid-logical-clocks-for-conflict-resolution">Implementing Hybrid Logical Clocks for Conflict Resolution</h2>
+<h3 id="1-assigning-timestamps">1. Assigning Timestamps</h3>
+<p>Each device generates timestamps for its operations using a Hybrid Logical Clock (HLC). Our HLC combines physical time, a logical counter, and a machine identifier, providing a robust way to order events. Moreover, we are able to identify which of the users' machines the event originated from.</p>
+<pre><code>function generateTimestamp(currentTime, lastWallClockTime, logicalCounter, machineId): 
+    if currentTime &gt; lastWallClockTime: 
+        lastWallClockTime = currentTime 
+        logicalCounter = 0 
+    else: 
+        logicalCounter += 1 
+    return (lastWallClockTime, logicalCounter, machineId)
+</code></pre>
+<h3 id="2-formatting-timestamps">2. Formatting Timestamps</h3>
+<p>Our HLC has three parts, which can make using them a bit cumbersome. We use these timestamps everywhere and ideally they'd be in a format that can be easily stored, transmitted, and deconstructed later. When comparing things, nothing is easier than comparing two numbers to determine which is greater! We ultimately landed on storing our timestamps in a 64-bit number.</p>
+<p>Example <code>607259396950458369</code>:</p>
+<ul>
+<li>Clock: <code>2024-09-24 15:13:24.4681608</code></li>
+<li>Counter: <code>0</code></li>
+<li>Device: <code>1</code></li>
+</ul>
+<h3 id="3-comparing-timestamps">3. Comparing Timestamps</h3>
+<p>When conflicts arise due to concurrent updates from multiple machines, HLC plays a crucial role in determining the most recent operation. The general principle is to retain the operation with the latest timestamp, as it represents the most up-to-date information. This process is rather straightforward with our timestamps—the largest timestamp wins every time.</p>
+<h3 id="4-handling-clock-skew">4. Handling Clock Skew</h3>
+<p>One challenge in using timestamps is managing clock skew/drift, where the system clocks of different devices may not be perfectly synchronized. Generally speaking, modern operating systems will automatically manage the system clock. However, we go a step further to mitigate this issue; we internally leverage NTP (Network Time Protocol) to manage our own clock to prevent any data issues.</p>
+<h2 id="practical-applications-in-my-dj-cloud">Practical Applications in My DJ Cloud</h2>
+<h3 id="file-synchronization-services">File Synchronization Services</h3>
+<p>At My DJ Cloud, we utilize HLC to handle concurrent updates from multiple devices. By comparing HLC values, our system ensures that the most recent changes are synchronized across all devices, avoiding data loss or corruption. This mirrors the approach used in message-based systems, where timestamps help in ordering messages and resolving conflicts.</p>
+<h3 id="server-side-version-determination">Server-Side Version Determination</h3>
+<p>Our server-side system plays a pivotal role in determining which version of a file should be used when conflicts arise. When multiple machines change the same file at the same time, the server compares the HLC values of the conflicting versions. The version with the latest HLC is retained as it represents the most recent update. This ensures that the latest changes are always preserved and synchronized across all devices.</p>
+<p><img src="https://seankearney.com/post/hybrid-logical-clocks-and-conflict-resolution/hybrid-logical-clock.png" alt="Hybrid Logical Clock Diagram" /></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Hybrid Logical Clocks are a powerful tool for conflict resolution in file synchronization services like My DJ Cloud. By providing a reliable means to order events and determine the most recent operations, HLC helps maintain data consistency and integrity. Leveraging HLC allows us to enhance our conflict resolution strategy and ensure that our users always have access to the most up-to-date files.</p>
+
+        </div>
+    </article>
+
+    
+    <nav class="flex justify-between items-center py-8 border-t border-gray-200 dark:border-gray-700">
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;devinai-builds-zola-theme&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Devin.ai Builds a Zola Theme
+        </a>
+        
+
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;when-is-a-kilboyte-not-a-kilobyte&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            When is a Kilobyte not a Kilobyte?
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </a>
+        
+    </nav>
+    
+
+    
+    
+        
+    
+        
+    
+    
+    
+</div>
+
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Social Links -->
+            <div class="flex justify-center space-x-6 mb-6">
+                
+<a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="GitHub">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="Twitter">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="LinkedIn">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="StackOverflow">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.07-10.478-2.187-.453 2.068zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.95zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.35 1.618zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0h.002z"/></svg>
+    
+</a>
+
+
+            </div>
+
+            <!-- Footer Links -->
+            <div class="text-center space-y-4">
+                <p class="text-gray-600 dark:text-gray-400">
+                    © 2026 Sean Kearney
+                </p>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Powered by <a href="https://www.getzola.org/" class="hover:text-gray-900 dark:hover:text-white transition-colors">Zola</a>
+                    &amp;
+                    <span><a href="https://github.com/seankearney/zola-devin" class="hover:text-gray-900 dark:hover:text-white transition-colors">Devin</a></span>
+                </p>
+                <a href="https://seankearney.com/rss.xml" 
+                   class="inline-block text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                   title="RSS Feed">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

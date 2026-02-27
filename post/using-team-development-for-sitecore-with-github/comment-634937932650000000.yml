@@ -1,0 +1,5 @@
+id: 634937932650000000
+date: 2013-01-14T20:47:45.0000000Z
+name: Kam
+avatar: http://www.gravatar.com/avatar/314826f5d569260f26ac9f26f9e38b86.jpg?d=robohash
+message: I believe there&#39;s a typo at the end; one would add the &quot;*.item -text&quot; to the .gitattributes file, not .gitignore.

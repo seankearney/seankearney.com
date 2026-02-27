@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    
+    <title>Sitecore needs a NuGet feed for their assemblies | Sean Kearney</title>
+    <meta name="description" content="A modern blog built with Zola">
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-needs-a-nuget-feed-for-their-assemblies&#x2F;">
+    <meta property="og:site_name" content="Sean Kearney">
+    <meta property="og:title" content="Sitecore needs a NuGet feed for their assemblies | Sean Kearney">
+    <meta property="og:description" content="A modern blog built with Zola">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Sitecore needs a NuGet feed for their assemblies | Sean Kearney">
+    <meta name="twitter:description" content="A modern blog built with Zola">
+    
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (!savedTheme) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+            }
+        })();
+    </script>
+    <meta name="search-index" content="https://seankearney.com/search_index.en.js">
+    <link rel="stylesheet" href="https://seankearney.com/tailwind.css">
+    <script src="https://seankearney.com/js/elasticlunr.min.js" defer></script>
+    <script src="https://seankearney.com/search.js" defer></script>
+    <script src="https://seankearney.com/theme.js" defer></script>
+    <script src="https://seankearney.com/mobile-menu.js" defer></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://seankearney.com/rss.xml">
+</head>
+<body>
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 z-50">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-6">
+                <a href="https://seankearney.com" class="text-xl font-bold text-slate-900 dark:text-white">Sean Kearney</a>
+                <div class="hidden md:flex space-x-4">
+                    
+                    <a href="https://seankearney.com/about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">About</a>
+                    
+                    <a href="https://seankearney.com/post" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Blog</a>
+                    
+                    <a href="https://seankearney.com/tags" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Categories</a>
+                    
+                    <a href="https://seankearney.com/archive" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Archive</a>
+                    
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative hidden md:block">
+                    <input id="search-input" type="search" class="w-48 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Type to search..." aria-label="Search">
+                    <div id="search-preview" class="absolute right-0 mt-2 w-96 max-w-screen-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50 hidden">
+                    </div>
+                </div>
+                <button id="mobile-search-button" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Search" aria-expanded="false" aria-controls="search-modal">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Toggle dark mode">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <button class="mobile-menu-button md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Menu" aria-expanded="false">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div class="mobile-menu hidden md:hidden bg-white dark:bg-gray-800 w-full border-t dark:border-gray-700">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+                
+                <a href="https://seankearney.com/about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">About</a>
+                
+                <a href="https://seankearney.com/post" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Blog</a>
+                
+                <a href="https://seankearney.com/tags" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Categories</a>
+                
+                <a href="https://seankearney.com/archive" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Archive</a>
+                
+            </div>
+        </div>
+    </header>
+
+    <div id="search-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 transition-opacity duration-200 ease-in-out">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-3xl mx-auto mt-16 sm:mt-20 rounded-lg shadow-xl overflow-hidden transform transition-transform duration-200">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Search Results</h2>
+                <button id="close-search" class="text-2xl text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition-colors duration-150" aria-label="Close search">×</button>
+            </div>
+            <div class="p-4 border-b dark:border-gray-700 md:hidden">
+                <input id="modal-search-input" type="search" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Type to search..." aria-label="Search">
+            </div>
+            <div id="search-results" class="max-h-[80vh] sm:max-h-[70vh] overflow-y-auto p-4 space-y-4">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 pt-20 pb-16 min-h-screen">
+        
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <article class="mb-16">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-slate-900 dark:text-white mb-4">Sitecore needs a NuGet feed for their assemblies</h1>
+            <div class="text-gray-500 dark:text-gray-400">
+                <time datetime="2014-08-04">August 04, 2014</time>
+                
+                <span class="mx-2">•</span>
+                <span>
+                    
+                    <a href="https://seankearney.com/tags/sitecore/" 
+                       class="text-blue-600 dark:text-blue-400 hover:underline">Sitecore</a>
+                    
+                    
+                </span>
+                
+            </div>
+        </header>
+
+        <div class="prose dark:prose-invert max-w-none">
+            <p><img src="https://seankearney.com/post/sitecore-needs-a-nuget-feed-for-their-assemblies/call-to-action.jpg" alt="" />This is a call to action for Sitecore to start hosting a NuGet feed of all common Sitecore assemblies. However, lets take a look at how the Sitecore development process has changed over the years.</p>
+<span id="continue-reading"></span>
+<p>Historically, Sitecore <a href="http://sdn.sitecore.net/Articles/API/Using%20Visual%20Studio%20,-d-,Net.aspx">told</a> developers to <a href="http://www.sitecore.net/learn/blogs/technical-blogs/john-west-sitecore-blog/posts/2010/09/create-a-visual-studio-2010-project-for-a-sitecore-solution.aspx">work in the 'web root'</a>. This meant that you had direct access to the Sitecore assemblies as they were already in your bin directory. Some developers would even go so far as to check the entire Sitecore application, along with their code, into source control (yuck!). Some more advanced shops had very complex processes in place to 'stand up' up a Sitecore instance (think Sitecore SIM) before deploying custom code. Builds and deployments of Sitecore sites were typically very haphazard consisting of developers building locally, xcopy code deployments, and manual Sitecore package creation and installation. There weren't many developers writing 'shared source modules' back then either. Developers who were doing it were working in a Sitecore provided SVN system. They built their module, created a Sitecore package and checked it in to SVN.</p>
+<p>So what has changed over the last five years?</p>
+<ol>
+<li><a href="http://teamdevelopmentforsitecore.com">Team Development for Sitecore</a> (TDS) (Sitecore serialization and other ways to source control your Sitecore items)</li>
+<li>While Sitecore hasn't officially changed their stance about '<a href="/post/Visual-Studio-Projects-and-Sitecore">working outside of the web root</a>', <a href="http://www.sitecore.net/learn/blogs/technical-blogs/john-west-sitecore-blog/posts/2010/09/create-a-visual-studio-2010-project-for-a-sitecore-solution.aspx#content_0_row2_0_communitycontent_2_CommentsList_CommentItem_14">John West</a> and a majority of the community has accepted it as best practice.</li>
+<li>There are A LOT more Sitecore developers creating modules these days.</li>
+<li>Git[Hub] has become the De facto standard for open source projects.</li>
+<li>Sitecore has gotten out of the SVN hosting business; they created the Marketplace to aggregate modules.</li>
+<li>Visual Studio changes (extensions such as Sitecore Rocks, Package web, Slow Cheetah, etc...)</li>
+<li>Web Deploy technologies</li>
+<li>Build (and deploy) server availability and adoption</li>
+<li>NuGet</li>
+</ol>
+<p>Let us consider the current process of developing an open source Sitecore Module.</p>
+<p>The general approach, for me, would be to create a VS solution with a Web App project and a TDS project. I'd grab Sitecore DLLs from somewhere else on my system, copy them to my code workspace and put them in a 'lib' folder. I'd make the appropriate references to these libraries and begin coding. When I was all done, and ready to put the code in the public domain I'd have to remember to not commit the Sitecore DLLs and add a ReadMe telling other developers to add them. In fact, GitHub is filled with <a href="https://github.com/search?q=sitecore.kernel.dll&amp;type=Code">ReadMe files saying “grab the sitecore.kernel.dll from your Sitecore installation”</a>. This is sooo 2009.</p>
+<p>Now, once the code is up on GitHub, I would ideally have some automated build process that will build each commit that happens and make the module available to everyone. There are plenty of build server options out there these days (hosted TeamCity, Jenkins, VS Online, AppVeyor, etc...) and there really is no reason to not have this in place – except for the little problem of the build server not having easy access to the required Sitecore DLLs! Obviously, the thing that is building your code requires the dependencies; however, if we can't put the Sitecore DLLs in the source control repo, what are we to do?</p>
+<p>Sitecore has the ability to fix that problem by 'simply' providing a NuGet feed of their assemblies! NuGet isn't going anywhere. In fact ASP.NET VNext (which is currently in CTP 2) is basically all package based. Rather than having a ReadMe file that tells the developer to go fetch the assemblies manually, the project should simply have a reference to a specific Sitecore NuGet package.</p>
+<p>I understand that Sitecore may not want to make their assemblies publicly available on the main NuGet feed, so why not have a private feed? Hosting a NuGet feed is trivial or there are third party providers (as they know, since Sitecore Rocks is using one).</p>
+<p>I've tweeted in the past asking for this, but a tweet has a short life. It is time to throw this out there to the community. Will, what I am proposing, make developing/building/distributing Sitecore sites and modules easier?</p>
+<p>So what, you may ask, is the reason I bring this up again now? I'm glad you asked! There will be some upcoming blog posts outlining how I am revamping the build process for a Sitecore open source module.</p>
+
+        </div>
+    </article>
+
+    
+    <nav class="flex justify-between items-center py-8 border-t border-gray-200 dark:border-gray-700">
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;tds-code-generation-output-multiple-files&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            TDS Code Generation Output Multiple Files
+        </a>
+        
+
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;tds-deployment-properties-report&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            TDS Deployment Properties Report
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </a>
+        
+    </nav>
+    
+
+    
+    
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+    
+    
+    <section class="mt-16">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-8">Comments</h2>
+        <div class="space-y-8">
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;8a6f1cccea99ef539a637cf5a3e5acbe.jpg?d=robohash" 
+                         alt="Avatar of Mark Cassidy"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Mark Cassidy</h3>
+                        <time datetime="2014-08-21T03:11:13.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            August 21, 2014
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>I concur.</p>
+<p>Sitecore cannot run without a license file, and as long as you don't start distributing Sitecore.Nexus, I don't see why this should be all that much of a problem for Sitecore.</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;3f6ae61e2e0de95f1c938e0feed5c84e.jpg?d=robohash" 
+                         alt="Avatar of Xavier Decoster"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Xavier Decoster</h3>
+                        <time datetime="2014-08-12T12:17:04.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            August 12, 2014
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>I definitely applaud the use of NuGet for this scenario!</p>
+<p>Have you guys considered using MyGet.org for your NuGet needs? (disclaimer: I am one of the founders of MyGet)</p>
+<p>It sounds like our services might be a good fit for your needs, incl. a gallery where you can publish your feed, build services, support for upstream package sources (with support for feed credentials) and more. There's even an OSS plan.</p>
+<p>Feel free to reach out through https://www.myget.org/support</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;e5ae0d2b7c7ecaf15f87c6e7c0cf2210.jpg?d=robohash" 
+                         alt="Avatar of Taras Alenin"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Taras Alenin</h3>
+                        <time datetime="2014-08-08T10:26:41.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            August 08, 2014
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>Yes, I'm tired of creating a private NuGet on every project!!!!</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;8d655ee23220ded63e2a8de76e31e05f.jpg?d=robohash" 
+                         alt="Avatar of Mark Stiles"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Mark Stiles</h3>
+                        <time datetime="2014-08-06T01:14:29.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            August 06, 2014
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>Oh right you suggested that. I skimmed way to much. Sorrily -mark</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;8d655ee23220ded63e2a8de76e31e05f.jpg?d=robohash" 
+                         alt="Avatar of Mark Stiles"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Mark Stiles</h3>
+                        <time datetime="2014-08-06T01:13:20.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            August 06, 2014
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>I'd add that any of those binaries that aren't obfuscated also be considered for open sourcing. Pull requests could seriously streamline the bug fixing/patching process.</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;314826f5d569260f26ac9f26f9e38b86.jpg?d=robohash" 
+                         alt="Avatar of Kam Figy"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Kam Figy</h3>
+                        <time datetime="2014-08-05T02:57:35.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            August 05, 2014
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>I completely concur with this idea.</p>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    
+</div>
+
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Social Links -->
+            <div class="flex justify-center space-x-6 mb-6">
+                
+<a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="GitHub">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="Twitter">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="LinkedIn">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="StackOverflow">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.07-10.478-2.187-.453 2.068zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.95zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.35 1.618zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0h.002z"/></svg>
+    
+</a>
+
+
+            </div>
+
+            <!-- Footer Links -->
+            <div class="text-center space-y-4">
+                <p class="text-gray-600 dark:text-gray-400">
+                    © 2026 Sean Kearney
+                </p>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Powered by <a href="https://www.getzola.org/" class="hover:text-gray-900 dark:hover:text-white transition-colors">Zola</a>
+                    &amp;
+                    <span><a href="https://github.com/seankearney/zola-devin" class="hover:text-gray-900 dark:hover:text-white transition-colors">Devin</a></span>
+                </p>
+                <a href="https://seankearney.com/rss.xml" 
+                   class="inline-block text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                   title="RSS Feed">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    
+    <title>Visual Studio Projects and Sitecore | Sean Kearney</title>
+    <meta name="description" content="A modern blog built with Zola">
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;visual-studio-projects-and-sitecore&#x2F;">
+    <meta property="og:site_name" content="Sean Kearney">
+    <meta property="og:title" content="Visual Studio Projects and Sitecore | Sean Kearney">
+    <meta property="og:description" content="A modern blog built with Zola">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Visual Studio Projects and Sitecore | Sean Kearney">
+    <meta name="twitter:description" content="A modern blog built with Zola">
+    
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (!savedTheme) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+            }
+        })();
+    </script>
+    <meta name="search-index" content="https://seankearney.com/search_index.en.js">
+    <link rel="stylesheet" href="https://seankearney.com/tailwind.css">
+    <script src="https://seankearney.com/js/elasticlunr.min.js" defer></script>
+    <script src="https://seankearney.com/search.js" defer></script>
+    <script src="https://seankearney.com/theme.js" defer></script>
+    <script src="https://seankearney.com/mobile-menu.js" defer></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://seankearney.com/rss.xml">
+</head>
+<body>
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 z-50">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-6">
+                <a href="https://seankearney.com" class="text-xl font-bold text-slate-900 dark:text-white">Sean Kearney</a>
+                <div class="hidden md:flex space-x-4">
+                    
+                    <a href="https://seankearney.com/about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">About</a>
+                    
+                    <a href="https://seankearney.com/post" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Blog</a>
+                    
+                    <a href="https://seankearney.com/tags" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Categories</a>
+                    
+                    <a href="https://seankearney.com/archive" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Archive</a>
+                    
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative hidden md:block">
+                    <input id="search-input" type="search" class="w-48 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Type to search..." aria-label="Search">
+                    <div id="search-preview" class="absolute right-0 mt-2 w-96 max-w-screen-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50 hidden">
+                    </div>
+                </div>
+                <button id="mobile-search-button" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Search" aria-expanded="false" aria-controls="search-modal">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Toggle dark mode">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <button class="mobile-menu-button md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Menu" aria-expanded="false">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div class="mobile-menu hidden md:hidden bg-white dark:bg-gray-800 w-full border-t dark:border-gray-700">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+                
+                <a href="https://seankearney.com/about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">About</a>
+                
+                <a href="https://seankearney.com/post" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Blog</a>
+                
+                <a href="https://seankearney.com/tags" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Categories</a>
+                
+                <a href="https://seankearney.com/archive" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Archive</a>
+                
+            </div>
+        </div>
+    </header>
+
+    <div id="search-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 transition-opacity duration-200 ease-in-out">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-3xl mx-auto mt-16 sm:mt-20 rounded-lg shadow-xl overflow-hidden transform transition-transform duration-200">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Search Results</h2>
+                <button id="close-search" class="text-2xl text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition-colors duration-150" aria-label="Close search">×</button>
+            </div>
+            <div class="p-4 border-b dark:border-gray-700 md:hidden">
+                <input id="modal-search-input" type="search" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Type to search..." aria-label="Search">
+            </div>
+            <div id="search-results" class="max-h-[80vh] sm:max-h-[70vh] overflow-y-auto p-4 space-y-4">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 pt-20 pb-16 min-h-screen">
+        
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <article class="mb-16">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-slate-900 dark:text-white mb-4">Visual Studio Projects and Sitecore</h1>
+            <div class="text-gray-500 dark:text-gray-400">
+                <time datetime="2010-10-01">October 01, 2010</time>
+                
+                <span class="mx-2">•</span>
+                <span>
+                    
+                    <a href="https://seankearney.com/tags/sitecore/" 
+                       class="text-blue-600 dark:text-blue-400 hover:underline">Sitecore</a>
+                    , 
+                    
+                    <a href="https://seankearney.com/tags/basics/" 
+                       class="text-blue-600 dark:text-blue-400 hover:underline">Basics</a>
+                    
+                    
+                </span>
+                
+            </div>
+        </header>
+
+        <div class="prose dark:prose-invert max-w-none">
+            <p>This is a topic that I've been meaning to cover for some time now, but it is <a href="http://www.sitecore.net/en/Community/Technical-Blogs/John-West-Sitecore-Blog/Posts/2010/09/Create-a-Visual-Studio-2010-Project-for-a-Sitecore-Solution.aspx">this post</a> by <a href="http://twitter.com/sitecorejohn">John West</a> that pushed me to do it sooner rather than later.</p>
+<span id="continue-reading"></span>
+<p>There are basically two ways of working with Sitecore.</p>
+<ol>
+<li>Your solution, and code, is fully immersed in the Sitecore web site.</li>
+<li>Your solution, and code, is outside of Sitecore's web site and you use some post build process to deploy.</li>
+</ol>
+<p>John's post, and Sitecore documents, suggests that you go with option 1. I, however, do not agree that this is the right way to go. I feel that my code should not be mixed in with over 6,000 of Sitecore's files. Here are some reasons:</p>
+<ol>
+<li>The most important advantage is a clear understanding of the ownership of files in the solution. Everything checked into source control is explicitly owned by the solution being developed. All other files are owned by Sitecore or a third party package installed in Sitecore.</li>
+<li>I want to be able to distinguish my files from Sitecore's just by looking on the file system.</li>
+<li>If I need to ship the code to my client I simply want to zip up my 'workspace' and not have to wade through out-of-the box Sitecore files.</li>
+<li>I want my development environment to be as close as possible to a production environment. This means no .cs files in my web root</li>
+</ol>
+<p>I've been working outside of the web root for three years now and wouldn't consider it being any other way. In fact, I am always wondering why you would want to work out of the web root as Sitecore suggests. I spoke to a client recently, while proving support for <a href="http://TeamDevelopmentForSitecore">Team Development for Sitecore</a>, and their answer was simply, "we didn't know better." That isn't acceptable.</p>
+<p>Here is the way I work and highly suggest you work as well.</p>
+<ol>
+<li>Use IIS and configure Sitecore somewhere other than C:[Workspace][Client]\trunk. For example, C:\Sitecore[Client]\Website</li>
+<li>Create your Visual Studio solution (and projects) outside of the web root. i.e. C:[Workspace][Client]\trunk\ClientWebsite.sln</li>
+<li>Add references to any Sitecore assemblies as needed. Make sure to set "Copy Local" to false as John West suggests.</li>
+<li>Use a post build step to copy the output of your compiled Web Application project to the location specified in step 1. Or, better yet, use Team Development for Sitecore to handle the deployment for you.</li>
+<li>To debug, you will need to make a change to the Web Application project. On the 'Web' tab of the properties for your Web Application project you should choose the "Use Custom Web Server" option and enter in your development Sitecore URL. Once this setting has been specified you can now press F5 to build your project and debug normally. This may require some IIS components to be enabled, depending on your system. This will also work for IIS running on a remote machine (and virtual machines) as long as remote debugging components are installed on the remote machine.</li>
+</ol>
+<p>Taking this one step further, you NEED to be using source control and automated builds in your development. <a href="http://martinfowler.com/articles/continuousIntegration.html">Continuous Integration</a> is also a good practice and possible using Team Development for Sitecore! Cost shouldn't be an excuse either as there are <a href="http://subversion.apache.org/">free</a> <a href="http://www.jetbrains.com/teamcity/">tools</a> out there to help you with this!<br />
+We, at <a href="http://www.hhogdev.com">Hedgehog Development</a>, have done a good number of Sitecore <a href="http://www.sitecore.net/en/News/Press-releases/2009/Site-of-the-Year-NA-2009.aspx">site</a>s this way and we do consider this a best practice. We are able to bring new developers onto a project in minutes and can roll out builds effortlessly.</p>
+<p>I would love to get some feedback on this. Please let me know if you love working out of the web root as Sitecore suggests.</p>
+<p><strong>Update 2/2013:</strong> John West has seen the light and now agrees that this approach is sound. <a href="http://www.sitecore.net/en/Community/Technical-Blogs/John-West-Sitecore-Blog/Posts/2010/09/Create-a-Visual-Studio-2010-Project-for-a-Sitecore-Solution.aspx#communitycontent_2_CommentsList_CommentItem_14">http://www.sitecore.net/en/Community/Technical-Blogs/John-West-Sitecore-Blog/Posts/2010/09/Create-a-Visual-Studio-2010-Project-for-a-Sitecore-Solution.aspx#communitycontent_2_CommentsList_CommentItem_14</a></p>
+
+        </div>
+    </article>
+
+    
+    <nav class="flex justify-between items-center py-8 border-t border-gray-200 dark:border-gray-700">
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;learnsitecore-podcast-2-team-development-for-sitecore&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            LearnSitecore Podcast 2 - Team Development for Sitecore
+        </a>
+        
+
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-item-and-version-design-flaw&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            Sitecore item and version design flaw
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </a>
+        
+    </nav>
+    
+
+    
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+        
+            
+        
+    
+    
+    
+    <section class="mt-16">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-8">Comments</h2>
+        <div class="space-y-8">
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;b4591048ba49c1111162c1db646f4147.jpg?d=robohash" 
+                         alt="Avatar of Alistair Deneys"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Alistair Deneys</h3>
+                        <time datetime="2010-10-30T15:40:54.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            October 30, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>Vote 1 for outside webroot.</p>
+<p>I also find myself creating lots of small projects to try out ideas like John does (for my blog), and I find it much easier to have separate projects outside my webroot and use MSBuild to copy the files over to a Sitecore instance on my local machine I share between all these small projects. Spinning up a whole new instance of Sitecore, complete with it's own set of DBs just to try out a little idea feels much too heavy.</p>
+<p>I understand people's frustrations of having their website restart each time you update, even for something like a CSS file (cause that should be stored in your project too; separation of ownership). I guess I've just learnt to live with it and value to separation over the convenience.</p>
+<p>Just to cover off Rasmus' and Nick's questions (for how I do it anyway), presentation components still need to be created in Sitecore, then XSLTs copied to the project and ASCX / ASPX created manually (for proper code behind) in the solution. Just make sure the path of the ASCX / ASPX is the same as the component you created. You might also want to have a look into the VS2010 plugin Sitecore Rocks! which let's you create these components inside VS. As for the modules, I install those then move the package files off to a separate folder and use MSBuild to copy those files across as a post-build step.</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;93308b41863a5f67a5d6e5c62a98314c.jpg?d=robohash" 
+                         alt="Avatar of Nick Wesselman"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Nick Wesselman</h3>
+                        <time datetime="2010-10-21T02:20:31.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            October 21, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>Sean,</p>
+<p>How do you handle Sitecore module installs? It seems like after installing, you'd need them added to the base Sitecore "image" that all developers use, and that is used for deploying new environments. But then how do you isolate the "image" from the code deployed on top of it?</p>
+<p>Thanks,
+Nick</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;4a4bfe1e6a03050c2884c9fc7fd6e747.jpg?d=robohash" 
+                         alt="Avatar of Rasmus"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Rasmus</h3>
+                        <time datetime="2010-10-18T17:26:58.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            October 18, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>I like the idea of working outside the webroot and we're doing this for umbraco projects aswell. But how do you handle changes done in Sitecore. Typically our developers would add new sublayouts through sitecore, to ensure database changes are done correctly. How do you handle that in a "out of webroot" project?</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;e9ac5d1ba61b7b128136ec1c2db82f2c.jpg?d=robohash" 
+                         alt="Avatar of Admin"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Admin</h3>
+                        <time datetime="2010-10-05T01:10:54.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            October 05, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>Alex/Ivan,
+I can see some benefit to the approach you want to take, but I must ask if you work on a single site for your company or many sites for different clients, (or something else)?</p>
+<p>In my experience I have many projects (clients) that have various components to their site. For instance, I have two projects that both rely on Coveo for search. I do not want to have Coveo running on my machine so I create a virtual machine that runs Sitecore and Coveo. When I build my project, from my workstation, the compiled code gets pushed to my VM and I debug. To make it more confusing, the Coveo version are different, therefore I have each client in their own virtual machine. If I took your approach I would need to have Visual Studio running in a VM and I would need to work in that VM via remote desktop.</p>
+<p>Ultimately it comes down to preference. Using virtual machines and Team Development for Sitecore I am able to code outside of the web root, leverage source control, have a development environment closely mirror my production environment, and do continuous integration. To me, that is the best way to work.</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;ef25aabf9027c35b2e4b73cdb27c9b61.jpg?d=robohash" 
+                         alt="Avatar of Ivan"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Ivan</h3>
+                        <time datetime="2010-10-05T00:13:25.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            October 05, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>I think Alex is right.
+I am also sure it would be much easier and understandable to make some step for deploying/build script. That step can remove all the *.cs files from under webroot of preparing build.</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;23463b99b62a72f26ed677cc556c44e8.jpg?d=robohash" 
+                         alt="Avatar of Alex"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Alex</h3>
+                        <time datetime="2010-10-04T09:00:25.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            October 04, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>Post-build steps are not as good, you have to recompile the project to update the actual files.
+I'd suggest to create all custom files(and projects) within folder under /Website instead.</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;aaa73f5f0902061a7be6642aabfbd2a3.jpg?d=robohash" 
+                         alt="Avatar of John West"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">John West</h3>
+                        <time datetime="2010-10-01T23:19:11.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            October 01, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>Just noting that I read somewhere that Windows Azure requires the Web Application Project, though there are probably ways around that. I thought it was funny because Microsoft had removed that project model in the first release of Visual Studio 2005, but had to add it back with a service pack, included it in 2008, and appeared to make it mandatory for Azure in 2010.</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;e9ac5d1ba61b7b128136ec1c2db82f2c.jpg?d=robohash" 
+                         alt="Avatar of Admin"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Admin</h3>
+                        <time datetime="2010-10-01T23:10:33.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            October 01, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>@John,
+I would say that if I did what you did then I would probably do something like you have outlined; essentially a way to test out various things quickly.</p>
+<p>However, my issue is that the majority of people reading your blog aren't doing what you do. I would think the majority are working on their own "in-house" site, or, as in my case, many sites for many clients. Therefore, being that the majority probably aren't doing what you do, then they probably shouldn't work the way you do either.</p>
+<p>As for the dynamic compilation... it sounds like using the 'web site model' with Sitecore. Then maybe using web deploy projects you can compile that for production release. Interesting idea.</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;aaa73f5f0902061a7be6642aabfbd2a3.jpg?d=robohash" 
+                         alt="Avatar of John West"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">John West</h3>
+                        <time datetime="2010-10-01T20:14:55.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            October 01, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>This approach definitely has advantages. I think it is more work for someone like me who has to create lots of Visual Studio projects for Sitecore solutions frequently and quickly, and then not integrate with source code management or maintain those solutions for any length of time.</p>
+<p>I think I've heard of another approach that uses dynamic compilation to reduce the frequency of ASP.NET restarts. I think that would require code within the document root. If such a model exists, I expect it would compile the code into an assembly for deployment (not require deployment of source code).</p>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="http:&#x2F;&#x2F;www.gravatar.com&#x2F;avatar&#x2F;dd4acb3e41148b9e6b9aa14b0780e06e.jpg?d=robohash" 
+                         alt="Avatar of Adam Weber"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Adam Weber</h3>
+                        <time datetime="2010-10-01T18:35:39.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            October 01, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>Sean,</p>
+<p>I couldn't agree with you more. I've been a long-time fan of working outside of the web root as well and using post-build scripts (MSBuild is crazy extensible) to copy files from the solution to the web root.</p>
+<p>This approach [i]always[/i] results in cleaner solutions, easier code management, more efficient deployments and also smoother upgrades.</p>
+<p>--adam</p>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    
+</div>
+
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Social Links -->
+            <div class="flex justify-center space-x-6 mb-6">
+                
+<a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="GitHub">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="Twitter">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="LinkedIn">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="StackOverflow">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.07-10.478-2.187-.453 2.068zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.95zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.35 1.618zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0h.002z"/></svg>
+    
+</a>
+
+
+            </div>
+
+            <!-- Footer Links -->
+            <div class="text-center space-y-4">
+                <p class="text-gray-600 dark:text-gray-400">
+                    © 2026 Sean Kearney
+                </p>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Powered by <a href="https://www.getzola.org/" class="hover:text-gray-900 dark:hover:text-white transition-colors">Zola</a>
+                    &amp;
+                    <span><a href="https://github.com/seankearney/zola-devin" class="hover:text-gray-900 dark:hover:text-white transition-colors">Devin</a></span>
+                </p>
+                <a href="https://seankearney.com/rss.xml" 
+                   class="inline-block text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                   title="RSS Feed">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

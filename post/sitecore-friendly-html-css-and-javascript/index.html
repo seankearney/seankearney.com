@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-74650-7"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-74650-7');
+    </script>
+    
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    
+    
+    
+    <title>Sitecore friendly html, css and javascript | Sean Kearney</title>
+    <meta name="description" content="A modern blog built with Zola">
+    <!-- Open Graph / Social Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecore-friendly-html-css-and-javascript&#x2F;">
+    <meta property="og:site_name" content="Sean Kearney">
+    <meta property="og:title" content="Sitecore friendly html, css and javascript | Sean Kearney">
+    <meta property="og:description" content="A modern blog built with Zola">
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Sitecore friendly html, css and javascript | Sean Kearney">
+    <meta name="twitter:description" content="A modern blog built with Zola">
+    
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('theme');
+            if (!savedTheme) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+            }
+        })();
+    </script>
+    <meta name="search-index" content="https://seankearney.com/search_index.en.js">
+    <link rel="stylesheet" href="https://seankearney.com/tailwind.css">
+    <script src="https://seankearney.com/js/elasticlunr.min.js" defer></script>
+    <script src="https://seankearney.com/search.js" defer></script>
+    <script src="https://seankearney.com/theme.js" defer></script>
+    <script src="https://seankearney.com/mobile-menu.js" defer></script>
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://seankearney.com/rss.xml">
+</head>
+<body>
+    <header class="bg-white dark:bg-gray-800 shadow-md fixed w-full top-0 z-50">
+        <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-6">
+                <a href="https://seankearney.com" class="text-xl font-bold text-slate-900 dark:text-white">Sean Kearney</a>
+                <div class="hidden md:flex space-x-4">
+                    
+                    <a href="https://seankearney.com/about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">About</a>
+                    
+                    <a href="https://seankearney.com/post" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Blog</a>
+                    
+                    <a href="https://seankearney.com/tags" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Categories</a>
+                    
+                    <a href="https://seankearney.com/archive" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400">Archive</a>
+                    
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative hidden md:block">
+                    <input id="search-input" type="search" class="w-48 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Type to search..." aria-label="Search">
+                    <div id="search-preview" class="absolute right-0 mt-2 w-96 max-w-screen-sm bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden z-50 hidden">
+                    </div>
+                </div>
+                <button id="mobile-search-button" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Search" aria-expanded="false" aria-controls="search-modal">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+                <button id="theme-toggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Toggle dark mode">
+                    <svg width="20" height="20" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+                <button class="mobile-menu-button md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700" aria-label="Menu" aria-expanded="false">
+                    <svg width="24" height="24" fill="none" stroke="currentColor" class="text-slate-900 dark:text-white" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+        <div class="mobile-menu hidden md:hidden bg-white dark:bg-gray-800 w-full border-t dark:border-gray-700">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-2">
+                
+                <a href="https://seankearney.com/about" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">About</a>
+                
+                <a href="https://seankearney.com/post" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Blog</a>
+                
+                <a href="https://seankearney.com/tags" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Categories</a>
+                
+                <a href="https://seankearney.com/archive" class="text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 py-2">Archive</a>
+                
+            </div>
+        </div>
+    </header>
+
+    <div id="search-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 transition-opacity duration-200 ease-in-out">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-3xl mx-auto mt-16 sm:mt-20 rounded-lg shadow-xl overflow-hidden transform transition-transform duration-200">
+            <div class="flex justify-between items-center p-4 border-b dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-slate-900 dark:text-white">Search Results</h2>
+                <button id="close-search" class="text-2xl text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-full w-8 h-8 flex items-center justify-center transition-colors duration-150" aria-label="Close search">×</button>
+            </div>
+            <div class="p-4 border-b dark:border-gray-700 md:hidden">
+                <input id="modal-search-input" type="search" class="w-full px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Type to search..." aria-label="Search">
+            </div>
+            <div id="search-results" class="max-h-[80vh] sm:max-h-[70vh] overflow-y-auto p-4 space-y-4">
+                <!-- Search results will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <main class="container mx-auto px-4 pt-20 pb-16 min-h-screen">
+        
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <article class="mb-16">
+        <header class="mb-8">
+            <h1 class="text-4xl font-bold text-slate-900 dark:text-white mb-4">Sitecore friendly html, css and javascript</h1>
+            <div class="text-gray-500 dark:text-gray-400">
+                <time datetime="2010-01-21">January 21, 2010</time>
+                
+                <span class="mx-2">•</span>
+                <span>
+                    
+                    <a href="https://seankearney.com/tags/sitecore/" 
+                       class="text-blue-600 dark:text-blue-400 hover:underline">Sitecore</a>
+                    , 
+                    
+                    <a href="https://seankearney.com/tags/front-end/" 
+                       class="text-blue-600 dark:text-blue-400 hover:underline">Front End</a>
+                    
+                    
+                </span>
+                
+            </div>
+        </header>
+
+        <div class="prose dark:prose-invert max-w-none">
+            <p><em>Disclaimer: While some of these guidelines may be applied to other Content Management Systems, or .net web forms in general, this is based on my experience with Sitecore.</em></p>
+<span id="continue-reading"></span>
+<p>A common approach of having a CMS based web site implemented usually goes as follows:</p>
+<ol>
+<li>Company X (aka 'The Client') approaches a design firm.</li>
+<li>Said design firm paints a lot of pretty pictures (also known as wire-frames, mock-ups, etc..), which the client gets sold on</li>
+<li>The design firm (or a subcontractor) will cut up those pretty pictures into HTML/CSS/JS files.</li>
+<li>That design firm chooses a <a href="http://www.hhogdev.com/" title="Sitecore Partner">Sitecore partner</a> to do the implementation of their super clean front-end work.</li>
+</ol>
+<p>While I am greatly generalizing, this is a common approach. The point I am hoping to address is that design firms (who aren't familiar with .net or Sitecore) are very likely to make things difficult for the implementation team. Here are a few issues I have seen over the last few projects.</p>
+<p><strong>ID attribute on html elements</strong></p>
+<p>This is another broad statement, but take it at face-value to avoid problems. Front end developers will reference an element via the <em>id</em> attribute for css styling as well as <a href="http://jquery.com">jQuery</a> (or any other client side framework) manipulations. While this sounds like a very normal approach it can lead to issues when that element gets converted into a .NET Server control and this tag:</p>
+<p><code>&lt;input name="q" id="q" type="text" /&gt;</code></p>
+<p>is now this tag:</p>
+<p><code>&lt;input name="ctl00_Main_q" id="ctl00_Main_q" type="text" /&gt;</code></p>
+<p>This annoying rewrite of the *id *attribute will break all pre-written css and javascript written for that <em>id</em>. As back-end developers we know that only id's of server controls (or regular tags with runat="server") will be rewritten, but is easier to have front-end dev's avoid referencing elements by <em>id</em> them all together.</p>
+<p><strong>HTML Patterns</strong></p>
+<p>In general, repeating patterns are very easy to program. Avoid throwing unnecessary id's and classes on elements. A perfect example would be for navigation elements; a side menu should be a simple nested unordered list with no extra classes. Having classes that change based on content, depth in site, etc... it will require logic, which takes time to implement.</p>
+<p>Do this:</p>
+<pre><code>&lt;h1&gt;Nav Header&lt;&#x2F;h1&gt;  
+    &lt;ul&gt;  
+        &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Level 1a&lt;&#x2F;a&gt;  
+            &lt;ul&gt;  
+                &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Level 2a&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+                &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Level 2b&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+                &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Level 2c&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+            &lt;&#x2F;ul&gt;  
+        &lt;&#x2F;li&gt;  
+         &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Level 2a&lt;&#x2F;a&gt;  
+            &lt;ul&gt;  
+                &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Level 2a&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+                &lt;li&gt;&lt;a href=&quot;#&quot; class=&quot;selected&quot;&gt;Level 2b&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+                &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Level 2c&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+            &lt;&#x2F;ul&gt;  
+        &lt;&#x2F;li&gt;  
+    &lt;&#x2F;ul&gt;
+</code></pre>
+<p>Not this:</p>
+<pre><code>&lt;h1&gt;Nav Header&lt;&#x2F;h1&gt;  
+    &lt;ul class=&quot;mainNav&quot;&gt;  
+        &lt;li class=&quot;first&quot;&gt;&lt;a href=&quot;#&quot;&gt;Level 1a&lt;&#x2F;a&gt;  
+            &lt;ul class=&quot;subnav&quot;&gt;  
+                &lt;li class=&quot;first&quot;&gt;&lt;a href=&quot;#&quot;&gt;Level 2a&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+                &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Level 2b&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+                &lt;li class=&quot;last&quot;&gt;&lt;a href=&quot;#&quot;&gt;Level 2c&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+            &lt;&#x2F;ul&gt;  
+        &lt;&#x2F;li&gt;  
+         &lt;li class=&quot;last&quot;&gt;&lt;a href=&quot;#&quot;&gt;Level 2a&lt;&#x2F;a&gt;  
+            &lt;ul class=&quot;subnav&quot;&gt;  
+                &lt;li class=&quot;first&quot;&gt;&lt;a href=&quot;#&quot;&gt;Level 2a&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+                &lt;li&gt;&lt;a href=&quot;#&quot; class=&quot;selected&quot;&gt;Level 2b&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+                &lt;li class=&quot;last&quot;&gt;&lt;a href=&quot;#&quot;&gt;Level 2c&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;  
+            &lt;&#x2F;ul&gt;  
+        &lt;&#x2F;li&gt;  
+    &lt;&#x2F;ul&gt;
+</code></pre>
+<p>Obviously this is an overly simplistic menu system that cannot always be accomplished. My main point here is to avoid classes on elements that aren't absolutely necessary. We can use basic css selectors to get at elements without having to provide more classes to denote first and subnav.</p>
+<p><strong>Modularity</strong></p>
+<p>If you have ever seen a Sitecore sales demo you have undoubtedly seen the presenter effortlessly change the layout of the page. Possibly adding some 'widgets' to the side or changing the entire layout from two to three columns? Sitecore allows renderings and sublayouts to be placed within placeholders. This introduces a lot of flexibility for the design of site, however, it does require a lot of forethought to make sublayouts look nice in multiple locations.</p>
+<p>In order to make your sublayouts (or any other custom 'widgeting' system) work and look great you should follow a couple guidelines.</p>
+<ol>
+<li>Keep your html super lean and clean.</li>
+<li><a href="http://www.stubbornella.org/content/2009/02/28/object-oriented-css-grids-on-github/">Object Oriented Css</a></li>
+</ol>
+<p><strong>Design Images</strong></p>
+<p>This is just my preference on how to organize the file system of a Sitecore site and you may have your own system and that is fine. Whatever system you choose, just be consistent as sites can grow big quickly and managing these little files can become daunting.</p>
+<ul>
+<li>Images referenced from css files should go in an "images" directory underneath the css directory. Furthermore, keep image paths relative to the css file.</li>
+<li>Any leftover images required for the design should go in a /images directory.</li>
+<li>Placeholder images should be prefixed with "fpo_" which makes it easy to identify these images as being good candidates to be moved into Sitecore media library.</li>
+</ul>
+<p><strong>Multi-Lingual Considerations</strong></p>
+<p>Manipulating the DOM with Javascript is trivial with the introduction of client libraries such as jQuery. A potential issue will arise when a developer hard codes in a language specific string (such as 'open,' 'close,' etc...) in a javascript function. In order to avoid this pitfall have the translatable text reside in a hidden span on the page, not in the javascript code.</p>
+
+        </div>
+    </article>
+
+    
+    <nav class="flex justify-between items-center py-8 border-t border-gray-200 dark:border-gray-700">
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;sitecores-webforms-for-marketers-v2-gotchas&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Sitecore&#x27;s Webforms for Marketers (v2) Gotchas
+        </a>
+        
+
+        
+        <a href="https:&#x2F;&#x2F;seankearney.com&#x2F;post&#x2F;my-sitecore-development-environment&#x2F;" class="flex items-center text-blue-600 dark:text-blue-400 hover:underline">
+            My Sitecore Development Environment
+            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+            </svg>
+        </a>
+        
+    </nav>
+    
+
+    
+    
+        
+            
+        
+    
+    
+    
+    <section class="mt-16">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-8">Comments</h2>
+        <div class="space-y-8">
+            
+            <div class="flex space-x-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                <div class="flex-shrink-0">
+                    <img src="https:&#x2F;&#x2F;robohash.org&#x2F;781533de5d740574f5f1e536961bc7e1.jpg" 
+                         alt="Avatar of Nick Tzanev"
+                         class="w-12 h-12 rounded-full"
+                         onerror="this.onerror=null;this.src='https://seankearney.com/images/default-avatar.svg'">
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="font-bold text-slate-900 dark:text-white">Nick Tzanev</h3>
+                        <time datetime="2010-01-31T12:57:36.0000000Z" 
+                              class="text-sm text-gray-500 dark:text-gray-400">
+                            January 31, 2010
+                        </time>
+                    </div>
+                    <div class="prose dark:prose-invert max-w-none text-sm">
+                        <p>Sean, thanks a bunch. I also like the idea bout css-related images being placed in a folder inside and relative to the css files themselves. In our case, we use the same branding across several web apps where each may have its own images (or not) – it would make sense to copy a “css” folder from one project to the next instead of fishing for gifs or jpgs.</p>
+<p>On a separate note, one important thing to point out about Sitecore, CSS and their Telerik HTML editor is that in certain cases, what-you-see-is -not-what-you-get or, WYSI(n)WYG  in fact, the rad control that's built into Sitecore can be given its own stylesheet so that your custom design features can be forced to display accordingly and show up in the little drop-down as a choice to your users… For example, if you choose to style all of your bulleted lists in any way, the editor will still display them as black dots and your content contributors will begin calling you to tweak their designs.</p>
+
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+    
+</div>
+
+    </main>
+
+    <footer class="bg-white dark:bg-gray-800 border-t dark:border-gray-700">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Social Links -->
+            <div class="flex justify-center space-x-6 mb-6">
+                
+<a href="https:&#x2F;&#x2F;github.com&#x2F;seankearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="GitHub">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;twitter.com&#x2F;seankearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="Twitter">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;www.linkedin.com&#x2F;in&#x2F;skearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="LinkedIn">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    
+</a>
+
+<a href="https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;255194&#x2F;sean-kearney" 
+   class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+   target="_blank" 
+   rel="noopener noreferrer"
+   title="StackOverflow">
+    
+    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.07-10.478-2.187-.453 2.068zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.95zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.35 1.618zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0h.002z"/></svg>
+    
+</a>
+
+
+            </div>
+
+            <!-- Footer Links -->
+            <div class="text-center space-y-4">
+                <p class="text-gray-600 dark:text-gray-400">
+                    © 2026 Sean Kearney
+                </p>
+                <p class="text-gray-600 dark:text-gray-400">
+                    Powered by <a href="https://www.getzola.org/" class="hover:text-gray-900 dark:hover:text-white transition-colors">Zola</a>
+                    &amp;
+                    <span><a href="https://github.com/seankearney/zola-devin" class="hover:text-gray-900 dark:hover:text-white transition-colors">Devin</a></span>
+                </p>
+                <a href="https://seankearney.com/rss.xml" 
+                   class="inline-block text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
+                   title="RSS Feed">
+                    <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6.503 20.752c0 1.794-1.456 3.248-3.251 3.248-1.796 0-3.252-1.454-3.252-3.248 0-1.794 1.456-3.248 3.252-3.248 1.795.001 3.251 1.454 3.251 3.248zm-6.503-12.572v4.811c6.05.062 10.96 4.966 11.022 11.009h4.817c-.062-8.71-7.118-15.758-15.839-15.82zm0-3.368c10.58.046 19.152 8.594 19.183 19.188h4.817c-.03-13.231-10.755-23.954-24-24v4.812z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
