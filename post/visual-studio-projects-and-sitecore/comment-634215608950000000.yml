@@ -1,0 +1,9 @@
+id: 634215608950000000
+date: 2010-10-01T20:14:55.0000000Z
+name: John West
+avatar: http://www.gravatar.com/avatar/aaa73f5f0902061a7be6642aabfbd2a3.jpg?d=robohash
+message: >-
+  This approach definitely has advantages. I think it is more work for someone like me who has to create lots of Visual Studio projects for Sitecore solutions frequently and quickly, and then not integrate with source code management or maintain those solutions for any length of time. 
+
+
+  I think I've heard of another approach that uses dynamic compilation to reduce the frequency of ASP.NET restarts. I think that would require code within the document root. If such a model exists, I expect it would compile the code into an assembly for deployment (not require deployment of source code).

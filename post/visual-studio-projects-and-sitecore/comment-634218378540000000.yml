@@ -1,0 +1,14 @@
+id: 634218378540000000
+date: 2010-10-05T01:10:54.0000000Z
+name: Admin
+avatar: http://www.gravatar.com/avatar/e9ac5d1ba61b7b128136ec1c2db82f2c.jpg?d=robohash
+message: >-
+  Alex/Ivan,
+
+  I can see some benefit to the approach you want to take, but I must ask if you work on a single site for your company or many sites for different clients, (or something else)? 
+
+
+  In my experience I have many projects (clients) that have various components to their site. For instance, I have two projects that both rely on Coveo for search. I do not want to have Coveo running on my machine so I create a virtual machine that runs Sitecore and Coveo. When I build my project, from my workstation, the compiled code gets pushed to my VM and I debug. To make it more confusing, the Coveo version are different, therefore I have each client in their own virtual machine. If I took your approach I would need to have Visual Studio running in a VM and I would need to work in that VM via remote desktop.
+
+
+  Ultimately it comes down to preference. Using virtual machines and Team Development for Sitecore I am able to code outside of the web root, leverage source control, have a development environment closely mirror my production environment, and do continuous integration. To me, that is the best way to work.

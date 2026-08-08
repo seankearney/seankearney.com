@@ -1,0 +1,5 @@
+id: 634173443090000000
+date: 2010-08-14T00:58:29.0000000Z
+name: Kyle Heon
+avatar: https://robohash.org/90b6b26d46550f533e2049774be8644f.jpg
+message: Index rebuilds are significantly slower to build but I'm seeing 50%+ decrease in size on disk for my indexes. Not a big deal for my relatively tiny indexes but for large ones I can see this being really beneficial. Thanks again.

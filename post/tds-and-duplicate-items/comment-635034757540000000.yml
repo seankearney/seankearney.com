@@ -1,0 +1,9 @@
+id: 635034757540000000
+date: 2013-05-06T22:22:34.0000000Z
+name: Joe Edwards
+avatar: http://www.gravatar.com/avatar/5bf77f2d5145ac170849b293da4fb045.jpg?d=robohash
+message: >-
+  The main reason I can think is that the stock, out-of-the-box Sitecore Core database contains duplicate item names (the dreaded Dividers), so just adding that tree in the first place requires painful manual renaming (and then it&#39;s no longer &quot;stock, out-of-the-box&quot;).
+
+
+  It&#39;s bad from a user experience standpoint: your users&#39; very first sync with Core will throw up several error messages which require manual resolution, which is not a good first impression.

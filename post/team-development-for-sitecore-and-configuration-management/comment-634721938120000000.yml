@@ -1,0 +1,9 @@
+id: 634721938120000000
+date: 2012-05-09T20:56:52.0000000Z
+name: Derek Dysart
+avatar: http://www.gravatar.com/avatar/543c0458312f5326c6e1ec19d1e87833.jpg?d=robohash
+message: >-
+  Funny, I was drafting an email to you guys that config transforms don't work with TDS, and in Googling how to get Visual Studio to apply the transform without using deploy.
+
+
+  This is awesome, BTW. I love Sitecore's patching system, but there are things that don't work with it (service endpoints being the one we run into)

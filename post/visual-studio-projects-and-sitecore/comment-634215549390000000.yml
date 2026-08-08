@@ -1,0 +1,15 @@
+id: 634215549390000000
+date: 2010-10-01T18:35:39.0000000Z
+name: Adam Weber
+avatar: http://www.gravatar.com/avatar/dd4acb3e41148b9e6b9aa14b0780e06e.jpg?d=robohash
+message: >-
+  Sean,
+
+
+  I couldn't agree with you more. I've been a long-time fan of working outside of the web root as well and using post-build scripts (MSBuild is crazy extensible) to copy files from the solution to the web root. 
+
+
+  This approach [i]always[/i] results in cleaner solutions, easier code management, more efficient deployments and also smoother upgrades. 
+
+
+  --adam

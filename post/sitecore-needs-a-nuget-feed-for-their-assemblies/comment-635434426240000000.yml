@@ -1,0 +1,15 @@
+id: 635434426240000000
+date: 2014-08-12T12:17:04.0000000Z
+name: Xavier Decoster
+avatar: http://www.gravatar.com/avatar/3f6ae61e2e0de95f1c938e0feed5c84e.jpg?d=robohash
+message: >-
+  I definitely applaud the use of NuGet for this scenario!
+
+
+  Have you guys considered using MyGet.org for your NuGet needs? (disclaimer: I am one of the founders of MyGet)
+
+
+  It sounds like our services might be a good fit for your needs, incl. a gallery where you can publish your feed, build services, support for upstream package sources (with support for feed credentials) and more. There&#39;s even an OSS plan.
+
+
+  Feel free to reach out through https://www.myget.org/support

@@ -1,0 +1,5 @@
+id: 635020864770000000
+date: 2013-04-20T20:27:57.0000000Z
+name: Ben Golden
+avatar: http://www.gravatar.com/avatar/396ff37caa807be13339c672023b9dbe.jpg?d=robohash
+message: I think I am one of the people who has made this request.  Personally, I think that TDS should support any content tree that Sitecore supports.  However, I think it would probably be better if Sitecore were to prohibit duplicate item paths.  They already have a validator for this, so I wouldn&#39;t think it would be too hard for them to make this a more critical failure.

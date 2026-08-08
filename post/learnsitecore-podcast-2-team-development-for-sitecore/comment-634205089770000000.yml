@@ -1,0 +1,18 @@
+id: 634205089770000000
+date: 2010-09-19T16:02:57.0000000Z
+name: James
+avatar: http://www.gravatar.com/avatar/9fd7f47412308c72f68a5c50cdb4adfa.jpg?d=robohash
+message: >-
+  Hi Sean, nice podcast.  I'm new to Sitecore (currently working on moving our existing websites to Sitecore) and have we have just got TDS installed and working, so it was interesting to hear something about TDS and where it is going.  
+
+
+  I have a question about the object modelling you talk about at the end of the podcast and how you handle Sitecore items in code.  At the moment when I need to change an item, or a field on an item, programmatically I get the item and edit the fields I need directly.  It sounds like you create classes which are wrappers or interfaces for your templates (and thus items) and use these to classes to manipulate the item.  Is this correct?  It seems like a fair bit of extra work but I can see some advantages too.  
+
+
+  Would you consider doing this modelling/code generation in the other direction?  That is, from classes (that might have been made by an ORM) to Sitecore templates?  I think this would be more complex and possibly not as useful, but interesting none the less.
+
+
+  Cheers,
+
+
+  James.

@@ -1,0 +1,5 @@
+id: 634215719510000000
+date: 2010-10-01T23:19:11.0000000Z
+name: John West
+avatar: http://www.gravatar.com/avatar/aaa73f5f0902061a7be6642aabfbd2a3.jpg?d=robohash
+message: Just noting that I read somewhere that Windows Azure requires the Web Application Project, though there are probably ways around that. I thought it was funny because Microsoft had removed that project model in the first release of Visual Studio 2005, but had to add it back with a service pack, included it in 2008, and appeared to make it mandatory for Azure in 2010.

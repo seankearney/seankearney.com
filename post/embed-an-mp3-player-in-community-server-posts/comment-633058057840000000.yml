@@ -1,0 +1,12 @@
+id: 633058057840000000
+date: 2007-01-31T02:03:04.0000000Z
+name: Sean Kearney
+avatar: https://robohash.org/cd7897511d257d1932178812f5aca46a.jpg
+message: >-
+  We had the opposite problem over at DigitalDjPool.com.
+
+
+  From the Flash Players Developer:
+
+
+  If you encounter too fast or too slow playback of MP3 files or if your progressbar is messed up, your MP3 files contain variable bitrate encoding. Flash isn't very good at handling these, it's best to stick to constant bitrate encoding. Also make sure to stick to a sampling frequancy that is a multitude of 11.025kHz (48kHz, for example, also poses problems)

@@ -1,0 +1,20 @@
+id: 633148377400000000
+date: 2007-05-15T14:55:40.0000000Z
+name: JRedekop
+avatar: https://robohash.org/7d607c64738356b354efeaf46e104aad.jpg
+message: >-
+  BTW...
+
+
+  The javascript was exposed while browsing my posts by tags..
+
+  (/archive/tags/)
+
+
+  And the javascript text was exposed - not executed as script
+
+
+  var so = new SWFObject('/Utility/MP3/mp3player.swf','player','320','240','7'); so.addVariable...
+
+
+  Did I miss something?

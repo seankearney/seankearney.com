@@ -1,0 +1,9 @@
+id: 634304880180000000
+date: 2011-01-13T04:00:18.0000000Z
+name: Alistair Deneys
+avatar: http://www.gravatar.com/avatar/b4591048ba49c1111162c1db646f4147.jpg?d=robohash
+message: >-
+  Interesting issue. I can see why Sitecore does it the way they do (as Brian describes above) and I have also witnessed the issue myself previously where an item existed but had no versions in any language. 
+
+
+  I know you're after a discussion about how Sitecore should behave, but for anyone scratching their heads wondering how to work around this issue, simply verify the current item version has a created date. I'm not sure if that will work for the example above, but it worked in my case where an item didn't have a version in the current language.

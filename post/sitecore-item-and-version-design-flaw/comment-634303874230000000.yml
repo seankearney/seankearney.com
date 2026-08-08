@@ -1,0 +1,15 @@
+id: 634303874230000000
+date: 2011-01-12T00:03:43.0000000Z
+name: Ivan Buzyka
+avatar: http://www.gravatar.com/avatar/ef25aabf9027c35b2e4b73cdb27c9b61.jpg?d=robohash
+message: >-
+  Right, it would be logical to get rid of that &quot;Zombie&quot; items which does not have any version.
+
+  There is also another quite similar problem - about language fallback issue which frequently happens on multilingual solutions - there is great approach recently released by Alex Shyba:
+
+  http://sitecoreblog.alexshyba.com/2010/11/approaching-language-fallback-with.html. 
+
+  I think something similar should be implemented in one of next Sitecore CMS version.
+
+
+  Interesting information. thank You.
